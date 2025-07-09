@@ -11,7 +11,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    //MAKE : this section is so you can test out your individual storyboard. edit the commented sections.
+//    func scene(_ scene: UIScene,
+//               willConnectTo session: UISceneSession,
+//               options connectionOptions: UIScene.ConnectionOptions) {
+//        guard let windowScene = (scene as? UIWindowScene) else { return }
+//
+//        // Load your specific storyboard and view controller
+//        let storyboard = UIStoryboard(name: "Julia", bundle: nil) //change name String
+//        let rootVC = storyboard.instantiateViewController(withIdentifier: "FutureTripsViewController") //change Identifier String
+//
+//        // Set up the window manually
+//        let window = UIWindow(windowScene: windowScene)
+//        window.rootViewController = rootVC
+//        self.window = window
+//        window.makeKeyAndVisible()
+//    }
 
+
+    //MAKE : ORIGINAL code
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
