@@ -1,0 +1,31 @@
+
+# Xcode
+#
+# gitignore for Xcode projects
+# General
+.DS_Store
+.localized
+build/
+DerivedData/
+*.xcodeproj/
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/xcuserdata/
+*.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+!*.xcworkspace/xcshareddata/
+!*.xcworkspace/xcuserdata/
+# Generated playgrounds
+*.playground/
+# Carthage
+Carthage/Build/
+# CocoaPods
+Pods/
+# Swift Package Manager
+.swiftpm/
+# User-specific files that change frequently
+*.xcuserstate
+xcuserdata/
+
+# Specific file causing your current issue
+CS371-Project.xcodeproj/project.xcworkspace/xcuserdata/suhanigoswami.xcuserdatad/UserInterfaceState.xcuserstate
