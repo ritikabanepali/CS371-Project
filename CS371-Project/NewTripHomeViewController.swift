@@ -23,10 +23,10 @@ class NewTripHomeViewController: UIViewController {
         welcomeLabel.text = "Hello, UserName!"
     }
 
-    @IBAction func createNewTripTapped(_ sender: UIButton) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "CreateTripViewController") as! CreateTripViewController
-        navigationController?.pushViewController(vc, animated: true)
-    }
+//    @IBAction func createNewTripTapped(_ sender: UIButton) {
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "CreateTripViewController") as! CreateTripViewController
+//        navigationController?.pushViewController(vc, animated: true)
+//    }
 
     @IBAction func pastTripsTapped(_ sender: UIButton) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "PastTripsViewController") as! PastTripsViewController

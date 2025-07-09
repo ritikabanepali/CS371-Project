@@ -23,11 +23,6 @@ class SettingsViewController: UIViewController {
         }
     }
 
-    @IBAction func logoutTapped(_ sender: UIButton) {
-        print("User logged out")
-        // Add logout logic later
-    }
-
     @IBAction func backButtonTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
