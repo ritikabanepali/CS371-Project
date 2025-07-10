@@ -10,7 +10,6 @@ import UIKit
 class NewTripHomeViewController: UIViewController {
 
     @IBOutlet weak var welcomeLabel: UILabel!
-    @IBOutlet weak var createTripButton: UIButton!
     @IBOutlet weak var futureTripsButton: UIButton!
     @IBOutlet weak var pastTripsButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
