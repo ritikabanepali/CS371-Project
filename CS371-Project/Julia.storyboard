@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
@@ -74,10 +74,11 @@
                         <color key="backgroundColor" red="0.98039215800000001" green="0.98039215800000001" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <color key="tintColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.91764706370000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
+                    <navigationItem key="navigationItem" id="MbB-Sx-tiI"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-24" y="-31"/>
+            <point key="canvasLocation" x="901.52671755725191" y="-31.690140845070424"/>
         </scene>
         <!--My Trip Home View Controller-->
         <scene sceneID="Rnw-Zp-Hmy">
@@ -99,6 +100,9 @@
                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
                                     <color key="baseBackgroundColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.91764706370000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <segue destination="NW4-RG-AcW" kind="show" id="3J6-7w-dEA"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tex-Io-x1D">
                                 <rect key="frame" x="82" y="443" width="229" height="80"/>
@@ -110,6 +114,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Photo Album" cornerStyle="capsule">
                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
+                                    <color key="baseBackgroundColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <segue destination="zry-E2-PTr" kind="show" identifier="toPhotoAlbumVC" id="Eek-lz-K6E"/>
@@ -124,7 +129,11 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Generate Itinerary / View Itinerary" cornerStyle="capsule">
                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
+                                    <color key="baseBackgroundColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <segue destination="xQa-zo-hUi" kind="show" id="qQt-5r-U0W"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Trip" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXu-9K-4Ut">
                                 <rect key="frame" x="141.66666666666666" y="138" width="110" height="33"/>
@@ -142,7 +151,11 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Travelers" cornerStyle="capsule">
                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
+                                    <color key="baseBackgroundColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <segue destination="P3O-3j-i5p" kind="show" id="xjC-bQ-Iwj"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Upm-Ff-8Hg"/>
@@ -164,12 +177,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="360-h7-Eya" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="817.55725190839689" y="-32.394366197183103"/>
+            <point key="canvasLocation" x="1744.2748091603053" y="-32.394366197183103"/>
         </scene>
         <!--Photo Album View Controller-->
         <scene sceneID="Xec-0m-8vB">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mzm-gr-I7a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="PhotoAlbumViewController" id="zry-E2-PTr" customClass="PhotoAlbumViewController" customModule="CS371_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Du6-LU-51Z">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
@@ -202,6 +214,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Add Photo" cornerStyle="capsule">
                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
+                                    <color key="baseBackgroundColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
                             </button>
                         </subviews>
@@ -219,8 +232,39 @@
                     </view>
                     <navigationItem key="navigationItem" id="Tyc-K6-2XT"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mzm-gr-I7a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1643.5114503816794" y="431.69014084507046"/>
+            <point key="canvasLocation" x="2644" y="132"/>
+        </scene>
+        <!--travelersID-->
+        <scene sceneID="e06-ml-cIW">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Ritika" referencedIdentifier="travelersID" id="P3O-3j-i5p" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Lfc-yH-Zmy"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="C4x-a3-Emd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2585" y="672"/>
+        </scene>
+        <!--surveyID-->
+        <scene sceneID="vBb-T9-ybU">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Ritika" referencedIdentifier="surveyID" id="NW4-RG-AcW" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="WgP-oa-eiO"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NYO-J6-ZAo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2584" y="-432"/>
+        </scene>
+        <!--iteneraryID-->
+        <scene sceneID="DZS-SA-CZ8">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Ritika" referencedIdentifier="iteneraryID" id="xQa-zo-hUi" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="WHu-bh-6dt"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bFA-et-oBp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2644" y="-309"/>
         </scene>
     </scenes>
     <resources>
