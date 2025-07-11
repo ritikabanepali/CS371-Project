@@ -187,7 +187,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Photo Album" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o09-Lp-F0C">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo Album" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o09-Lp-F0C">
                                 <rect key="frame" x="102" y="59" width="189" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="189" id="xke-6S-4fv"/>
@@ -196,19 +196,19 @@
                                 <color key="textColor" red="0.29803922770000002" green="0.41568624970000001" blue="0.1686274707" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jn4-0Z-U0h">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jn4-0Z-U0h">
                                 <rect key="frame" x="36" y="121" width="321" height="504"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="480" id="fNr-II-vGb"/>
-                                    <constraint firstAttribute="width" constant="321" id="t6L-h0-53h"/>
+                                    <constraint firstAttribute="width" constant="321" id="568-Ld-pvb"/>
+                                    <constraint firstAttribute="height" constant="504" id="Y8S-eR-GCd"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LDw-Er-p5m">
-                                <rect key="frame" x="36" y="650" width="229" height="80"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LDw-Er-p5m">
+                                <rect key="frame" x="102" y="651" width="189" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="PkC-1D-HsN"/>
-                                    <constraint firstAttribute="width" constant="229" id="zVc-0J-kmh"/>
+                                    <constraint firstAttribute="width" constant="189" id="4z5-Fp-fyY"/>
+                                    <constraint firstAttribute="height" constant="80" id="A5q-jZ-TgB"/>
                                 </constraints>
                                 <color key="tintColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.91764706370000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
@@ -221,20 +221,21 @@
                         <viewLayoutGuide key="safeArea" id="rET-aN-X7J"/>
                         <color key="backgroundColor" red="0.98039215800000001" green="0.98039215800000001" blue="0.97254902119999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="jn4-0Z-U0h" firstAttribute="top" secondItem="o09-Lp-F0C" secondAttribute="bottom" constant="26" id="5U5-lh-25L"/>
+                            <constraint firstItem="rET-aN-X7J" firstAttribute="trailing" secondItem="jn4-0Z-U0h" secondAttribute="trailing" constant="36" id="1mM-oX-py4"/>
                             <constraint firstItem="o09-Lp-F0C" firstAttribute="centerX" secondItem="rET-aN-X7J" secondAttribute="centerX" id="BjT-wS-uay"/>
-                            <constraint firstItem="jn4-0Z-U0h" firstAttribute="centerX" secondItem="rET-aN-X7J" secondAttribute="centerX" id="Bjn-FQ-wfe"/>
-                            <constraint firstItem="jn4-0Z-U0h" firstAttribute="leading" secondItem="rET-aN-X7J" secondAttribute="leading" constant="36" id="Fxc-yM-nm8"/>
-                            <constraint firstItem="LDw-Er-p5m" firstAttribute="top" secondItem="jn4-0Z-U0h" secondAttribute="bottom" constant="28" id="XJQ-Hi-aXN"/>
-                            <constraint firstItem="o09-Lp-F0C" firstAttribute="top" secondItem="rET-aN-X7J" secondAttribute="top" constant="50" id="lU4-ET-s4k"/>
-                            <constraint firstItem="LDw-Er-p5m" firstAttribute="leading" secondItem="rET-aN-X7J" secondAttribute="leading" constant="36" id="z1a-hM-XUV"/>
+                            <constraint firstItem="jn4-0Z-U0h" firstAttribute="leading" secondItem="rET-aN-X7J" secondAttribute="leading" constant="36" id="Eqa-WR-Uce"/>
+                            <constraint firstItem="LDw-Er-p5m" firstAttribute="leading" secondItem="rET-aN-X7J" secondAttribute="leading" constant="102" id="Lm0-ae-hAD"/>
+                            <constraint firstItem="rET-aN-X7J" firstAttribute="trailing" secondItem="LDw-Er-p5m" secondAttribute="trailing" constant="102" id="RMm-V1-iAt"/>
+                            <constraint firstItem="rET-aN-X7J" firstAttribute="bottom" secondItem="LDw-Er-p5m" secondAttribute="bottom" constant="52" id="aQ7-Yq-jsy"/>
+                            <constraint firstItem="LDw-Er-p5m" firstAttribute="top" secondItem="jn4-0Z-U0h" secondAttribute="bottom" constant="26" id="fJ3-fp-jDG"/>
+                            <constraint firstItem="jn4-0Z-U0h" firstAttribute="top" secondItem="o09-Lp-F0C" secondAttribute="bottom" constant="29" id="xEg-pm-3rJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Tyc-K6-2XT"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mzm-gr-I7a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2644" y="132"/>
+            <point key="canvasLocation" x="2643.5114503816794" y="131.69014084507043"/>
         </scene>
         <!--travelersID-->
         <scene sceneID="e06-ml-cIW">
