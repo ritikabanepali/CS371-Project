@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zry-E2-PTr">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
@@ -247,7 +247,7 @@
                             <constraint firstItem="o09-Lp-F0C" firstAttribute="top" secondItem="rET-aN-X7J" secondAttribute="top" constant="38" id="7li-hQ-Qdg"/>
                             <constraint firstItem="Fff-aY-JE4" firstAttribute="top" secondItem="o09-Lp-F0C" secondAttribute="bottom" constant="22" id="B2I-hK-oDF"/>
                             <constraint firstItem="o09-Lp-F0C" firstAttribute="centerX" secondItem="rET-aN-X7J" secondAttribute="centerX" id="BjT-wS-uay"/>
-                            <constraint firstItem="LDw-Er-p5m" firstAttribute="top" secondItem="Fff-aY-JE4" secondAttribute="bottom" constant="24" id="Gg0-6a-TNt"/>
+                            <constraint firstItem="rET-aN-X7J" firstAttribute="bottom" secondItem="Fff-aY-JE4" secondAttribute="bottom" constant="114" id="Cy9-K1-kSd"/>
                             <constraint firstItem="LDw-Er-p5m" firstAttribute="leading" secondItem="rET-aN-X7J" secondAttribute="leading" constant="102" id="Lm0-ae-hAD"/>
                             <constraint firstItem="rET-aN-X7J" firstAttribute="trailing" secondItem="LDw-Er-p5m" secondAttribute="trailing" constant="102" id="RMm-V1-iAt"/>
                             <constraint firstItem="rET-aN-X7J" firstAttribute="trailing" secondItem="Fff-aY-JE4" secondAttribute="trailing" id="TTh-Me-S1j"/>

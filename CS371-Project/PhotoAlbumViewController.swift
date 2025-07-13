@@ -11,6 +11,8 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         super.viewDidLoad()
         photoCollection.dataSource = self
         photoCollection.delegate = self
+        photoCollection.isScrollEnabled = true
+
     }
 
     // MARK: - Add Photo Button
