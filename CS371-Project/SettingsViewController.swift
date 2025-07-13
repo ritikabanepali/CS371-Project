@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SettingsViewController: UIViewController {
 
@@ -26,5 +27,24 @@ class SettingsViewController: UIViewController {
     @IBAction func backButtonTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
+    
+    @IBAction func logoutButtonTapped(_ sender: UIButton) {
+        do {
+            try Auth.auth().signOut()
+            
+            // Navigate to SignInViewController from Suhani storyboard
+            
+            let storyboard = UIStoryboard(name: "Suhani", bundle: nil)
+            let signInVC = storyboard.instantiateViewController(withIdentifier: "HomePageViewController")
+            signInVC.modalPresentationStyle = .fullScreen
+            present(signInVC, animated: true, completion: nil)
+            
+            
+            
+        } catch {
+            print("Error signing out: \(error.localizedDescription)")
+        }
+    }
 }
+
 

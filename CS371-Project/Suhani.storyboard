@@ -165,7 +165,6 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="signinButton:" destination="6ae-kc-8Hl" eventType="touchUpInside" id="8dT-Br-zTf"/>
-                                    <segue destination="cUb-gJ-Oki" kind="presentation" modalPresentationStyle="fullScreen" id="mGK-ha-BC7"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAJ-BC-Clh">
@@ -337,9 +336,6 @@
             <point key="canvasLocation" x="96.946564885496173" y="3.5211267605633805"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="4FC-gQ-9hQ"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="HomepageBackgroundImage" width="574" height="1244"/>
         <image name="LoginImage" width="130" height="134"/>
