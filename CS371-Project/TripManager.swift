@@ -16,6 +16,7 @@ struct Trip {
     let destination: String
     let startDate: Date
     let endDate: Date
+    let invitedFriends: [String]
     
     var isPastTrip: Bool {
         return Date() > endDate
@@ -65,64 +66,65 @@ class TripManager {
                     destination: destination,
                     startDate: startDate,
                     endDate: endDate,
+                    invitedFriends: invitedFriends,
                 )
                 completion(.success(newTrip))
             }
         }
     }
     
-      // Fetches all trips for the currently logged-in user.
-      // A closure that returns an array of future trips, an array of past trips, or an error.
-      func fetchUserTrips(completion: @escaping (Result<([Trip], [Trip]), Error>) -> Void) {
-          guard let userUID = UserManager.shared.currentUserID else {
-              let error = NSError(domain: "TripManagerError", code: 401, userInfo: [NSLocalizedDescriptionKey: "User is not logged in."])
-              completion(.failure(error))
-              return
-          }
-
-          let userTripsCollection = db.collection("Users").document(userUID).collection("trips")
-          
-          // You can order by date to get them chronologically
-          userTripsCollection.order(by: "startDate", descending: true).getDocuments { (querySnapshot, error) in
-              if let error = error {
-                  completion(.failure(error))
-                  return
-              }
-
-              guard let documents = querySnapshot?.documents else {
-                  // If there are no documents, return empty arrays
-                  completion(.success(([], [])))
-                  return
-              }
-
-              var futureTrips: [Trip] = []
-              var pastTrips: [Trip] = []
-
-              // Loop through the documents and convert them to Trip objects
-              for doc in documents {
-                  let data = doc.data()
-                  let id = doc.documentID
-                  
-                  let ownerUID = data["ownerUID"] as? String ?? ""
-                  let destination = data["destination"] as? String ?? "Unknown Destination"
-                  let invitedFriends = data["invitedFriends"] as? [String] ?? []
-                  
-                  // Convert Firestore Timestamps back to Swift Dates
-                  let startDate = (data["startDate"] as? Timestamp)?.dateValue() ?? Date()
-                  let endDate = (data["endDate"] as? Timestamp)?.dateValue() ?? Date()
-
-                  let trip = Trip(id: id, ownerUID: ownerUID, destination: destination, startDate: startDate, endDate: endDate)
-
-                  // Sort the trip into the correct array
-                  if trip.isPastTrip {
-                      pastTrips.append(trip)
-                  } else {
-                      futureTrips.append(trip)
-                  }
-              }
-              completion(.success((futureTrips, pastTrips)))
-          }
-      }
+    // Fetches all trips for the currently logged-in user.
+    // A closure that returns an array of future trips, an array of past trips, or an error.
+    func fetchUserTrips(completion: @escaping (Result<([Trip], [Trip]), Error>) -> Void) {
+        guard let userUID = UserManager.shared.currentUserID else {
+            let error = NSError(domain: "TripManagerError", code: 401, userInfo: [NSLocalizedDescriptionKey: "User is not logged in."])
+            completion(.failure(error))
+            return
+        }
+        
+        let userTripsCollection = db.collection("Users").document(userUID).collection("trips")
+        
+        // You can order by date to get them chronologically
+        userTripsCollection.order(by: "startDate", descending: true).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let documents = querySnapshot?.documents else {
+                // If there are no documents, return empty arrays
+                completion(.success(([], [])))
+                return
+            }
+            
+            var futureTrips: [Trip] = []
+            var pastTrips: [Trip] = []
+            
+            // Loop through the documents and convert them to Trip objects
+            for doc in documents {
+                let data = doc.data()
+                let id = doc.documentID
+                
+                let ownerUID = data["ownerUID"] as? String ?? ""
+                let destination = data["destination"] as? String ?? "Unknown Destination"
+                let invitedFriends = data["invitedFriends"] as? [String] ?? []
+                
+                // Convert Firestore Timestamps back to Swift Dates
+                let startDate = (data["startDate"] as? Timestamp)?.dateValue() ?? Date()
+                let endDate = (data["endDate"] as? Timestamp)?.dateValue() ?? Date()
+                
+                let trip = Trip(id: id, ownerUID: ownerUID, destination: destination, startDate: startDate, endDate: endDate, invitedFriends: invitedFriends)
+                
+                // Sort the trip into the correct array
+                if trip.isPastTrip {
+                    pastTrips.append(trip)
+                } else {
+                    futureTrips.append(trip)
+                }
+            }
+            completion(.success((futureTrips, pastTrips)))
+        }
+    }
     
 }
 

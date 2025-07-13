@@ -36,13 +36,14 @@ class CreateTripViewController: UIViewController {
         // get the dates directly from the UIDatePicker objects
         let startDate = startDatePicker.date
         let endDate = endDatePicker.date
+        let invitedFriends = [String]()
         
         // Disable the button to prevent multiple taps while saving
         continueButton.isEnabled = false
         continueButton.setTitle("Creating Trip...", for: .normal)
         
         // call the TripManager to save the data to Firestore
-        TripManager.shared.createTrip(destination: destination, startDate: startDate, endDate: endDate) { [weak self] result in
+        TripManager.shared.createTrip(destination: destination, startDate: startDate, endDate: endDate, invitedFriends: invitedFriends) { [weak self] result in
             
             // on the main thread before doing UI updates
             DispatchQueue.main.async {

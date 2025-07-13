@@ -6,24 +6,23 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class TravelerViewController: UIViewController {
 
+    @IBOutlet weak var enterEmailTextField: UITextField!
+    @IBOutlet weak var inviteButton: UIButton!
+    @IBOutlet weak var invitedTableView: UITableView!
+    @IBOutlet weak var tripNameLabel: UILabel!
+    
+    var tripID: String?
+    var invitedFriends: [String] = []
+    var invitedFriendsNames: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationController?.navigationBar.tintColor = .black
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
