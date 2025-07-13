@@ -46,8 +46,8 @@
                                                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BCl-Hn-szv">
                                                     <rect key="frame" x="20" y="10" width="353" height="183"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Italy - Summer 2025" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CbJ-AC-FMe">
-                                                            <rect key="frame" x="21" y="7.9999999999999982" width="313" height="25.333333333333329"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Italy " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CbJ-AC-FMe">
+                                                            <rect key="frame" x="21" y="8" width="313" height="26"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="313" id="gpw-Rn-rob"/>
                                                             </constraints>
@@ -56,19 +56,13 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rome, Florence, Venice" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1G-9U-mcP">
-                                                            <rect key="frame" x="21" y="41" width="179" height="21"/>
+                                                            <rect key="frame" x="88.666666666666686" y="41.666666666666664" width="179" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="March 12 - March 20, 2026 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DYv-Xe-FYp">
-                                                            <rect key="frame" x="21" y="70" width="211" height="21"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 travelers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6iv-l0-lPS">
-                                                            <rect key="frame" x="21" y="99" width="81" height="21"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="March 12 - March 20, 2026 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DYv-Xe-FYp">
+                                                            <rect key="frame" x="71" y="70" width="211" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -78,7 +72,7 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="tintColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.91764706370000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <state key="normal" title="Button"/>
-                                                            <buttonConfiguration key="configuration" style="filled" title="temporary button" cornerStyle="capsule">
+                                                            <buttonConfiguration key="configuration" style="filled" title="Open Trip" cornerStyle="capsule">
                                                                 <fontDescription key="titleFontDescription" type="boldSystem" pointSize="14"/>
                                                                 <color key="baseBackgroundColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.91764706370000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             </buttonConfiguration>
@@ -86,16 +80,22 @@
                                                                 <segue destination="SJL-RG-8Xp" kind="show" identifier="toMyTripHomeVC" id="8o3-T2-vAR"/>
                                                             </connections>
                                                         </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="3 travelers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6iv-l0-lPS">
+                                                            <rect key="frame" x="136" y="99" width="81" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <constraints>
+                                                        <constraint firstItem="b1G-9U-mcP" firstAttribute="centerX" secondItem="BCl-Hn-szv" secondAttribute="centerX" id="6pN-1H-oDY"/>
                                                         <constraint firstItem="b1G-9U-mcP" firstAttribute="top" secondItem="CbJ-AC-FMe" secondAttribute="bottom" constant="7.6666666666666714" id="7Xh-Q1-j2v"/>
+                                                        <constraint firstItem="6iv-l0-lPS" firstAttribute="centerX" secondItem="BCl-Hn-szv" secondAttribute="centerX" id="Olt-7C-HbB"/>
                                                         <constraint firstItem="CbJ-AC-FMe" firstAttribute="top" secondItem="BCl-Hn-szv" secondAttribute="top" constant="8" id="RFl-Cw-hPs"/>
                                                         <constraint firstItem="6iv-l0-lPS" firstAttribute="top" secondItem="DYv-Xe-FYp" secondAttribute="bottom" constant="8" symbolic="YES" id="UVK-mQ-guW"/>
-                                                        <constraint firstItem="6iv-l0-lPS" firstAttribute="leading" secondItem="BCl-Hn-szv" secondAttribute="leading" constant="21" id="dQt-G5-xbR"/>
-                                                        <constraint firstItem="b1G-9U-mcP" firstAttribute="leading" secondItem="BCl-Hn-szv" secondAttribute="leading" constant="21" id="gig-S9-Sz8"/>
-                                                        <constraint firstItem="DYv-Xe-FYp" firstAttribute="leading" secondItem="BCl-Hn-szv" secondAttribute="leading" constant="21" id="nhM-xj-UPd"/>
                                                         <constraint firstItem="CbJ-AC-FMe" firstAttribute="leading" secondItem="BCl-Hn-szv" secondAttribute="leading" constant="21" id="nqv-fY-MyC"/>
                                                         <constraint firstItem="DYv-Xe-FYp" firstAttribute="top" secondItem="b1G-9U-mcP" secondAttribute="bottom" constant="8" symbolic="YES" id="pzE-xH-LsD"/>
+                                                        <constraint firstItem="DYv-Xe-FYp" firstAttribute="centerX" secondItem="BCl-Hn-szv" secondAttribute="centerX" id="rsn-A0-RA0"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
