@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tzg-J3-OFX">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
@@ -126,18 +126,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="901.52671755725191" y="-31.690140845070424"/>
+            <point key="canvasLocation" x="1828.2442748091603" y="-31.690140845070424"/>
         </scene>
         <!--My Trip Home View Controller-->
         <scene sceneID="Rnw-Zp-Hmy">
             <objects>
                 <viewController storyboardIdentifier="MyTripHomeViewController" id="SJL-RG-8Xp" customClass="MyTripHomeViewController" customModule="CS371_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mfi-Fr-fZz">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BE6-lz-PRm">
-                                <rect key="frame" x="82" y="228" width="229" height="80"/>
+                                <rect key="frame" x="82" y="331" width="229" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="229" id="1TW-lr-eQt"/>
                                     <constraint firstAttribute="height" constant="80" id="Wy5-tJ-RbY"/>
@@ -153,7 +153,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tex-Io-x1D">
-                                <rect key="frame" x="82" y="448" width="229" height="80"/>
+                                <rect key="frame" x="82" y="551" width="229" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="QBK-kk-zV4"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="Rri-jq-AE0"/>
@@ -170,7 +170,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Trip" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXu-9K-4Ut">
-                                <rect key="frame" x="141.66666666666666" y="138" width="110" height="33"/>
+                                <rect key="frame" x="141.66666666666666" y="241" width="110" height="33"/>
                                 <fontDescription key="fontDescription" name="HoeflerText-Regular" family="Hoefler Text" pointSize="33"/>
                                 <color key="textColor" red="0.29803922770000002" green="0.41568624970000001" blue="0.1686274707" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
@@ -192,7 +192,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gap-EK-ku2">
-                                <rect key="frame" x="82" y="338" width="231" height="80"/>
+                                <rect key="frame" x="82" y="441" width="231" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="AW4-4s-pLL"/>
                                     <constraint firstAttribute="width" constant="231" id="aPq-21-hd8"/>
@@ -228,18 +228,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="360-h7-Eya" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1744.2748091603053" y="-32.394366197183103"/>
+            <point key="canvasLocation" x="2670.9923664122134" y="-32.394366197183103"/>
         </scene>
         <!--Photo Album View Controller-->
         <scene sceneID="Xec-0m-8vB">
             <objects>
-                <viewController storyboardIdentifier="PhotoAlbumViewController" id="zry-E2-PTr" customClass="PhotoAlbumViewController" customModule="CS371_Project" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhotoAlbumViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zry-E2-PTr" customClass="PhotoAlbumViewController" customModule="CS371_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Du6-LU-51Z">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fff-aY-JE4">
-                                <rect key="frame" x="0.0" y="152" width="393" height="517"/>
+                                <rect key="frame" x="0.0" y="255" width="393" height="415"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aQC-W5-41p">
                                     <size key="itemSize" width="128" height="128"/>
@@ -265,7 +265,7 @@
                                 </cells>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo Album" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o09-Lp-F0C">
-                                <rect key="frame" x="102" y="97" width="189" height="33"/>
+                                <rect key="frame" x="102" y="200" width="189" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="189" id="xke-6S-4fv"/>
                                 </constraints>
@@ -274,7 +274,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LDw-Er-p5m">
-                                <rect key="frame" x="102" y="693" width="189" height="80"/>
+                                <rect key="frame" x="102" y="694" width="189" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="189" id="4z5-Fp-fyY"/>
                                     <constraint firstAttribute="height" constant="80" id="A5q-jZ-TgB"/>
@@ -311,7 +311,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mzm-gr-I7a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2643.5114503816794" y="131.69014084507043"/>
+            <point key="canvasLocation" x="3570.2290076335876" y="131.69014084507043"/>
+        </scene>
+        <!--Photo Album-->
+        <scene sceneID="1u3-a1-iof">
+            <objects>
+                <viewController storyboardIdentifier="FullscreenPhotoVC" title="Photo Album" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Jhb-gh-t7O" customClass="FullscreenPhotoViewController" customModule="CS371_Project" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rtH-Wf-g5Y">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="B1C-jx-pij">
+                                <rect key="frame" x="0.0" y="158" width="393" height="586"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="EUB-XN-OLy"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="EUB-XN-OLy" firstAttribute="bottom" secondItem="B1C-jx-pij" secondAttribute="bottom" constant="40" id="RPc-P1-0ud"/>
+                            <constraint firstItem="EUB-XN-OLy" firstAttribute="trailing" secondItem="B1C-jx-pij" secondAttribute="trailing" id="Zq0-0V-7pI"/>
+                            <constraint firstItem="B1C-jx-pij" firstAttribute="top" secondItem="EUB-XN-OLy" secondAttribute="top" constant="40" id="evP-ri-4vE"/>
+                            <constraint firstItem="B1C-jx-pij" firstAttribute="leading" secondItem="EUB-XN-OLy" secondAttribute="leading" id="xPg-lG-vFB"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="B1C-jx-pij" id="Lca-jG-uHy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GdE-L1-HTN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4410" y="132"/>
         </scene>
         <!--travelersID-->
         <scene sceneID="e06-ml-cIW">
@@ -341,7 +370,25 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bFA-et-oBp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2644" y="-309"/>
+            <point key="canvasLocation" x="3569.4656488549617" y="-309.15492957746483"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="mnE-hG-cnQ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tzg-J3-OFX" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yRu-pk-9f2">
+                        <rect key="frame" x="0.0" y="118" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="67I-wk-hPn"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jcs-yQ-7xu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="901.52671755725191" y="-31.690140845070424"/>
         </scene>
     </scenes>
     <resources>

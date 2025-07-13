@@ -59,6 +59,12 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
             imageView.clipsToBounds = true
             imageView.layer.cornerRadius = 10
         }
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOpacity = 0.2
+        cell.layer.shadowOffset = CGSize(width: 0, height: 1)
+        cell.layer.shadowRadius = 4
+        cell.layer.masksToBounds = false
+
         return cell
     }
 
@@ -83,4 +89,16 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let storyboard = UIStoryboard(name: "Julia", bundle: nil)
+        if let fullscreenVC = storyboard.instantiateViewController(withIdentifier: "FullscreenPhotoVC") as? FullscreenPhotoViewController {
+            fullscreenVC.images = images
+            fullscreenVC.currentIndex = indexPath.item
+            fullscreenVC.modalPresentationStyle = .fullScreen
+            navigationController?.pushViewController(fullscreenVC, animated: true)
+        }
+    }
+
 }
