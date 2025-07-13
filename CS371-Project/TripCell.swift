@@ -9,6 +9,9 @@ import UIKit
 
 class TripCell: UITableViewCell {
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var destinationLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var travelersLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

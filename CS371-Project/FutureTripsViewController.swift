@@ -7,36 +7,59 @@
 
 import UIKit
 
-
 class FutureTripsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-   @IBOutlet weak var tableView: UITableView!
-    
-    
+
+    @IBOutlet weak var tableView: UITableView!
+    var trips: [Trip] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        
+
+        fetchTrips()
     }
-    
-    //test to add 3 elements
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return 5
+
+    func fetchTrips() {
+        TripManager.shared.fetchUserTrips { result in
+            switch result {
+            case .success(let (futureTrips, _)):
+                self.trips = futureTrips
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print("❌ Error fetching trips:", error.localizedDescription)
+            }
         }
+    }
+
+    // MARK: - TableView Data Source
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return trips.count
+    }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let trip = trips[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "TripCellID", for: indexPath) as! TripCell
+
+        // Example formatting:
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+
+        cell.destinationLabel.text = trip.destination
+        cell.dateLabel.text = "\(formatter.string(from: trip.startDate)) → \(formatter.string(from: trip.endDate))"
+        cell.travelersLabel.text = "\(trip.invitedFriends.count + 1) travelers" // +1 for the owner
 
         // styling container
         cell.containerView.layer.cornerRadius = 12
         cell.containerView.backgroundColor = .white
-
-        // double check details
         cell.backgroundColor = .clear
         cell.contentView.backgroundColor = .clear
         cell.selectionStyle = .none
-        
-        //shadow
+
+        // shadow
         cell.containerView.layer.shadowColor = UIColor.black.cgColor
         cell.containerView.layer.shadowOpacity = 0.1
         cell.containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -44,5 +67,4 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
 
         return cell
     }
-
 }
