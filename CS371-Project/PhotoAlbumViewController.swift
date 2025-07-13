@@ -1,19 +1,20 @@
-//
-//  PhotoAlbumViewController.swift
-//  CS371-Project
-//
-//  Created by Julia on 7/9/25.
-//
-
 import UIKit
 import PhotosUI
 
-class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate {
+class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
-    // Connect this to your UIImageView in storyboard
-    // Connect this to your "Add Photo" button in storyboard (IBAction)
-    @IBOutlet weak var imageView: UIImageView!
-    
+    @IBOutlet weak var photoCollection: UICollectionView!
+
+    var images: [UIImage] = []
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        photoCollection.dataSource = self
+        photoCollection.delegate = self
+    }
+
+    // MARK: - Add Photo Button
+
     @IBAction func addPhotosButtonTapped(_ sender: Any) {
         var config = PHPickerConfiguration()
         config.filter = .images
@@ -24,12 +25,8 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         present(picker, animated: true)
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Any setup if needed
-    }
+    // MARK: - PHPicker Delegate
 
-    // Delegate method
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
 
@@ -38,9 +35,50 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         result.itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
             if let image = object as? UIImage {
                 DispatchQueue.main.async {
-                    self.imageView.image = image
+                    self.images.append(image)
+                    self.photoCollection.reloadData()
                 }
             }
         }
+    }
+
+    // MARK: - UICollectionView Data Source
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return images.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath)
+        
+        if let imageView = cell.contentView.viewWithTag(1) as? UIImageView {
+            imageView.image = images[indexPath.item]
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            imageView.layer.cornerRadius = 10
+        }
+        return cell
+    }
+
+    // MARK: - UICollectionView Layout: 2-column square grid with spacing
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let spacing: CGFloat = 8
+        let columns: CGFloat = 3
+        let totalSpacing = spacing * (columns + 1)
+        let width = (collectionView.bounds.width - totalSpacing) / columns
+        return CGSize(width: width, height: width) // square cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
     }
 }
