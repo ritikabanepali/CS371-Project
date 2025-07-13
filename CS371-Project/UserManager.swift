@@ -12,7 +12,7 @@ import FirebaseFirestore
 class UserManager {
     static let shared = UserManager()
 
-    //global data to use
+    // global data to use
     var currentUserID: String?
     var currentUserFirstName: String?
     var currentUserLastName: String?
@@ -20,7 +20,7 @@ class UserManager {
     
     private init(){}
     
-    //setting user data from firestore to be used in homepage/create
+    // setting user data from firestore to be used in homepage/create
     func setUserData(uid: String, firstName: String, lastName: String, email: String) {
         self.currentUserID = uid
         self.currentUserFirstName = firstName
@@ -28,7 +28,7 @@ class UserManager {
         self.currentUserEmail = email
     }
     
-    //remove set user data when logout is pressed
+    // remove set user data when logout is pressed
     func logoutUserData(){
         self.currentUserID = nil
         self.currentUserFirstName = nil

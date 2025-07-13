@@ -38,7 +38,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="6ae-kc-8Hl" kind="presentation" identifier="SignInPageSegue" modalPresentationStyle="fullScreen" id="YpF-n4-2sP"/>
+                                    <segue destination="6ae-kc-8Hl" kind="show" identifier="SignInPageSegue" id="YpF-n4-2sP"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lrd-KT-Pws">
@@ -57,7 +57,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="z7p-kE-d54" kind="presentation" identifier="CreateAccountPageSegue" modalPresentationStyle="fullScreen" id="gVu-kz-UDa"/>
+                                    <segue destination="z7p-kE-d54" kind="show" identifier="CreateAccountPageSegue" id="gVu-kz-UDa"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENJOY TRAVEL, STRESS FREE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aEq-dl-wJa">
@@ -175,7 +175,7 @@
                                     <fontDescription key="titleFontDescription" type="system" pointSize="10"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="needAccountButton:" destination="6ae-kc-8Hl" eventType="touchUpInside" id="QxV-cM-64m"/>
+                                    <segue destination="z7p-kE-d54" kind="show" id="xXi-Dy-VX1"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sign In" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hf-CV-0Nh">
@@ -189,6 +189,7 @@
                         <viewLayoutGuide key="safeArea" id="XC1-KQ-cB4"/>
                         <color key="backgroundColor" red="0.98039215800000001" green="0.98039215800000001" blue="0.96470588450000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
+                    <navigationItem key="navigationItem" id="c8z-Hi-bGG"/>
                     <connections>
                         <outlet property="emailTextField" destination="bOd-kw-UZ3" id="uYK-LF-PiX"/>
                         <outlet property="passwordTextField" destination="ppk-jO-fbz" id="b2L-kV-3eO"/>
@@ -306,6 +307,7 @@
                         <viewLayoutGuide key="safeArea" id="oDE-f0-QCZ"/>
                         <color key="backgroundColor" red="0.98039215800000001" green="0.98039215800000001" blue="0.96470588450000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
+                    <navigationItem key="navigationItem" id="t3K-rc-mJS"/>
                     <connections>
                         <outlet property="emailTextField" destination="oYo-iH-Las" id="j60-Ci-V3n"/>
                         <outlet property="firstNameTextField" destination="Auq-55-OAT" id="Am1-Pj-XHX"/>
@@ -336,6 +338,9 @@
             <point key="canvasLocation" x="96.946564885496173" y="3.5211267605633805"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="xXi-Dy-VX1"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="HomepageBackgroundImage" width="574" height="1244"/>
         <image name="LoginImage" width="130" height="134"/>

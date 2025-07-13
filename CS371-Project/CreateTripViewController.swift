@@ -8,61 +8,74 @@ import UIKit
 
 
 class CreateTripViewController: UIViewController {
-
+    
     @IBOutlet weak var destinationField: UITextField!
-//    @IBOutlet weak var startDateField: UITextField!
-//    @IBOutlet weak var endDateField: UITextField!
-    @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var continueButton: UIButton!
+    @IBOutlet weak var endDatePicker: UIDatePicker!
+    @IBOutlet weak var startDatePicker: UIDatePicker!
 
-    let startPicker = UIDatePicker()
-    let endPicker = UIDatePicker()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setupDatePicker(textField: startDateField, datePicker: startPicker)
-//        setupDatePicker(textField: endDateField, datePicker: endPicker)
+        
+        // set a minimum date for the end date picker
+        startDatePicker.addTarget(self, action: #selector(startDateChanged), for: .valueChanged)
+        
+        // set initial minimum date for the end picker
+        endDatePicker.minimumDate = startDatePicker.date
     }
-
-    func setupDatePicker(textField: UITextField, datePicker: UIDatePicker) {
-        datePicker.datePickerMode = .date
-        datePicker.preferredDatePickerStyle = .wheels
-        textField.inputView = datePicker
-
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        toolbar.setItems([
-            UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneTapped))
-        ], animated: true)
-        textField.inputAccessoryView = toolbar
-    }
-
-    @objc func doneTapped() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy"
-
-//        if startDateField.isFirstResponder {
-//            startDateField.text = formatter.string(from: startPicker.date)
-//            startDateField.resignFirstResponder()
-//        } else if endDateField.isFirstResponder {
-//            endDateField.text = formatter.string(from: endPicker.date)
-//            endDateField.resignFirstResponder()
+    
+    
+    @IBAction func continueButtonTapped(_ sender: Any) {
+        
+        guard let destination = destinationField.text, !destination.isEmpty else {
+            showAlert(title: "Missing Destination", message: "Please enter a destination for your trip.")
+            return
+        }
+        
+        // get the dates directly from the UIDatePicker objects
+        let startDate = startDatePicker.date
+        let endDate = endDatePicker.date
+        
+        // Disable the button to prevent multiple taps while saving
+        continueButton.isEnabled = false
+        continueButton.setTitle("Creating Trip...", for: .normal)
+        
+        // call the TripManager to save the data to Firestore
+        TripManager.shared.createTrip(destination: destination, startDate: startDate, endDate: endDate) { [weak self] result in
+            
+            // on the main thread before doing UI updates
+            DispatchQueue.main.async {
+                // Re-enable the button regardless of outcome
+                self?.continueButton.isEnabled = true
+                self?.continueButton.setTitle("Continue", for: .normal)
+                
+                switch result {
+                case .success(let newTrip):
+                    print("Successfully created trip to \(newTrip.destination)!")
+                    // On success, dismiss this view controller to go back to the home screen
+                    self?.dismiss(animated: true, completion: nil)
+                    
+                case .failure(let error):
+                    print("Error creating trip: \(error.localizedDescription)")
+                    // Show an alert to the user so they know what went wrong
+                    self?.showAlert(title: "Error", message: "Could not create trip. Please try again. \n(\(error.localizedDescription))")
+                }
+            }
         }
     }
+    
+    @objc func startDateChanged() {
+        // whenever the start date changes, update the minimum allowed end date
+        endDatePicker.minimumDate = startDatePicker.date
+    }
+    
+    // helper function to display alerts to the user
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+}
 
-//    @IBAction func backButtonTapped(_ sender: UIButton) {
-//        navigationController?.popViewController(animated: true)
-//    }
-
-//    @IBAction func continueButtonTapped(_ sender: UIButton) {
-//        print("Destination: \(destinationField.text ?? "")")
-//        print("Start Date: \(startDateField.text ?? "")")
-//        print("End Date: \(endDateField.text ?? "")")
-//    }
-
-//    @IBAction func addFriendTapped(_ sender: UIButton) {
-//        print("Friend to add: \(usernameField.text ?? "")")
-//        // Later: Add logic to show dynamic tag
-//    }
-//}
 
