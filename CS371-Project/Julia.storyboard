@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
@@ -140,7 +140,7 @@
                                 <rect key="frame" x="82" y="228" width="229" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="229" id="1TW-lr-eQt"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="fxk-tv-axI"/>
+                                    <constraint firstAttribute="height" constant="80" id="Wy5-tJ-RbY"/>
                                 </constraints>
                                 <color key="tintColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.91764706370000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
@@ -153,8 +153,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tex-Io-x1D">
-                                <rect key="frame" x="82" y="443" width="229" height="80"/>
+                                <rect key="frame" x="82" y="448" width="229" height="80"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="QBK-kk-zV4"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="Rri-jq-AE0"/>
                                     <constraint firstAttribute="width" constant="229" id="eNc-TM-OoO"/>
                                 </constraints>
@@ -174,8 +175,8 @@
                                 <color key="textColor" red="0.29803922770000002" green="0.41568624970000001" blue="0.1686274707" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="15F-Pr-SYR">
-                                <rect key="frame" x="80" y="565" width="231" height="80"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="15F-Pr-SYR">
+                                <rect key="frame" x="80" y="559" width="231" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="231" id="CzS-LM-mgk"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="vGV-oi-9Wi"/>
@@ -190,9 +191,11 @@
                                     <segue destination="P3O-3j-i5p" kind="show" id="xjC-bQ-Iwj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gap-EK-ku2">
-                                <rect key="frame" x="99" y="351" width="195" height="80"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gap-EK-ku2">
+                                <rect key="frame" x="82" y="338" width="231" height="80"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="AW4-4s-pLL"/>
+                                    <constraint firstAttribute="width" constant="231" id="aPq-21-hd8"/>
                                     <constraint firstAttribute="height" constant="80" id="nFa-yF-48d"/>
                                 </constraints>
                                 <color key="tintColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.91764706370000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -212,11 +215,11 @@
                             <constraint firstItem="BE6-lz-PRm" firstAttribute="top" secondItem="NXu-9K-4Ut" secondAttribute="bottom" constant="57" id="Nrp-tA-0Wr"/>
                             <constraint firstItem="tex-Io-x1D" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="NzB-YQ-AgX"/>
                             <constraint firstItem="15F-Pr-SYR" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="80" id="Pgk-bx-c1q"/>
-                            <constraint firstItem="15F-Pr-SYR" firstAttribute="top" secondItem="tex-Io-x1D" secondAttribute="bottom" constant="42" id="Q0B-eN-Jfl"/>
-                            <constraint firstItem="gap-EK-ku2" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="26" id="QsL-2P-dQ5"/>
+                            <constraint firstItem="gap-EK-ku2" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="PhN-dP-9A9"/>
+                            <constraint firstItem="15F-Pr-SYR" firstAttribute="top" secondItem="tex-Io-x1D" secondAttribute="bottom" constant="30" id="Q0B-eN-Jfl"/>
                             <constraint firstItem="BE6-lz-PRm" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="fiC-5D-dOH"/>
                             <constraint firstItem="NXu-9K-4Ut" firstAttribute="centerX" secondItem="Upm-Ff-8Hg" secondAttribute="centerX" id="t5l-mm-clI"/>
-                            <constraint firstItem="gap-EK-ku2" firstAttribute="top" secondItem="BE6-lz-PRm" secondAttribute="bottom" constant="25" id="u8J-aQ-RVt"/>
+                            <constraint firstItem="gap-EK-ku2" firstAttribute="top" secondItem="BE6-lz-PRm" secondAttribute="bottom" constant="30" id="u8J-aQ-RVt"/>
                             <constraint firstItem="NXu-9K-4Ut" firstAttribute="top" secondItem="Upm-Ff-8Hg" secondAttribute="top" constant="79" id="vO3-0b-G3d"/>
                             <constraint firstItem="tex-Io-x1D" firstAttribute="top" secondItem="gap-EK-ku2" secondAttribute="bottom" constant="30" id="zX2-Rh-wXf"/>
                         </constraints>

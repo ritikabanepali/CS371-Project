@@ -35,6 +35,12 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
         cell.backgroundColor = .clear
         cell.contentView.backgroundColor = .clear
         cell.selectionStyle = .none
+        
+        //shadow
+        cell.containerView.layer.shadowColor = UIColor.black.cgColor
+        cell.containerView.layer.shadowOpacity = 0.1
+        cell.containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cell.containerView.layer.shadowRadius = 4
 
         return cell
     }
