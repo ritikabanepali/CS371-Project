@@ -8,43 +8,40 @@
 import UIKit
 import FirebaseAuth
 
-
 class HomePageViewController: UIViewController {
     var handle: AuthStateDidChangeListenerHandle?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
-    // Do any additional setup after loading the view.
     // Check if user is already signed in
     override func viewWillAppear(_ animated: Bool) {
-        
         if let handle = handle {
             Auth.auth().removeStateDidChangeListener(handle)
         }
         handle = Auth.auth().addStateDidChangeListener { [weak self] auth, user in
-            if user != nil {
-                // User is already signed in — present the next screen
-                let storyboard = UIStoryboard(name: "Abha", bundle: nil)
-                if let abhaNavVC = storyboard.instantiateViewController(withIdentifier: "AbhaNavController") as? UINavigationController {
-                    abhaNavVC.modalPresentationStyle = .fullScreen
-                    self?.present(abhaNavVC, animated: true, completion: nil)
+            if let user = user {
+                UserManager.shared.fetchUserProfile(forUserID: user.uid) {error in
+                    if error == nil {
+                        // User is already signed in
+                        let storyboard = UIStoryboard(name: "Abha", bundle: nil)
+                        if let abhaNavVC = storyboard.instantiateViewController(withIdentifier: "AbhaNavController") as? UINavigationController {
+                            abhaNavVC.modalPresentationStyle = .fullScreen
+                            self?.present(abhaNavVC, animated: true, completion: nil)
+                        }
+                    } else {
+                        do {
+                            try Auth.auth().signOut()
+                        } catch {
+                            print("Error signing out")
+                        }
+                        UserManager.shared.logoutUserData()
+                    }
                 }
+                
             }
         }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

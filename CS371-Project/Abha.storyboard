@@ -95,8 +95,8 @@
                                     <segue destination="v5C-MC-0Fa" kind="show" id="iGw-TT-QYT"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Hello, UserName!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kO4-3U-M88">
-                                <rect key="frame" x="82.666666666666671" y="181" width="227.66666666666663" height="29.333333333333343"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Hello, UserName!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kO4-3U-M88">
+                                <rect key="frame" x="16" y="181" width="361" height="29"/>
                                 <fontDescription key="fontDescription" name="HoeflerText-Regular" family="Hoefler Text" pointSize="29"/>
                                 <color key="textColor" red="0.29803922770000002" green="0.41568624970000001" blue="0.1686274707" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
@@ -153,7 +153,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1193.1297709923663" y="228.87323943661974"/>
+            <point key="canvasLocation" x="1185.4961832061069" y="228.87323943661974"/>
         </scene>
         <!--SettingsViewController-->
         <scene sceneID="Mu6-PB-V5i">
