@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 class UserManager {
     static let shared = UserManager()
+    private let db = Firestore.firestore()
 
     // global data to use
     var currentUserID: String?
@@ -36,6 +37,7 @@ class UserManager {
         self.currentUserEmail = nil
     }
     
+    // get the specific user's profile ao load their data
     func fetchUserProfile(forUserID uid: String, completion: @escaping (Error?) -> Void) {
         let db = Firestore.firestore()
         db.collection("Users").document(uid).getDocument { [weak self] documentSnapshot, error in
@@ -64,6 +66,26 @@ class UserManager {
                     completion(NSError(domain: "UserManagerError", code: 404, userInfo: [NSLocalizedDescriptionKey: "User profile not found."]))
                 }
             }
+    }
+    
+    // find a user's id by searching their email
+    func findUser(byEmail email: String, completion: @escaping (Result<String, Error>) -> Void) {
+        // query the firestore data base in lowercasew
+        db.collection("Users").whereField("Email", isEqualTo: email.lowercased()).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let document = querySnapshot?.documents.first else {
+                let notFoundError = NSError(domain: "UserManagerError", code: 404, userInfo: [NSLocalizedDescriptionKey: "User with that email not found."])
+                completion(.failure(notFoundError))
+                return
+            }
+            
+            // return the UID of the found user
+            completion(.success(document.documentID))
+        }
     }
 }
 

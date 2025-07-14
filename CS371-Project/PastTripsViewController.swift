@@ -32,8 +32,6 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
 
-    // MARK: - TableView Data Source
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return trips.count
     }
@@ -47,7 +45,7 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
 
         cell.destinationLabel.text = trip.destination
         cell.dateLabel.text = "\(formatter.string(from: trip.startDate)) → \(formatter.string(from: trip.endDate))"
-        cell.travelersLabel.text = "\(trip.invitedFriends.count + 1) travelers"
+        cell.travelersLabel.text = "\(trip.travelers.count) travelers"
 
         cell.containerView.layer.cornerRadius = 12
         cell.containerView.backgroundColor = .white

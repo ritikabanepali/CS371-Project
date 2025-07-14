@@ -1,11 +1,4 @@
-//
-//  CreateTripViewController.swift
-//  CS371-Project
-//
-//
-
 import UIKit
-
 
 class CreateTripViewController: UIViewController {
     
@@ -14,7 +7,6 @@ class CreateTripViewController: UIViewController {
     @IBOutlet weak var endDatePicker: UIDatePicker!
     @IBOutlet weak var startDatePicker: UIDatePicker!
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,7 +16,6 @@ class CreateTripViewController: UIViewController {
         // set initial minimum date for the end picker
         endDatePicker.minimumDate = startDatePicker.date
     }
-    
     
     @IBAction func continueButtonTapped(_ sender: Any) {
         
@@ -36,14 +27,12 @@ class CreateTripViewController: UIViewController {
         // get the dates directly from the UIDatePicker objects
         let startDate = startDatePicker.date
         let endDate = endDatePicker.date
-        let invitedFriends = [String]()
         
         // Disable the button to prevent multiple taps while saving
         continueButton.isEnabled = false
         continueButton.setTitle("Creating Trip...", for: .normal)
         
-        // call the TripManager to save the data to Firestore
-        TripManager.shared.createTrip(destination: destination, startDate: startDate, endDate: endDate, invitedFriends: invitedFriends) { [weak self] result in
+        TripManager.shared.createTrip(destination: destination, startDate: startDate, endDate: endDate) { [weak self] result in
             
             // on the main thread before doing UI updates
             DispatchQueue.main.async {
@@ -57,10 +46,8 @@ class CreateTripViewController: UIViewController {
                     // On success, goes to my trip vc
                     let storyboard = UIStoryboard(name: "Julia", bundle: nil)
                     if let myTripVC = storyboard.instantiateViewController(withIdentifier: "MyTripHomeViewController") as? MyTripHomeViewController {
-                        myTripVC.tripDestination = newTrip.destination
                         self?.navigationController?.pushViewController(myTripVC, animated: true)
                     }
-
                     
                 case .failure(let error):
                     print("Error creating trip: \(error.localizedDescription)")
@@ -83,5 +70,3 @@ class CreateTripViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
 }
-
-

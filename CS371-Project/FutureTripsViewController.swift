@@ -16,7 +16,10 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         fetchTrips()
     }
 
@@ -50,7 +53,7 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
 
         cell.destinationLabel.text = trip.destination
         cell.dateLabel.text = "\(formatter.string(from: trip.startDate)) → \(formatter.string(from: trip.endDate))"
-        cell.travelersLabel.text = "\(trip.invitedFriends.count + 1) travelers" // +1 for the owner
+        cell.travelersLabel.text = "\(trip.travelers.count) travelers"
 
         // styling container
         cell.containerView.layer.cornerRadius = 12
