@@ -29,7 +29,7 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
                     self.tableView.reloadData()
                 }
             case .failure(let error):
-                print("❌ Error fetching trips:", error.localizedDescription)
+                print("Error fetching trips:", error.localizedDescription)
             }
         }
     }
