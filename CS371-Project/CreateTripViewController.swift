@@ -54,8 +54,13 @@ class CreateTripViewController: UIViewController {
                 switch result {
                 case .success(let newTrip):
                     print("Successfully created trip to \(newTrip.destination)!")
-                    // On success, dismiss this view controller to go back to the home screen
-                    self?.dismiss(animated: true, completion: nil)
+                    // On success, goes to my trip vc
+                    let storyboard = UIStoryboard(name: "Julia", bundle: nil)
+                    if let myTripVC = storyboard.instantiateViewController(withIdentifier: "MyTripHomeViewController") as? MyTripHomeViewController {
+                        myTripVC.tripDestination = newTrip.destination
+                        self?.navigationController?.pushViewController(myTripVC, animated: true)
+                    }
+
                     
                 case .failure(let error):
                     print("Error creating trip: \(error.localizedDescription)")
