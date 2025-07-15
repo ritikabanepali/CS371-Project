@@ -1,7 +1,5 @@
 import UIKit
 import PhotosUI
-import FirebaseStorage
-import FirebaseFirestore
 
 class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
@@ -42,6 +40,8 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
                     self.images.append(image)
                     self.photoCollection.reloadData()
                 }
+                
+               
             }
         }
     }
@@ -102,5 +102,10 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
             navigationController?.pushViewController(fullscreenVC, animated: true)
         }
     }
+    
+    //MARK: photo storage stuff
+    
+
+
 
 }
