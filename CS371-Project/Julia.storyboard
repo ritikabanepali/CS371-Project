@@ -133,8 +133,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BE6-lz-PRm">
-                                <rect key="frame" x="82" y="330" width="229" height="70"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BE6-lz-PRm">
+                                <rect key="frame" x="82" y="281" width="229" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="229" id="5K6-zT-Kg3"/>
                                     <constraint firstAttribute="height" constant="70" id="Ffe-RL-ouf"/>
@@ -149,8 +149,8 @@
                                     <segue destination="NW4-RG-AcW" kind="show" id="3J6-7w-dEA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tex-Io-x1D">
-                                <rect key="frame" x="82" y="538" width="229" height="70"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tex-Io-x1D">
+                                <rect key="frame" x="82" y="489" width="229" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="5Xh-hP-tsI"/>
                                     <constraint firstAttribute="width" constant="229" id="ue1-ZT-GA0"/>
@@ -165,8 +165,8 @@
                                     <segue destination="zry-E2-PTr" kind="show" identifier="toPhotoAlbumVC" id="Eek-lz-K6E"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Trip" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXu-9K-4Ut">
-                                <rect key="frame" x="48" y="118" width="299" height="77"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="My Trip" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXu-9K-4Ut">
+                                <rect key="frame" x="48" y="150" width="299" height="77"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="299" id="bLG-oV-wUx"/>
                                 </constraints>
@@ -174,8 +174,8 @@
                                 <color key="textColor" red="0.29803922770000002" green="0.41568624970000001" blue="0.1686274707" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gap-EK-ku2">
-                                <rect key="frame" x="82" y="438" width="229" height="70"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gap-EK-ku2">
+                                <rect key="frame" x="82" y="389" width="229" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="cek-RY-zLX"/>
                                     <constraint firstAttribute="width" constant="229" id="uMr-am-lwE"/>
@@ -190,8 +190,8 @@
                                     <segue destination="xQa-zo-hUi" kind="show" id="qQt-5r-U0W"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxP-5C-yhb">
-                                <rect key="frame" x="143" y="730" width="107" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxP-5C-yhb">
+                                <rect key="frame" x="143" y="681" width="107" height="35"/>
                                 <color key="tintColor" systemColor="systemRedColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Delete Trip"/>
@@ -199,8 +199,8 @@
                                     <action selector="deleteTripTapped:" destination="SJL-RG-8Xp" eventType="touchUpInside" id="5Qw-s6-tNy"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="15F-Pr-SYR">
-                                <rect key="frame" x="82" y="640" width="229" height="59"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="15F-Pr-SYR">
+                                <rect key="frame" x="82" y="591" width="229" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="U64-tj-pz4"/>
                                     <constraint firstAttribute="width" constant="229" id="qlt-Q6-Vey"/>
@@ -224,21 +224,19 @@
                             <constraint firstItem="gap-EK-ku2" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="7pb-G7-kw4"/>
                             <constraint firstItem="NXu-9K-4Ut" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="48" id="Ek9-Hd-WAe"/>
                             <constraint firstItem="tex-Io-x1D" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="LYG-GZ-IPJ"/>
-                            <constraint firstItem="Upm-Ff-8Hg" firstAttribute="bottom" secondItem="hxP-5C-yhb" secondAttribute="bottom" constant="19" id="PcA-D8-UX2"/>
+                            <constraint firstItem="BE6-lz-PRm" firstAttribute="top" secondItem="NXu-9K-4Ut" secondAttribute="bottom" constant="54" id="P1P-bC-xMs"/>
                             <constraint firstItem="Upm-Ff-8Hg" firstAttribute="trailing" secondItem="BE6-lz-PRm" secondAttribute="trailing" constant="82" id="Pps-oy-ZJD"/>
-                            <constraint firstItem="NXu-9K-4Ut" firstAttribute="top" secondItem="Upm-Ff-8Hg" secondAttribute="top" id="QbN-DY-Jtn"/>
+                            <constraint firstItem="NXu-9K-4Ut" firstAttribute="top" secondItem="Upm-Ff-8Hg" secondAttribute="top" constant="70" id="QbN-DY-Jtn"/>
                             <constraint firstItem="Upm-Ff-8Hg" firstAttribute="trailing" secondItem="gap-EK-ku2" secondAttribute="trailing" constant="82" id="Sbf-LA-E5Y"/>
-                            <constraint firstItem="hxP-5C-yhb" firstAttribute="top" secondItem="15F-Pr-SYR" secondAttribute="bottom" constant="31" id="V6U-oj-UIu"/>
+                            <constraint firstItem="hxP-5C-yhb" firstAttribute="top" secondItem="15F-Pr-SYR" secondAttribute="bottom" constant="50" id="V6U-oj-UIu"/>
                             <constraint firstItem="tex-Io-x1D" firstAttribute="top" secondItem="gap-EK-ku2" secondAttribute="bottom" constant="30" id="X6A-Wl-z0e"/>
                             <constraint firstItem="15F-Pr-SYR" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="bTU-ht-FXG"/>
-                            <constraint firstItem="BE6-lz-PRm" firstAttribute="top" secondItem="NXu-9K-4Ut" secondAttribute="bottom" constant="135" id="cvj-OF-cJj"/>
                             <constraint firstItem="Upm-Ff-8Hg" firstAttribute="trailing" secondItem="hxP-5C-yhb" secondAttribute="trailing" constant="143" id="fXI-On-Tt9"/>
                             <constraint firstItem="Upm-Ff-8Hg" firstAttribute="trailing" secondItem="NXu-9K-4Ut" secondAttribute="trailing" constant="46" id="i0g-yY-YYS"/>
                             <constraint firstItem="hxP-5C-yhb" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="143" id="nD0-F3-5jV"/>
                             <constraint firstItem="Upm-Ff-8Hg" firstAttribute="trailing" secondItem="15F-Pr-SYR" secondAttribute="trailing" constant="82" id="o0j-Dc-F9S"/>
                             <constraint firstItem="Upm-Ff-8Hg" firstAttribute="trailing" secondItem="tex-Io-x1D" secondAttribute="trailing" constant="82" id="qQU-Io-W0w"/>
                             <constraint firstItem="gap-EK-ku2" firstAttribute="top" secondItem="BE6-lz-PRm" secondAttribute="bottom" constant="38" id="ts0-zb-i6H"/>
-                            <constraint firstItem="Upm-Ff-8Hg" firstAttribute="bottom" secondItem="15F-Pr-SYR" secondAttribute="bottom" constant="85" id="uUi-ag-zpl"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Y3V-Ak-LMd"/>

@@ -12,6 +12,7 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var tableView: UITableView!
     var trips: [Trip] = []
     
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +84,9 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
         }
         return cell
     }
+    
+   
+
 
     // MARK: - TableView Delegate
 

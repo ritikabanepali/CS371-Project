@@ -11,6 +11,7 @@ class MyTripHomeViewController: UIViewController {
     
     var tripDestination: String?
     var tripID: String?
+ 
     
     @IBOutlet weak var titleLabel: UILabel!
     
@@ -73,6 +74,13 @@ class MyTripHomeViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "toPhotoAlbumVC",
+               let destinationVC = segue.destination as? PhotoAlbumViewController {
+                destinationVC.tripID = self.tripID
+            }
+        }
     
     
 }
