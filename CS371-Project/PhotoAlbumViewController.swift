@@ -1,5 +1,11 @@
 import UIKit
 import PhotosUI
+import Cloudinary
+
+// Replace with your actual Cloudinary cloud name and preset
+let config = CLDConfiguration(cloudName: "dzemwygcg", secure: true)
+let cloudinary = CLDCloudinary(configuration: config)
+
 
 class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
@@ -13,6 +19,7 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         photoCollection.delegate = self
         photoCollection.isScrollEnabled = true
 
+        loadSavedImageURLs()
     }
 
     // MARK: - Add Photo Button
@@ -40,10 +47,45 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
                     self.images.append(image)
                     self.photoCollection.reloadData()
                 }
-                
-               
+                self.uploadImageToCloudinary(image)
             }
         }
+    }
+
+    // MARK: - Cloudinary Upload
+
+    func uploadImageToCloudinary(_ image: UIImage) {
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else { return }
+
+        let params = CLDUploadRequestParams()
+        cloudinary.createUploader().upload(data: imageData, uploadPreset: "unsigned_preset", params: params, progress: nil) { result, error in
+            if let error = error {
+                print("Upload error:", error.localizedDescription)
+                return
+            }
+
+            if let secureUrl = result?.secureUrl {
+                print("Uploaded image URL:", secureUrl)
+
+                var savedURLs = UserDefaults.standard.stringArray(forKey: "savedImageURLs") ?? []
+                savedURLs.append(secureUrl)
+                UserDefaults.standard.set(savedURLs, forKey: "savedImageURLs")
+            }
+        }
+    }
+
+    // MARK: - Load Saved Image URLs
+
+    func loadSavedImageURLs() {
+        let urls = UserDefaults.standard.stringArray(forKey: "savedImageURLs") ?? []
+        for urlString in urls {
+            if let url = URL(string: urlString),
+               let data = try? Data(contentsOf: url),
+               let image = UIImage(data: data) {
+                self.images.append(image)
+            }
+        }
+        self.photoCollection.reloadData()
     }
 
     // MARK: - UICollectionView Data Source
@@ -54,7 +96,7 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath)
-        
+
         if let imageView = cell.contentView.viewWithTag(1) as? UIImageView {
             imageView.image = images[indexPath.item]
             imageView.contentMode = .scaleAspectFill
@@ -70,14 +112,14 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         return cell
     }
 
-    // MARK: - UICollectionView Layout: 2-column square grid with spacing
+    // MARK: - UICollectionView Layout
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let spacing: CGFloat = 8
         let columns: CGFloat = 3
         let totalSpacing = spacing * (columns + 1)
         let width = (collectionView.bounds.width - totalSpacing) / columns
-        return CGSize(width: width, height: width) // square cell
+        return CGSize(width: width, height: width)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -91,9 +133,10 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
     }
-    
+
+    // MARK: - Image Tap
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let storyboard = UIStoryboard(name: "Julia", bundle: nil)
         if let fullscreenVC = storyboard.instantiateViewController(withIdentifier: "FullscreenPhotoVC") as? FullscreenPhotoViewController {
             fullscreenVC.images = images
@@ -102,10 +145,4 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
             navigationController?.pushViewController(fullscreenVC, animated: true)
         }
     }
-    
-    //MARK: photo storage stuff
-    
-
-
-
 }
