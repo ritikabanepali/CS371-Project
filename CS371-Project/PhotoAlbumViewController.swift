@@ -1,5 +1,7 @@
 import UIKit
 import PhotosUI
+import FirebaseStorage
+import FirebaseFirestore
 
 class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
