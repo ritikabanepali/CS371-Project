@@ -153,4 +153,26 @@ class TripManager {
         }
     }
     
+    // Deletes a specific trip for the current user
+    func deleteTrip(tripID: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let userUID = UserManager.shared.currentUserID else {
+            print("User not logged in - cannot delete")
+            let error = NSError(domain: "TripManagerError", code: 401, userInfo: [NSLocalizedDescriptionKey: "User is not logged in."])
+            completion(.failure(error))
+            return
+        }
+        print("Deleting from path: Users/\(userUID)/trips/\(tripID)")
+
+        
+        let tripRef = db.collection("Users").document(userUID).collection("trips").document(tripID)
+        tripRef.delete { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+
+    
 }

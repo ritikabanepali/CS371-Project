@@ -55,18 +55,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A374F2DC2E26D55000F07357 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		A98746032E148AF9002D8772 = {
 			isa = PBXGroup;
 			children = (
 				A987460E2E148AF9002D8772 /* CS371-Project */,
-				A374F2DC2E26D55000F07357 /* Frameworks */,
 				A987460D2E148AF9002D8772 /* Products */,
 			);
 			sourceTree = "<group>";

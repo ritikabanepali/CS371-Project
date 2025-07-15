@@ -12,18 +12,16 @@ class TripCell: UITableViewCell {
     @IBOutlet weak var destinationLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var travelersLabel: UILabel!
-
     @IBOutlet weak var myButton: UIButton!
-    
+
+    var onOpenTripTapped: (() -> Void)? // Callback closure
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        myButton.addTarget(self, action: #selector(openTripPressed), for: .touchUpInside)
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    @objc func openTripPressed() {
+        onOpenTripTapped?()
     }
-
 }
