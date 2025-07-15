@@ -162,7 +162,7 @@ class TripManager {
             return
         }
         print("Deleting from path: Users/\(userUID)/trips/\(tripID)")
-
+        
         
         let tripRef = db.collection("Users").document(userUID).collection("trips").document(tripID)
         tripRef.delete { error in
@@ -173,6 +173,113 @@ class TripManager {
             }
         }
     }
-
     
-}
+    func fetchPendingInvitations(completion: @escaping (Result<[Trip], Error>) -> Void) {
+        guard let currentUserID = UserManager.shared.currentUserID else {
+            let error = NSError(domain: "TripManagerError", code: 401, userInfo: [NSLocalizedDescriptionKey: "User is not logged in."])
+            completion(.failure(error))
+            return
+        }
+        
+        // get all user documents
+        db.collection("Users").getDocuments { (userQuerySnapshot, userError) in
+            if let userError = userError {
+                completion(.failure(userError))
+                return
+            }
+            
+            guard let userDocuments = userQuerySnapshot?.documents, !userDocuments.isEmpty else {
+                completion(.success([]))
+                return
+            }
+            
+            var pendingInvitations: [Trip] = []
+            var completedFetches = 0
+            let totalFetches = userDocuments.count
+            var encounteredError: Error? = nil
+            
+            for userDoc in userDocuments {
+                let ownerUID = userDoc.documentID
+                self.db.collection("Users").document(ownerUID).collection("trips")
+                    .whereField("travelers.\(currentUserID)", isEqualTo: "pending")
+                    .getDocuments { (tripQuerySnapshot, tripError) in
+                        
+                        if let tripError = tripError {
+                            //save error but keep going
+                            if encounteredError == nil {
+                                encounteredError = tripError
+                            }
+                        } else if let tripDocuments = tripQuerySnapshot?.documents {
+                            //get trip information to append to trip
+                            for doc in tripDocuments {
+                                let data = doc.data()
+                                let trip = Trip(
+                                    id: doc.documentID,
+                                    ownerUID: data["ownerUID"] as? String ?? "",
+                                    destination: data["destination"] as? String ?? "Unknown Destination",
+                                    startDate: (data["startDate"] as? Timestamp)?.dateValue() ?? Date(),
+                                    endDate: (data["endDate"] as? Timestamp)?.dateValue() ?? Date(),
+                                    travelers: data["travelers"] as? [String: String] ?? [:]
+                                )
+                                pendingInvitations.append(trip)
+                            }
+                        }
+                        
+                        completedFetches += 1
+                        
+                        if completedFetches == totalFetches {
+                            if let error = encounteredError {
+                                completion(.failure(error))
+                            } else {
+                                completion(.success(pendingInvitations))
+                            }
+                        }
+                    }
+            }
+        }
+    }
+    
+    
+    func updateTraveler(forTrip trip: Trip, travelerUID: String, newStatus: String, completion: @escaping (Error?) -> Void) {
+        let tripRef = db.collection("Users").document(trip.ownerUID).collection("trips").document(trip.id)
+        tripRef.updateData([
+            "travelers.\(travelerUID)": newStatus
+        ]) { error in
+            if let error = error {
+                print("Error updating traveler status for trip \(trip.id): \(error.localizedDescription)")
+                completion(error)
+            } else {
+                print("Traveler \(travelerUID) status updated to '\(newStatus)' for trip \(trip.id).")
+                completion(nil)
+            }
+        }
+    }
+    
+    func addTripToUser(trip: Trip, completion: @escaping (Error?) -> Void) {
+        guard let currentUserID = UserManager.shared.currentUserID else {
+            let error = NSError(domain: "TripManagerError", code: 401, userInfo: [NSLocalizedDescriptionKey: "User is not logged in."])
+            completion(error)
+            return
+        }
+        let userTripsCollection = db.collection("Users").document(currentUserID).collection("trips")
+        
+        var updatedTravelers = trip.travelers
+        updatedTravelers[currentUserID] = "confirmed"
+        
+        let tripData: [String: Any] = [
+            "ownerUID": trip.ownerUID,
+            "destination": trip.destination,
+            "startDate": Timestamp(date: trip.startDate),
+            "endDate": Timestamp(date: trip.endDate),
+            "travelers": updatedTravelers
+        ]
+        userTripsCollection.addDocument(data: tripData) { error in
+            if let error = error {
+                print("Error adding accepted trip to current user's collection: \(error.localizedDescription)")
+                completion(error)
+            } else {
+                print("Accepted trip \(trip.id) added to current user's collection.")
+                completion(nil)
+            }
+        }
+    }

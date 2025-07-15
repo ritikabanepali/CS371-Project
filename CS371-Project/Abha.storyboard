@@ -535,10 +535,10 @@
             </objects>
             <point key="canvasLocation" x="702" y="596"/>
         </scene>
-        <!--View Controller-->
+        <!--Invitations View Controller-->
         <scene sceneID="ERt-TU-PZ1">
             <objects>
-                <viewController id="v5C-MC-0Fa" sceneMemberID="viewController">
+                <viewController id="v5C-MC-0Fa" customClass="InvitationsViewController" customModule="CS371_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4FU-pW-Hoa">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -554,7 +554,7 @@
                                 <rect key="frame" x="0.0" y="237" width="393" height="615"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InvitationCell" rowHeight="172" id="FMc-Wb-TNF">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="InvitationCell" rowHeight="172" id="FMc-Wb-TNF" customClass="InvitationCell" customModule="CS371_Project" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="393" height="172"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FMc-Wb-TNF" id="Ykp-Ve-2oI">
@@ -585,7 +585,7 @@
                                                     </buttonConfiguration>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8iR-5z-UDG">
-                                                    <rect key="frame" x="258" y="89" width="101" height="35"/>
+                                                    <rect key="frame" x="252" y="89" width="112" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="tintColor" red="0.98039215800000001" green="0.98039215800000001" blue="0.96470588450000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <state key="normal" title="Button"/>
@@ -595,6 +595,12 @@
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="acceptButton" destination="8iR-5z-UDG" id="T6N-jo-DgN"/>
+                                            <outlet property="ignoreButton" destination="iXJ-Qp-vOX" id="aQS-WP-9Mc"/>
+                                            <outlet property="nameLabel" destination="1kK-m8-2KP" id="WHv-pA-glw"/>
+                                            <outlet property="tripNameLabel" destination="tlH-Hz-Cau" id="8ne-jw-cFF"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -609,6 +615,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="lpR-mG-EDn"/>
+                    <connections>
+                        <outlet property="invitationsTable" destination="7sE-bl-uqb" id="sHG-M7-aAr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JAk-bm-3Qu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A374F2E12E26DD6500F07357 /* Cloudinary in Frameworks */ = {isa = PBXBuildFile; productRef = A374F2E02E26DD6500F07357 /* Cloudinary */; };
 		A9F80C542E219D4700A04BFC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A9F80C532E219D4700A04BFC /* FirebaseAuth */; };
 		A9F80C562E219D4700A04BFC /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = A9F80C552E219D4700A04BFC /* FirebaseAuthCombine-Community */; };
 		A9F80C582E219D4700A04BFC /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = A9F80C572E219D4700A04BFC /* FirebaseCore */; };
@@ -47,7 +46,6 @@
 			files = (
 				A9F80C542E219D4700A04BFC /* FirebaseAuth in Frameworks */,
 				A9F80C5A2E219D4700A04BFC /* FirebaseFirestore in Frameworks */,
-				A374F2E12E26DD6500F07357 /* Cloudinary in Frameworks */,
 				A9F80C582E219D4700A04BFC /* FirebaseCore in Frameworks */,
 				A9F80C5C2E219D4700A04BFC /* FirebaseFirestoreCombine-Community in Frameworks */,
 				A9F80C562E219D4700A04BFC /* FirebaseAuthCombine-Community in Frameworks */,
@@ -98,7 +96,6 @@
 				A9F80C572E219D4700A04BFC /* FirebaseCore */,
 				A9F80C592E219D4700A04BFC /* FirebaseFirestore */,
 				A9F80C5B2E219D4700A04BFC /* FirebaseFirestoreCombine-Community */,
-				A374F2E02E26DD6500F07357 /* Cloudinary */,
 			);
 			productName = "CS371-Project";
 			productReference = A987460C2E148AF9002D8772 /* CS371-Project.app */;
@@ -130,7 +127,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				A9F80C522E219D4700A04BFC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				A374F2DF2E26DD6500F07357 /* XCRemoteSwiftPackageReference "cloudinary_ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A987460D2E148AF9002D8772 /* Products */;
@@ -366,14 +362,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A374F2DF2E26DD6500F07357 /* XCRemoteSwiftPackageReference "cloudinary_ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/cloudinary/cloudinary_ios";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.2.1;
-			};
-		};
 		A9F80C522E219D4700A04BFC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -385,11 +373,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A374F2E02E26DD6500F07357 /* Cloudinary */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A374F2DF2E26DD6500F07357 /* XCRemoteSwiftPackageReference "cloudinary_ios" */;
-			productName = Cloudinary;
-		};
 		A9F80C532E219D4700A04BFC /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A9F80C522E219D4700A04BFC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
