@@ -101,15 +101,17 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
             guard let self = self else { return }
             let selectedTrip = self.trips[indexPath.row]
 
-            // Use the storyboard where TravelerViewController is located.
-            let storyboard = UIStoryboard(name: "Ritika", bundle: nil) // Update storyboard name if needed
+            // 1. Use Julia's storyboard
+            let storyboard = UIStoryboard(name: "Julia", bundle: nil)
             
-            if let travelerVC = storyboard.instantiateViewController(withIdentifier: "travelersID") as? TravelerViewController {
+            // 2. Instantiate MyTripHomeViewController using its Storyboard ID
+            if let myTripVC = storyboard.instantiateViewController(withIdentifier: "MyTripHomeViewController") as? MyTripHomeViewController {
                 
-                // Pass the ENTIRE selected trip object
-                travelerVC.trip = selectedTrip
+                // 3. Pass the ENTIRE selected trip object
+                //myTripVC.trip = selectedTrip
                 
-                self.navigationController?.pushViewController(travelerVC, animated: true)
+                // 4. Push the correct view controller
+                self.navigationController?.pushViewController(myTripVC, animated: true)
             }
         }
         return cell
