@@ -143,7 +143,7 @@
                                 <rect key="frame" x="103" y="491" width="241" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="LoginImage" translatesAutoresizingMaskIntoConstraints="NO" id="Qat-Ih-6l3">
                                 <rect key="frame" x="51" y="366" width="44" height="37"/>
@@ -339,7 +339,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="gVu-kz-UDa"/>
+        <segue reference="xXi-Dy-VX1"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="HomepageBackgroundImage" width="574" height="1244"/>

@@ -133,11 +133,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BE6-lz-PRm">
-                                <rect key="frame" x="82" y="281" width="229" height="70"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BE6-lz-PRm">
+                                <rect key="frame" x="82" y="260" width="230" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="229" id="5K6-zT-Kg3"/>
-                                    <constraint firstAttribute="height" constant="70" id="Ffe-RL-ouf"/>
+                                    <constraint firstAttribute="height" constant="80" id="5sS-Mi-cA0"/>
+                                    <constraint firstAttribute="width" constant="230" id="hAw-q1-hiQ"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="229" id="r1l-EK-Alt"/>
                                 </constraints>
                                 <color key="tintColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.91764706370000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
@@ -149,11 +150,11 @@
                                     <segue destination="NW4-RG-AcW" kind="show" id="3J6-7w-dEA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tex-Io-x1D">
-                                <rect key="frame" x="82" y="489" width="229" height="70"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tex-Io-x1D">
+                                <rect key="frame" x="82" y="490" width="229" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="5Xh-hP-tsI"/>
-                                    <constraint firstAttribute="width" constant="229" id="ue1-ZT-GA0"/>
+                                    <constraint firstAttribute="height" constant="80" id="Tcp-rc-01Z"/>
+                                    <constraint firstAttribute="width" constant="229" id="Wel-AX-41z"/>
                                 </constraints>
                                 <color key="tintColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.91764706370000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
@@ -165,20 +166,21 @@
                                     <segue destination="zry-E2-PTr" kind="show" identifier="toPhotoAlbumVC" id="Eek-lz-K6E"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="My Trip" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXu-9K-4Ut">
-                                <rect key="frame" x="48" y="150" width="299" height="77"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Trip" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXu-9K-4Ut">
+                                <rect key="frame" x="48" y="118" width="299" height="134"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="299" id="bLG-oV-wUx"/>
+                                    <constraint firstAttribute="height" constant="134" id="ZfR-zO-5mT"/>
+                                    <constraint firstAttribute="width" constant="299" id="eFz-kF-KbK"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HoeflerText-Regular" family="Hoefler Text" pointSize="33"/>
                                 <color key="textColor" red="0.29803922770000002" green="0.41568624970000001" blue="0.1686274707" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gap-EK-ku2">
-                                <rect key="frame" x="82" y="389" width="229" height="70"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gap-EK-ku2">
+                                <rect key="frame" x="82" y="375" width="229" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="cek-RY-zLX"/>
-                                    <constraint firstAttribute="width" constant="229" id="uMr-am-lwE"/>
+                                    <constraint firstAttribute="width" constant="229" id="DMS-7f-i7f"/>
+                                    <constraint firstAttribute="height" constant="80" id="wFP-MP-ICD"/>
                                 </constraints>
                                 <color key="tintColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.91764706370000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
@@ -190,20 +192,11 @@
                                     <segue destination="xQa-zo-hUi" kind="show" id="qQt-5r-U0W"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxP-5C-yhb">
-                                <rect key="frame" x="143" y="681" width="107" height="35"/>
-                                <color key="tintColor" systemColor="systemRedColor"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Delete Trip"/>
-                                <connections>
-                                    <action selector="deleteTripTapped:" destination="SJL-RG-8Xp" eventType="touchUpInside" id="5Qw-s6-tNy"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="15F-Pr-SYR">
-                                <rect key="frame" x="82" y="591" width="229" height="59"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="15F-Pr-SYR">
+                                <rect key="frame" x="82" y="605" width="229" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="59" id="U64-tj-pz4"/>
-                                    <constraint firstAttribute="width" constant="229" id="qlt-Q6-Vey"/>
+                                    <constraint firstAttribute="width" constant="229" id="v1d-sl-9aJ"/>
+                                    <constraint firstAttribute="height" constant="80" id="xpM-sf-dr1"/>
                                 </constraints>
                                 <color key="tintColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.91764706370000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
@@ -215,28 +208,31 @@
                                     <segue destination="P3O-3j-i5p" kind="show" id="xjC-bQ-Iwj"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxP-5C-yhb">
+                                <rect key="frame" x="143" y="729" width="107" height="35"/>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Delete Trip"/>
+                                <connections>
+                                    <action selector="deleteTripTapped:" destination="SJL-RG-8Xp" eventType="touchUpInside" id="5Qw-s6-tNy"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Upm-Ff-8Hg"/>
                         <color key="backgroundColor" red="0.98039215800000001" green="0.98039215800000001" blue="0.97254902119999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="15F-Pr-SYR" firstAttribute="top" secondItem="tex-Io-x1D" secondAttribute="bottom" constant="32" id="6Yg-vt-gN4"/>
-                            <constraint firstItem="BE6-lz-PRm" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="6Zh-M1-xr3"/>
-                            <constraint firstItem="gap-EK-ku2" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="7pb-G7-kw4"/>
-                            <constraint firstItem="NXu-9K-4Ut" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="48" id="Ek9-Hd-WAe"/>
-                            <constraint firstItem="tex-Io-x1D" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="LYG-GZ-IPJ"/>
-                            <constraint firstItem="BE6-lz-PRm" firstAttribute="top" secondItem="NXu-9K-4Ut" secondAttribute="bottom" constant="54" id="P1P-bC-xMs"/>
-                            <constraint firstItem="Upm-Ff-8Hg" firstAttribute="trailing" secondItem="BE6-lz-PRm" secondAttribute="trailing" constant="82" id="Pps-oy-ZJD"/>
-                            <constraint firstItem="NXu-9K-4Ut" firstAttribute="top" secondItem="Upm-Ff-8Hg" secondAttribute="top" constant="70" id="QbN-DY-Jtn"/>
-                            <constraint firstItem="Upm-Ff-8Hg" firstAttribute="trailing" secondItem="gap-EK-ku2" secondAttribute="trailing" constant="82" id="Sbf-LA-E5Y"/>
-                            <constraint firstItem="hxP-5C-yhb" firstAttribute="top" secondItem="15F-Pr-SYR" secondAttribute="bottom" constant="50" id="V6U-oj-UIu"/>
-                            <constraint firstItem="tex-Io-x1D" firstAttribute="top" secondItem="gap-EK-ku2" secondAttribute="bottom" constant="30" id="X6A-Wl-z0e"/>
-                            <constraint firstItem="15F-Pr-SYR" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="bTU-ht-FXG"/>
-                            <constraint firstItem="Upm-Ff-8Hg" firstAttribute="trailing" secondItem="hxP-5C-yhb" secondAttribute="trailing" constant="143" id="fXI-On-Tt9"/>
-                            <constraint firstItem="Upm-Ff-8Hg" firstAttribute="trailing" secondItem="NXu-9K-4Ut" secondAttribute="trailing" constant="46" id="i0g-yY-YYS"/>
-                            <constraint firstItem="hxP-5C-yhb" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="143" id="nD0-F3-5jV"/>
-                            <constraint firstItem="Upm-Ff-8Hg" firstAttribute="trailing" secondItem="15F-Pr-SYR" secondAttribute="trailing" constant="82" id="o0j-Dc-F9S"/>
-                            <constraint firstItem="Upm-Ff-8Hg" firstAttribute="trailing" secondItem="tex-Io-x1D" secondAttribute="trailing" constant="82" id="qQU-Io-W0w"/>
-                            <constraint firstItem="gap-EK-ku2" firstAttribute="top" secondItem="BE6-lz-PRm" secondAttribute="bottom" constant="38" id="ts0-zb-i6H"/>
+                            <constraint firstItem="tex-Io-x1D" firstAttribute="top" secondItem="gap-EK-ku2" secondAttribute="bottom" constant="35" id="0UH-HY-eVq"/>
+                            <constraint firstItem="BE6-lz-PRm" firstAttribute="top" secondItem="NXu-9K-4Ut" secondAttribute="bottom" constant="8" symbolic="YES" id="3BU-GT-m3s"/>
+                            <constraint firstItem="NXu-9K-4Ut" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="48" id="6tC-e8-lnK"/>
+                            <constraint firstItem="tex-Io-x1D" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="Jxl-ut-Bz9"/>
+                            <constraint firstItem="gap-EK-ku2" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="KvT-U6-Wx7"/>
+                            <constraint firstItem="15F-Pr-SYR" firstAttribute="top" secondItem="tex-Io-x1D" secondAttribute="bottom" constant="35" id="NAq-Qo-0aw"/>
+                            <constraint firstItem="BE6-lz-PRm" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="d06-Yi-on2"/>
+                            <constraint firstItem="hxP-5C-yhb" firstAttribute="top" secondItem="15F-Pr-SYR" secondAttribute="bottom" constant="44" id="eO1-5F-sUH"/>
+                            <constraint firstItem="NXu-9K-4Ut" firstAttribute="top" secondItem="Upm-Ff-8Hg" secondAttribute="top" id="hDK-BR-mXi"/>
+                            <constraint firstItem="15F-Pr-SYR" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="liT-PZ-qtM"/>
+                            <constraint firstItem="hxP-5C-yhb" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="143" id="rd8-wN-NzM"/>
+                            <constraint firstItem="gap-EK-ku2" firstAttribute="top" secondItem="BE6-lz-PRm" secondAttribute="bottom" constant="35" id="uB0-Py-kx5"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Y3V-Ak-LMd"/>
