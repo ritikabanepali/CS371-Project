@@ -561,17 +561,23 @@
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="172"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="&lt;Trip Name&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tlH-Hz-Cau">
-                                                    <rect key="frame" x="20" y="96" width="99" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="&lt;Trip Name&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tlH-Hz-Cau">
+                                                    <rect key="frame" x="20" y="89" width="199" height="72"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="72" id="0sh-mq-JMm"/>
+                                                        <constraint firstAttribute="width" constant="199" id="Fvf-Tp-mBs"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="First Name Last Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kK-m8-2KP">
-                                                    <rect key="frame" x="20" y="31" width="187" height="23"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="First Name Last Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kK-m8-2KP">
+                                                    <rect key="frame" x="20" y="11" width="187" height="70"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="70" id="BTH-o1-nJ2"/>
+                                                        <constraint firstAttribute="width" constant="187" id="eYm-DB-5ki"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -583,6 +589,9 @@
                                                     <buttonConfiguration key="configuration" style="gray" title="Ignore" cornerStyle="capsule">
                                                         <color key="baseBackgroundColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     </buttonConfiguration>
+                                                    <connections>
+                                                        <action selector="declineTapped:" destination="FMc-Wb-TNF" eventType="touchUpInside" id="h00-ob-7Df"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8iR-5z-UDG">
                                                     <rect key="frame" x="252" y="89" width="112" height="35"/>
@@ -592,14 +601,17 @@
                                                     <buttonConfiguration key="configuration" style="gray" title="Accept" cornerStyle="capsule">
                                                         <color key="baseBackgroundColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     </buttonConfiguration>
+                                                    <connections>
+                                                        <action selector="acceptTapped:" destination="FMc-Wb-TNF" eventType="touchUpInside" id="Ufy-L1-ZtV"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="acceptButton" destination="8iR-5z-UDG" id="T6N-jo-DgN"/>
-                                            <outlet property="ignoreButton" destination="iXJ-Qp-vOX" id="aQS-WP-9Mc"/>
-                                            <outlet property="nameLabel" destination="1kK-m8-2KP" id="WHv-pA-glw"/>
-                                            <outlet property="tripNameLabel" destination="tlH-Hz-Cau" id="8ne-jw-cFF"/>
+                                            <outlet property="acceptButton" destination="8iR-5z-UDG" id="THP-Wy-Gwy"/>
+                                            <outlet property="declineButton" destination="iXJ-Qp-vOX" id="q8E-Vd-19x"/>
+                                            <outlet property="destinationLabel" destination="tlH-Hz-Cau" id="CBG-lC-llY"/>
+                                            <outlet property="inviterLabel" destination="1kK-m8-2KP" id="GCN-Mh-E8w"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

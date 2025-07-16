@@ -255,32 +255,38 @@ class TripManager {
         }
     }
     
-    func addTripToUser(trip: Trip, completion: @escaping (Error?) -> Void) {
+
+    func fetchAcceptedInvitations(completion: @escaping (Result<[Trip], Error>) -> Void) {
         guard let currentUserID = UserManager.shared.currentUserID else {
-            let error = NSError(domain: "TripManagerError", code: 401, userInfo: [NSLocalizedDescriptionKey: "User is not logged in."])
-            completion(error)
+            let error = NSError(domain: "TripManagerError", code: 401, userInfo: [NSLocalizedDescriptionKey: "User not logged in."])
+            completion(.failure(error))
             return
         }
-        let userTripsCollection = db.collection("Users").document(currentUserID).collection("trips")
         
-        var updatedTravelers = trip.travelers
-        updatedTravelers[currentUserID] = "confirmed"
-        
-        let tripData: [String: Any] = [
-            "ownerUID": trip.ownerUID,
-            "destination": trip.destination,
-            "startDate": Timestamp(date: trip.startDate),
-            "endDate": Timestamp(date: trip.endDate),
-            "travelers": updatedTravelers
-        ]
-        userTripsCollection.addDocument(data: tripData) { error in
+        // This query is inefficient for a large user base, but will work for your project.
+        // It finds all trips where the current user is a confirmed traveler but not the owner.
+        db.collectionGroup("trips")
+          .whereField("travelers.\(currentUserID)", isEqualTo: "confirmed")
+          .whereField("ownerUID", isNotEqualTo: currentUserID) // Exclude trips you own
+          .getDocuments { (querySnapshot, error) in
             if let error = error {
-                print("Error adding accepted trip to current user's collection: \(error.localizedDescription)")
-                completion(error)
-            } else {
-                print("Accepted trip \(trip.id) added to current user's collection.")
-                completion(nil)
+                completion(.failure(error))
+                return
             }
+
+            let trips = querySnapshot?.documents.compactMap { doc -> Trip? in
+                let data = doc.data()
+                return Trip(
+                    id: doc.documentID,
+                    ownerUID: data["ownerUID"] as? String ?? "",
+                    destination: data["destination"] as? String ?? "Unknown Destination",
+                    startDate: (data["startDate"] as? Timestamp)?.dateValue() ?? Date(),
+                    endDate: (data["endDate"] as? Timestamp)?.dateValue() ?? Date(),
+                    travelers: data["travelers"] as? [String: String] ?? [:]
+                )
+            } ?? []
+            
+            completion(.success(trips))
         }
     }
 }

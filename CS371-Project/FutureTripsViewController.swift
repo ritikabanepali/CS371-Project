@@ -26,17 +26,43 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
     }
 
 
+    // Replace the old fetchTrips() function with this new one
+
     func fetchTrips() {
+        let group = DispatchGroup()
+        var ownedTrips: [Trip] = []
+        var acceptedTrips: [Trip] = []
+        
+        // 1. Fetch trips the user owns
+        group.enter()
         TripManager.shared.fetchUserTrips { result in
-            switch result {
-            case .success(let (futureTrips, _)):
-                self.trips = futureTrips
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            case .failure(let error):
-                print("Error fetching trips:", error.localizedDescription)
+            if case .success(let (futureTrips, _)) = result {
+                ownedTrips = futureTrips
             }
+            group.leave()
+        }
+        
+        // 2. Fetch trips the user has accepted invites for
+        group.enter()
+        TripManager.shared.fetchAcceptedInvitations { result in
+            if case .success(let trips) = result {
+                acceptedTrips = trips
+            }
+            group.leave()
+        }
+        
+        // 3. When both are done, combine and update the UI
+        group.notify(queue: .main) {
+            // Combine the two arrays and remove duplicates
+            var combinedTrips = [String: Trip]()
+            (ownedTrips + acceptedTrips).forEach { trip in
+                combinedTrips[trip.id] = trip
+            }
+            
+            // Sort the final list by start date
+            self.trips = Array(combinedTrips.values).sorted { $0.startDate < $1.startDate }
+            
+            self.tableView.reloadData()
         }
     }
 
@@ -75,23 +101,20 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
             guard let self = self else { return }
             let selectedTrip = self.trips[indexPath.row]
 
-            let storyboard = UIStoryboard(name: "Julia", bundle: nil)
-            if let myTripVC = storyboard.instantiateViewController(withIdentifier: "MyTripHomeViewController") as? MyTripHomeViewController {
-                myTripVC.tripDestination = selectedTrip.destination
-                myTripVC.tripID = selectedTrip.id
-                self.navigationController?.pushViewController(myTripVC, animated: true)
+            // Use the storyboard where TravelerViewController is located.
+            let storyboard = UIStoryboard(name: "Ritika", bundle: nil) // Update storyboard name if needed
+            
+            if let travelerVC = storyboard.instantiateViewController(withIdentifier: "travelersID") as? TravelerViewController {
+                
+                // Pass the ENTIRE selected trip object
+                travelerVC.trip = selectedTrip
+                
+                self.navigationController?.pushViewController(travelerVC, animated: true)
             }
         }
         return cell
     }
     
    
-
-
-    // MARK: - TableView Delegate
-
-
-
-    // MARK: - Prepare for Segue
 
 }
