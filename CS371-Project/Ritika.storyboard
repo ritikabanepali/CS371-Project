@@ -323,10 +323,10 @@
             </objects>
             <point key="canvasLocation" x="1800.7633587786258" y="718.30985915492965"/>
         </scene>
-        <!--View Controller-->
+        <!--Survey View Controller-->
         <scene sceneID="KpI-V5-uIQ">
             <objects>
-                <viewController storyboardIdentifier="surveyID" id="W6P-PE-dLL" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="surveyID" id="W6P-PE-dLL" customClass="SurveyViewController" customModule="CS371_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HqR-3J-ByS">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -343,21 +343,6 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tep-9v-UHn">
-                                                <rect key="frame" x="60" y="137" width="21" height="21"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="21" id="AhI-Io-EFe"/>
-                                                    <constraint firstAttribute="width" constant="21" id="Rad-zH-zYt"/>
-                                                </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
-                                            </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Arts &amp; Culture" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eGZ-8c-lwc">
                                                 <rect key="frame" x="85" y="137" width="92" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -370,14 +355,12 @@
                                                     <constraint firstAttribute="height" constant="21" id="GCQ-EL-8Mg"/>
                                                     <constraint firstAttribute="width" constant="21" id="TRd-58-aYu"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Adventure" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="YD1-GP-6Lw"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adventure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mv4-xh-ZTI">
                                                 <rect key="frame" x="85" y="167" width="67" height="17"/>
@@ -391,14 +374,12 @@
                                                     <constraint firstAttribute="height" constant="21" id="5Hv-R8-nCe"/>
                                                     <constraint firstAttribute="width" constant="21" id="W8o-vT-CZm"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Festivals" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="2tl-ae-kqO"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Festivals" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Er3-eS-WfT">
                                                 <rect key="frame" x="85" y="197" width="57" height="17"/>
@@ -412,14 +393,12 @@
                                                     <constraint firstAttribute="width" constant="21" id="hiY-bC-VDP"/>
                                                     <constraint firstAttribute="height" constant="21" id="wbG-g3-b6g"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Nature" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="TVo-Z3-d08"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nature" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fO-y4-2jY">
                                                 <rect key="frame" x="85" y="225" width="44" height="17"/>
@@ -433,14 +412,12 @@
                                                     <constraint firstAttribute="width" constant="21" id="63c-Z3-irq"/>
                                                     <constraint firstAttribute="height" constant="21" id="jJb-xt-ai4"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Music" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="oPv-ZO-nRO"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Music" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHo-2M-QkS">
                                                 <rect key="frame" x="85" y="254" width="39" height="17"/>
@@ -454,14 +431,12 @@
                                                     <constraint firstAttribute="width" constant="21" id="A1U-1G-chG"/>
                                                     <constraint firstAttribute="height" constant="21" id="Tx8-cJ-c8l"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Landmarks" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="01b-EY-6ng"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Landmarks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SQ6-tr-Yib">
                                                 <rect key="frame" x="250" y="137" width="71" height="17"/>
@@ -475,14 +450,12 @@
                                                     <constraint firstAttribute="height" constant="21" id="1Uq-n6-0rk"/>
                                                     <constraint firstAttribute="width" constant="21" id="Hz5-NP-kmq"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Shopping" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="i3a-bp-rCV"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shopping" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z3C-4w-zgV">
                                                 <rect key="frame" x="250" y="167" width="62" height="17"/>
@@ -496,14 +469,12 @@
                                                     <constraint firstAttribute="width" constant="21" id="8NE-Xo-dbj"/>
                                                     <constraint firstAttribute="height" constant="21" id="V7D-zE-8H8"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Relaxation" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="NgV-vC-QQU"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Relaxation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1mx-nd-Lvm">
                                                 <rect key="frame" x="250" y="197" width="67" height="17"/>
@@ -517,14 +488,12 @@
                                                     <constraint firstAttribute="width" constant="21" id="QAb-Uh-TI3"/>
                                                     <constraint firstAttribute="height" constant="21" id="cbx-ZJ-ypr"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Child-friendly" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="tkL-GV-tpb"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Child-friendly" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zI3-Ol-Wfs">
                                                 <rect key="frame" x="250" y="225" width="88" height="17"/>
@@ -538,14 +507,12 @@
                                                     <constraint firstAttribute="height" constant="21" id="3tS-SU-0IN"/>
                                                     <constraint firstAttribute="width" constant="21" id="Ovd-f4-nHL"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Romance" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="RPa-ci-VTj"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Romance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s7J-VX-G2h">
                                                 <rect key="frame" x="250" y="254" width="61" height="17"/>
@@ -565,14 +532,12 @@
                                                     <constraint firstAttribute="height" constant="21" id="kNP-iY-hmA"/>
                                                     <constraint firstAttribute="width" constant="21" id="pX9-d6-Uvu"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="East Asian" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="CZp-bP-BYR"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="East Asian" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ViV-iP-2c8">
                                                 <rect key="frame" x="70" y="340" width="67" height="17"/>
@@ -586,14 +551,12 @@
                                                     <constraint firstAttribute="height" constant="21" id="iuf-lA-42H"/>
                                                     <constraint firstAttribute="width" constant="21" id="k2I-AK-8NW"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="South Asian" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="U8K-89-0g9"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="South Asian" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Glc-fC-VcL">
                                                 <rect key="frame" x="70" y="370" width="77" height="17"/>
@@ -607,14 +570,12 @@
                                                     <constraint firstAttribute="width" constant="21" id="8tb-dD-KNu"/>
                                                     <constraint firstAttribute="height" constant="21" id="yMW-9M-njQ"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Mediterranean" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="gz4-xn-sUm"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mediterranean" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bb1-ct-71M">
                                                 <rect key="frame" x="71" y="399" width="94" height="17"/>
@@ -628,14 +589,12 @@
                                                     <constraint firstAttribute="width" constant="21" id="JcT-Sv-Lcu"/>
                                                     <constraint firstAttribute="height" constant="21" id="bzv-50-4qI"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Latin American" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="6fJ-w0-OEb"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CPI-6W-uCc">
                                                 <rect key="frame" x="45" y="454" width="21" height="21"/>
@@ -643,14 +602,12 @@
                                                     <constraint firstAttribute="width" constant="21" id="Xaz-pa-SHL"/>
                                                     <constraint firstAttribute="height" constant="21" id="dm4-FC-WAi"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Middle Eastern" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="lSG-b5-CnX"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eUf-FZ-pcY">
                                                 <rect key="frame" x="208" y="339" width="21" height="21"/>
@@ -658,14 +615,12 @@
                                                     <constraint firstAttribute="width" constant="21" id="afR-G7-VNJ"/>
                                                     <constraint firstAttribute="height" constant="21" id="kjz-LR-CEV"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="African/Caribbean" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="2gk-zC-e0p"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="African/Caribbean" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEI-5E-5L1">
                                                 <rect key="frame" x="235" y="340" width="117" height="17"/>
@@ -679,14 +634,12 @@
                                                     <constraint firstAttribute="height" constant="21" id="53R-KG-szf"/>
                                                     <constraint firstAttribute="width" constant="21" id="HQd-Mk-17z"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Vegeterian" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="Iab-gN-dDW"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2KO-9G-IGN">
                                                 <rect key="frame" x="235" y="370" width="0.0" height="0.0"/>
@@ -701,14 +654,12 @@
                                                     <constraint firstAttribute="height" constant="21" id="MjY-PF-kKd"/>
                                                     <constraint firstAttribute="width" constant="21" id="y8U-01-fGK"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Vegan" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="CnQ-1f-2yc"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vegan" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w3M-5t-PVB">
                                                 <rect key="frame" x="236" y="399" width="41" height="17"/>
@@ -728,14 +679,12 @@
                                                     <constraint firstAttribute="width" constant="21" id="tXv-NX-alW"/>
                                                     <constraint firstAttribute="height" constant="21" id="zeq-ZC-5tN"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Sea Food" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="iQj-cM-xNe"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sea Food" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yLo-X1-YiA">
                                                 <rect key="frame" x="235" y="428" width="61" height="17"/>
@@ -749,14 +698,12 @@
                                                     <constraint firstAttribute="width" constant="21" id="bJ3-dG-WlH"/>
                                                     <constraint firstAttribute="height" constant="21" id="vrO-Is-sIg"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="American/Western" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="quH-7L-V8Y"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="American/Western" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ep-E9-eTC">
                                                 <rect key="frame" x="235" y="457" width="119" height="17"/>
@@ -782,14 +729,12 @@
                                                     <constraint firstAttribute="width" constant="21" id="Sk2-up-XRv"/>
                                                     <constraint firstAttribute="height" constant="21" id="niu-Cm-SsT"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Local Specialties" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="NhV-53-cea"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Local Specialties" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wGh-n2-qUi">
                                                 <rect key="frame" x="77" y="542" width="109" height="17"/>
@@ -803,14 +748,12 @@
                                                     <constraint firstAttribute="width" constant="21" id="BOA-zQ-Y4Y"/>
                                                     <constraint firstAttribute="height" constant="21" id="Gml-JN-Tnq"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Fine Dining" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="dNp-JV-wXH"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Fine Dining" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9vX-hC-Qz5">
                                                 <rect key="frame" x="78" y="571" width="72" height="17"/>
@@ -824,14 +767,12 @@
                                                     <constraint firstAttribute="height" constant="21" id="hbq-l4-HCD"/>
                                                     <constraint firstAttribute="width" constant="21" id="phM-5r-e1e"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Wine &amp; Spirits" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="ExC-F3-8eF"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Upq-ns-XQL">
                                                 <rect key="frame" x="214" y="540" width="21" height="21"/>
@@ -839,14 +780,12 @@
                                                     <constraint firstAttribute="width" constant="21" id="6PJ-yW-cz2"/>
                                                     <constraint firstAttribute="height" constant="21" id="iqR-VR-Tfh"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Street Food" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="0b6-C1-xPN"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dRn-uf-mlZ">
                                                 <rect key="frame" x="239" y="569" width="0.0" height="0.0"/>
@@ -861,14 +800,12 @@
                                                     <constraint firstAttribute="height" constant="21" id="bRY-Pk-xUz"/>
                                                     <constraint firstAttribute="width" constant="21" id="dak-6x-gCF"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Dessert/Sweets" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="3Iw-F2-Zqk"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Dessert/Sweets" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RIQ-LN-HoM">
                                                 <rect key="frame" x="242" y="571" width="102" height="17"/>
@@ -888,14 +825,12 @@
                                                     <constraint firstAttribute="height" constant="21" id="agW-CD-xgJ"/>
                                                     <constraint firstAttribute="width" constant="21" id="sRw-Ul-pnh"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" cornerStyle="medium">
-                                                    <backgroundConfiguration key="background" strokeWidth="1">
-                                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </backgroundConfiguration>
-                                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </buttonConfiguration>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Food Tours" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="m7L-xj-3al"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Food Tours" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yuy-c5-uTE">
                                                 <rect key="frame" x="241" y="600" width="73" height="17"/>
@@ -944,6 +879,9 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="gray" title="+"/>
+                                                <connections>
+                                                    <action selector="addBlockedTime:" destination="W6P-PE-dLL" eventType="touchUpInside" id="0TG-TA-ewK"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blocked Times Selected:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6g-vd-o7C">
                                                 <rect key="frame" x="30" y="850" width="183" height="20"/>
@@ -951,23 +889,42 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1Mk-wN-YMf">
-                                                <rect key="frame" x="30" y="878" width="336" height="262"/>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="BlockedTimeCell" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1Mk-wN-YMf">
+                                                <rect key="frame" x="33" y="878" width="333" height="266"/>
                                                 <color key="backgroundColor" red="0.98039215800000001" green="0.98039215800000001" blue="0.96470588450000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="336" id="iRB-uJ-p3Y"/>
-                                                </constraints>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TimeBlockCells" id="x5c-co-SRE">
-                                                        <rect key="frame" x="0.0" y="50" width="336" height="43.666667938232422"/>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="BlockedTimeCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TimeBlockCells" id="x5c-co-SRE">
+                                                        <rect key="frame" x="0.0" y="50" width="333" height="43.666667938232422"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="x5c-co-SRE" id="JCc-ge-jYp">
-                                                            <rect key="frame" x="0.0" y="0.0" width="336" height="43.666667938232422"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="333" height="43.666667938232422"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </tableViewCellContentView>
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AkP-S7-RhT">
+                                                <rect key="frame" x="60" y="137" width="21" height="22"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="22" id="Z2h-I2-ALN"/>
+                                                    <constraint firstAttribute="width" constant="21" id="qGz-Ho-jv7"/>
+                                                </constraints>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Arts &amp; Culture" image="square" catalog="system"/>
+                                                <connections>
+                                                    <action selector="checkboxTapped:" destination="W6P-PE-dLL" eventType="touchUpInside" id="NPi-v1-Noi"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dDQ-yb-23S">
+                                                <rect key="frame" x="262" y="814" width="78" height="35"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="gray" title="Submit"/>
+                                                <connections>
+                                                    <action selector="submitSurvey:" destination="W6P-PE-dLL" eventType="touchUpInside" id="04B-RO-jMa"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.98039215800000001" green="0.98039215800000001" blue="0.96470588450000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
@@ -988,6 +945,7 @@
                                             <constraint firstItem="kSP-5h-t8y" firstAttribute="top" secondItem="WEI-5E-5L1" secondAttribute="bottom" constant="13" id="6X5-1n-x38"/>
                                             <constraint firstItem="bb1-ct-71M" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="71" id="6sZ-py-q2j"/>
                                             <constraint firstItem="cqY-Sh-5Cn" firstAttribute="top" secondItem="GiK-df-6qr" secondAttribute="bottom" constant="14" id="6zs-5r-zra"/>
+                                            <constraint firstItem="AkP-S7-RhT" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="60" id="8Ua-YM-UFt"/>
                                             <constraint firstItem="GiK-df-6qr" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="71" id="8aE-8F-HZE"/>
                                             <constraint firstItem="Leq-Uq-3u7" firstAttribute="top" secondItem="ikM-8t-ptX" secondAttribute="bottom" constant="29" id="8iO-2m-Kdz"/>
                                             <constraint firstItem="v8o-Zu-Nww" firstAttribute="top" secondItem="php-nZ-ebC" secondAttribute="bottom" constant="8" id="98E-qM-7Gg"/>
@@ -1008,17 +966,19 @@
                                             <constraint firstItem="9vX-hC-Qz5" firstAttribute="top" secondItem="wGh-n2-qUi" secondAttribute="bottom" constant="12" id="EkN-0n-RGd"/>
                                             <constraint firstItem="pzi-2b-Yof" firstAttribute="top" secondItem="Leq-Uq-3u7" secondAttribute="bottom" constant="14" id="Est-Cd-VnD"/>
                                             <constraint firstItem="sZi-SO-nxN" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="30" id="F8F-XV-WVW"/>
+                                            <constraint firstItem="1Mk-wN-YMf" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="30" id="FGA-fG-hgZ"/>
                                             <constraint firstItem="N6g-vd-o7C" firstAttribute="top" secondItem="YBb-57-Aeb" secondAttribute="bottom" constant="36" id="Gae-Ox-Q6R"/>
                                             <constraint firstItem="Er3-eS-WfT" firstAttribute="top" secondItem="mv4-xh-ZTI" secondAttribute="bottom" constant="13" id="Gdc-C2-rkE"/>
                                             <constraint firstItem="cWR-jf-NVp" firstAttribute="top" secondItem="Bga-3c-EKJ" secondAttribute="bottom" constant="9" id="Hdc-Zv-jj0"/>
                                             <constraint firstItem="xBk-sM-Hf6" firstAttribute="top" secondItem="pzi-2b-Yof" secondAttribute="bottom" constant="8" id="Hl4-PU-387"/>
                                             <constraint firstItem="Bga-3c-EKJ" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="60" id="HlF-G6-b2w"/>
                                             <constraint firstItem="Pq3-BK-f1o" firstAttribute="top" secondItem="wiv-2h-fTk" secondAttribute="bottom" constant="8" id="IBH-TO-agM"/>
+                                            <constraint firstAttribute="trailing" secondItem="1Mk-wN-YMf" secondAttribute="trailing" constant="25" id="IPb-Nk-TdW"/>
                                             <constraint firstItem="Glc-fC-VcL" firstAttribute="leading" secondItem="Pq3-BK-f1o" secondAttribute="trailing" constant="4" id="ISJ-wg-dPF"/>
                                             <constraint firstItem="7Ep-E9-eTC" firstAttribute="leading" secondItem="ikM-8t-ptX" secondAttribute="trailing" constant="6" id="Ij8-r9-gQl"/>
                                             <constraint firstItem="Er3-eS-WfT" firstAttribute="leading" secondItem="Hqe-e6-0h3" secondAttribute="trailing" constant="4" id="J3w-zd-LXB"/>
                                             <constraint firstItem="w3M-5t-PVB" firstAttribute="top" secondItem="kSP-5h-t8y" secondAttribute="bottom" constant="12" id="JMq-Ym-apW"/>
-                                            <constraint firstItem="1Mk-wN-YMf" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="30" id="JNV-NK-GC3"/>
+                                            <constraint firstAttribute="bottom" secondItem="1Mk-wN-YMf" secondAttribute="bottom" constant="18" id="JNF-5n-9wE"/>
                                             <constraint firstItem="Upq-ns-XQL" firstAttribute="top" secondItem="Leq-Uq-3u7" secondAttribute="bottom" constant="15" id="JO2-Tf-5Og"/>
                                             <constraint firstItem="zI3-Ol-Wfs" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="250" id="KrO-r4-dTc"/>
                                             <constraint firstItem="9fO-y4-2jY" firstAttribute="top" secondItem="Er3-eS-WfT" secondAttribute="bottom" constant="11" id="KxR-WW-Vrp"/>
@@ -1031,7 +991,6 @@
                                             <constraint firstItem="Glc-fC-VcL" firstAttribute="top" secondItem="ViV-iP-2c8" secondAttribute="bottom" constant="13" id="NWf-7m-1Kn"/>
                                             <constraint firstItem="eGZ-8c-lwc" firstAttribute="top" secondItem="lkB-tR-6kJ" secondAttribute="bottom" constant="15" id="OSY-HM-qPj"/>
                                             <constraint firstItem="cqY-Sh-5Cn" firstAttribute="leading" secondItem="CPI-6W-uCc" secondAttribute="trailing" constant="5" id="Q1d-jf-xsq"/>
-                                            <constraint firstItem="tep-9v-UHn" firstAttribute="top" secondItem="lkB-tR-6kJ" secondAttribute="bottom" constant="15" id="Qcg-mf-ADI"/>
                                             <constraint firstItem="php-nZ-ebC" firstAttribute="top" secondItem="kwr-fY-8YN" secondAttribute="bottom" constant="8" id="Qff-Ul-S3K"/>
                                             <constraint firstItem="bb1-ct-71M" firstAttribute="leading" secondItem="BKC-S1-f6k" secondAttribute="trailing" constant="5" id="Qi6-Sj-B0o"/>
                                             <constraint firstItem="GiK-df-6qr" firstAttribute="leading" secondItem="PEV-M4-Aoc" secondAttribute="trailing" constant="5" id="R1f-5b-gsb"/>
@@ -1039,7 +998,6 @@
                                             <constraint firstItem="BKC-S1-f6k" firstAttribute="top" secondItem="Pq3-BK-f1o" secondAttribute="bottom" constant="8" id="S9B-Ch-WzF"/>
                                             <constraint firstItem="BgL-JX-foE" firstAttribute="top" secondItem="Leq-Uq-3u7" secondAttribute="bottom" constant="17" id="SfN-P4-x0k"/>
                                             <constraint firstItem="z2Z-tL-zUw" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="226" id="TJt-Qa-8Is"/>
-                                            <constraint firstAttribute="bottom" secondItem="1Mk-wN-YMf" secondAttribute="bottom" constant="30" id="TxC-gc-8o6"/>
                                             <constraint firstItem="SQ6-tr-Yib" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="250" id="UMt-9j-ImI"/>
                                             <constraint firstItem="Hqe-e6-0h3" firstAttribute="top" secondItem="LFm-Wg-iZM" secondAttribute="bottom" constant="8" id="VKG-OU-j1N"/>
                                             <constraint firstItem="CrJ-Pv-3Rj" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="64" id="Vyz-jF-aYw"/>
@@ -1056,6 +1014,7 @@
                                             <constraint firstItem="pEp-L7-RSR" firstAttribute="top" secondItem="eUf-FZ-pcY" secondAttribute="bottom" constant="8" id="bQD-Qv-2sX"/>
                                             <constraint firstItem="N6g-vd-o7C" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="30" id="blC-Uf-X3X"/>
                                             <constraint firstItem="Er3-eS-WfT" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="85" id="c0w-fd-U31"/>
+                                            <constraint firstItem="1Mk-wN-YMf" firstAttribute="top" secondItem="N6g-vd-o7C" secondAttribute="bottom" constant="8" symbolic="YES" id="cLd-y6-djC"/>
                                             <constraint firstItem="CrJ-Pv-3Rj" firstAttribute="top" secondItem="xBk-sM-Hf6" secondAttribute="bottom" constant="8" id="dEl-Lg-4hC"/>
                                             <constraint firstItem="Pq3-BK-f1o" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="45" id="dFP-sX-acj"/>
                                             <constraint firstItem="z3C-4w-zgV" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="250" id="doE-Q1-mBo"/>
@@ -1073,6 +1032,7 @@
                                             <constraint firstItem="ikM-8t-ptX" firstAttribute="top" secondItem="Zcj-wo-0ax" secondAttribute="bottom" constant="8" id="jJY-a6-Bt7"/>
                                             <constraint firstItem="YaN-QZ-yJ8" firstAttribute="top" secondItem="s7J-VX-G2h" secondAttribute="bottom" constant="33" id="jaO-Vh-4ZD"/>
                                             <constraint firstItem="kwr-fY-8YN" firstAttribute="leading" secondItem="Er3-eS-WfT" secondAttribute="trailing" constant="81" id="lFi-y3-PGF"/>
+                                            <constraint firstItem="eGZ-8c-lwc" firstAttribute="leading" secondItem="AkP-S7-RhT" secondAttribute="trailing" constant="4" id="lXp-k6-ajZ"/>
                                             <constraint firstItem="v8o-Zu-Nww" firstAttribute="leading" secondItem="gHo-2M-QkS" secondAttribute="trailing" constant="99" id="mTU-re-DeJ"/>
                                             <constraint firstItem="PEV-M4-Aoc" firstAttribute="top" secondItem="BKC-S1-f6k" secondAttribute="bottom" constant="8" id="mZK-d2-Cib"/>
                                             <constraint firstItem="w3M-5t-PVB" firstAttribute="leading" secondItem="NFY-2V-YXm" secondAttribute="trailing" constant="7" id="mvh-og-61m"/>
@@ -1083,29 +1043,25 @@
                                             <constraint firstItem="mv4-xh-ZTI" firstAttribute="leading" secondItem="LFm-Wg-iZM" secondAttribute="trailing" constant="4" id="o4j-7p-bwV"/>
                                             <constraint firstItem="zI3-Ol-Wfs" firstAttribute="leading" secondItem="php-nZ-ebC" secondAttribute="trailing" constant="6" id="o8F-H5-LBv"/>
                                             <constraint firstItem="Upq-ns-XQL" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="226" id="oN8-UV-0Do"/>
-                                            <constraint firstItem="1Mk-wN-YMf" firstAttribute="centerX" secondItem="hfR-E4-MS9" secondAttribute="centerX" id="ohG-Sw-lH5"/>
+                                            <constraint firstItem="LFm-Wg-iZM" firstAttribute="top" secondItem="AkP-S7-RhT" secondAttribute="bottom" constant="6" id="oQ2-p4-jS9"/>
                                             <constraint firstItem="sZi-SO-nxN" firstAttribute="top" secondItem="kC4-YV-zrQ" secondAttribute="bottom" constant="8" symbolic="YES" id="pUZ-gE-NYL"/>
                                             <constraint firstItem="7Ep-E9-eTC" firstAttribute="top" secondItem="yLo-X1-YiA" secondAttribute="bottom" constant="12" id="piI-Ts-lex"/>
                                             <constraint firstItem="dbA-1Q-1qd" firstAttribute="leading" secondItem="eGZ-8c-lwc" secondAttribute="trailing" constant="46" id="q2z-Zg-B1x"/>
                                             <constraint firstItem="kSP-5h-t8y" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="236" id="qmC-ie-KV9"/>
                                             <constraint firstItem="wiv-2h-fTk" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="45" id="qq7-VR-Iem"/>
                                             <constraint firstItem="ViV-iP-2c8" firstAttribute="top" secondItem="YaN-QZ-yJ8" secondAttribute="bottom" constant="16" id="r2k-nz-iMC"/>
-                                            <constraint firstAttribute="trailing" secondItem="1Mk-wN-YMf" secondAttribute="trailing" constant="27" id="sEI-G3-IQn"/>
                                             <constraint firstItem="WEI-5E-5L1" firstAttribute="leading" secondItem="eUf-FZ-pcY" secondAttribute="trailing" constant="6" id="sec-rd-F2Q"/>
                                             <constraint firstItem="1mx-nd-Lvm" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="250" id="sjB-Mx-cAn"/>
                                             <constraint firstItem="BKC-S1-f6k" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="45" id="slf-Ht-K1P"/>
                                             <constraint firstItem="cWR-jf-NVp" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="60" id="uP3-cy-FPw"/>
                                             <constraint firstItem="cqY-Sh-5Cn" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="71" id="uRS-xQ-jmw"/>
-                                            <constraint firstItem="1Mk-wN-YMf" firstAttribute="top" secondItem="N6g-vd-o7C" secondAttribute="bottom" constant="8" symbolic="YES" id="uga-NI-auO"/>
-                                            <constraint firstItem="tep-9v-UHn" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="60" id="usy-NJ-UH2"/>
                                             <constraint firstItem="zI3-Ol-Wfs" firstAttribute="top" secondItem="1mx-nd-Lvm" secondAttribute="bottom" constant="11" id="vgy-c3-3Cg"/>
                                             <constraint firstItem="nVD-jD-cI9" firstAttribute="top" secondItem="sZi-SO-nxN" secondAttribute="bottom" constant="20" id="vuj-TJ-qDU"/>
                                             <constraint firstItem="CPI-6W-uCc" firstAttribute="leading" secondItem="hfR-E4-MS9" secondAttribute="leading" constant="45" id="w3B-vv-Aj8"/>
                                             <constraint firstItem="z2Z-tL-zUw" firstAttribute="top" secondItem="Upq-ns-XQL" secondAttribute="bottom" constant="8" id="wPu-KT-Dvq"/>
-                                            <constraint firstItem="LFm-Wg-iZM" firstAttribute="top" secondItem="tep-9v-UHn" secondAttribute="bottom" constant="7" id="wPu-Z3-kPh"/>
+                                            <constraint firstItem="AkP-S7-RhT" firstAttribute="top" secondItem="lkB-tR-6kJ" secondAttribute="bottom" constant="15" id="wpj-jU-u85"/>
                                             <constraint firstItem="RIQ-LN-HoM" firstAttribute="leading" secondItem="z2Z-tL-zUw" secondAttribute="trailing" constant="7" id="wr5-FG-RMb"/>
                                             <constraint firstItem="yLo-X1-YiA" firstAttribute="top" secondItem="w3M-5t-PVB" secondAttribute="bottom" constant="12" id="xUF-Y6-hzP"/>
-                                            <constraint firstItem="eGZ-8c-lwc" firstAttribute="leading" secondItem="tep-9v-UHn" secondAttribute="trailing" constant="4" id="xUY-io-leO"/>
                                             <constraint firstItem="NFY-2V-YXm" firstAttribute="leading" secondItem="bb1-ct-71M" secondAttribute="trailing" constant="43" id="xyS-k5-kRj"/>
                                             <constraint firstItem="ikM-8t-ptX" firstAttribute="leading" secondItem="cqY-Sh-5Cn" secondAttribute="trailing" constant="40" id="y6N-DZ-ycS"/>
                                             <constraint firstItem="php-nZ-ebC" firstAttribute="leading" secondItem="9fO-y4-2jY" secondAttribute="trailing" constant="94" id="y7x-5r-d9O"/>
@@ -1160,13 +1116,45 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="U9H-b9-R3D"/>
+                    <connections>
+                        <outlet property="adventureButton" destination="LFm-Wg-iZM" id="eWq-BB-afO"/>
+                        <outlet property="africanCaribbeanButton" destination="eUf-FZ-pcY" id="Esu-v9-ypY"/>
+                        <outlet property="americanButton" destination="ikM-8t-ptX" id="jyy-j5-K9L"/>
+                        <outlet property="artsCultureButton" destination="AkP-S7-RhT" id="8Ds-0g-AQc"/>
+                        <outlet property="blockedTimesTableView" destination="1Mk-wN-YMf" id="3Em-94-OD3"/>
+                        <outlet property="childFriendlyButton" destination="php-nZ-ebC" id="4gU-Js-sUj"/>
+                        <outlet property="dessertButton" destination="z2Z-tL-zUw" id="Uea-CM-Rns"/>
+                        <outlet property="eastAsianButton" destination="wiv-2h-fTk" id="FMd-Hm-bYI"/>
+                        <outlet property="endDatePicker" destination="YBb-57-Aeb" id="FIU-AL-9aj"/>
+                        <outlet property="festivalsButton" destination="Hqe-e6-0h3" id="oXo-Lh-xRf"/>
+                        <outlet property="fineDiningButton" destination="xBk-sM-Hf6" id="UjC-s2-s28"/>
+                        <outlet property="foodToursButton" destination="OuO-Ra-VmR" id="UhQ-68-mLV"/>
+                        <outlet property="landmarksButton" destination="dbA-1Q-1qd" id="Jpo-Wm-kTl"/>
+                        <outlet property="latinAmericanButton" destination="PEV-M4-Aoc" id="boP-4b-A5C"/>
+                        <outlet property="localSpecialtiesButton" destination="pzi-2b-Yof" id="SPd-Ds-dPZ"/>
+                        <outlet property="mediterraneanButton" destination="BKC-S1-f6k" id="0jW-kL-5Gh"/>
+                        <outlet property="middleEasternButton" destination="CPI-6W-uCc" id="rdr-5r-yiW"/>
+                        <outlet property="musicButton" destination="cWR-jf-NVp" id="TYc-D5-lb5"/>
+                        <outlet property="natureButton" destination="Bga-3c-EKJ" id="xY6-ol-72a"/>
+                        <outlet property="relaxationButton" destination="kwr-fY-8YN" id="1Ih-Xl-LDs"/>
+                        <outlet property="romanceButton" destination="v8o-Zu-Nww" id="3pq-iV-gc7"/>
+                        <outlet property="seaFoodButton" destination="Zcj-wo-0ax" id="LRx-NF-lOO"/>
+                        <outlet property="shoppingButton" destination="8FC-hl-Zxz" id="bnz-K0-nJL"/>
+                        <outlet property="southAsianButton" destination="Pq3-BK-f1o" id="arV-xh-JaJ"/>
+                        <outlet property="startDatePicker" destination="sZi-SO-nxN" id="bOY-0v-Ce1"/>
+                        <outlet property="streetFoodButton" destination="Upq-ns-XQL" id="SGA-MI-kPe"/>
+                        <outlet property="veganButton" destination="NFY-2V-YXm" id="HTt-vK-Lbu"/>
+                        <outlet property="vegetarianButton" destination="pEp-L7-RSR" id="YUJ-8K-6oT"/>
+                        <outlet property="wineButton" destination="CrJ-Pv-3Rj" id="uWu-Io-COv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="upe-AZ-6dg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1801" y="4"/>
+            <point key="canvasLocation" x="1800.7633587786258" y="3.5211267605633805"/>
         </scene>
     </scenes>
     <resources>
+        <image name="square" catalog="system" width="128" height="114"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

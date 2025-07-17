@@ -72,6 +72,13 @@ class MyTripHomeViewController: UIViewController {
                let destinationVC = segue.destination as? PhotoAlbumViewController {
                 destinationVC.tripID = self.trip?.id
             }
+            
+            // Add this block for SurveyViewController
+            else if segue.identifier == "surveyID",
+                    let surveyVC = segue.destination as? SurveyViewController {
+                surveyVC.currentTrip = self.trip
+            }
+        
         }
     
     @IBAction func goToTravelersTapped(_ sender: UIButton) {
