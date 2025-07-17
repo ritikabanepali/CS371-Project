@@ -12,7 +12,6 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var tableView: UITableView!
     var trips: [Trip] = []
     
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,7 +107,7 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
             if let myTripVC = storyboard.instantiateViewController(withIdentifier: "MyTripHomeViewController") as? MyTripHomeViewController {
                 
                 // 3. Pass the ENTIRE selected trip object
-                //myTripVC.trip = selectedTrip
+                myTripVC.trip = selectedTrip
                 
                 // 4. Push the correct view controller
                 self.navigationController?.pushViewController(myTripVC, animated: true)

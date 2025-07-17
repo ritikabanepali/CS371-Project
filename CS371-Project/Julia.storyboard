@@ -169,8 +169,10 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Trip" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXu-9K-4Ut">
                                 <rect key="frame" x="48" y="118" width="299" height="134"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="134" id="9C9-hY-pj0"/>
                                     <constraint firstAttribute="height" constant="134" id="ZfR-zO-5mT"/>
                                     <constraint firstAttribute="width" constant="299" id="eFz-kF-KbK"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="299" id="wFm-r3-Fzs"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HoeflerText-Regular" family="Hoefler Text" pointSize="33"/>
                                 <color key="textColor" red="0.29803922770000002" green="0.41568624970000001" blue="0.1686274707" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -205,7 +207,7 @@
                                     <color key="baseBackgroundColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <segue destination="P3O-3j-i5p" kind="show" id="xjC-bQ-Iwj"/>
+                                    <action selector="goToTravelersTapped:" destination="SJL-RG-8Xp" eventType="touchUpInside" id="pw6-Wq-ZKg"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hxP-5C-yhb">
@@ -356,16 +358,6 @@
             </objects>
             <point key="canvasLocation" x="4410" y="132"/>
         </scene>
-        <!--travelersID-->
-        <scene sceneID="e06-ml-cIW">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Ritika" referencedIdentifier="travelersID" id="P3O-3j-i5p" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="Lfc-yH-Zmy"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="C4x-a3-Emd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2585" y="672"/>
-        </scene>
         <!--surveyID-->
         <scene sceneID="vBb-T9-ybU">
             <objects>
@@ -410,7 +402,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

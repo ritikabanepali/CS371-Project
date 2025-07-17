@@ -97,7 +97,7 @@ class UserManager {
             guard let document = snapshot, document.exists,
                   let data = document.data(),
                   let firstName = data["FirstName"] as? String,
-                  let lastName = data["Lastname"] as? String else {
+                  let lastName = data["LastName"] as? String else {
                 let notFoundError = NSError(domain: "UserManagerError", code: 404, userInfo: [NSLocalizedDescriptionKey: "User name not found for UID \(uid)."])
                 completion(.failure(notFoundError))
                 return

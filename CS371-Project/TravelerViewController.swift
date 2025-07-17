@@ -26,7 +26,7 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("✅ CHECKPOINT 2: TravelerVC received trip. Travelers count: \(self.trip?.travelers.count ?? -1)")
         invitedTableView.dataSource = self
         invitedTableView.delegate = self
         
@@ -55,6 +55,7 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         var fetchedTravelers: [TravelerViewModel] = []
 
         for (uid, status) in trip.travelers {
+            print("✅ CHECKPOINT 3: Loop is running for UID: \(uid)")
             group.enter() // Enter the group for each async call
             UserManager.shared.fetchName(forUserWithUID: uid) { result in
                 switch result {
@@ -73,6 +74,8 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // This closure runs only after ALL fetchName calls have completed
         group.notify(queue: .main) {
+            print("✅ CHECKPOINT 4: All names fetched. Final array count: \(fetchedTravelers.count). Reloading table.")
+
             // Sort to show confirmed users first
             self.travelers = fetchedTravelers.sorted {
                 if $0.status == "confirmed" && $1.status == "pending" { return true }

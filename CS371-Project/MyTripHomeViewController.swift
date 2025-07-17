@@ -9,16 +9,14 @@ import UIKit
 
 class MyTripHomeViewController: UIViewController {
     
-    var tripDestination: String?
-    var tripID: String?
- 
+    var trip: Trip?
     
     @IBOutlet weak var titleLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let destination = tripDestination {
+        if let destination = trip?.destination {
             titleLabel.text = "My Trip to \(destination)"
         } else {
             titleLabel.text = "My Trip"
@@ -27,12 +25,6 @@ class MyTripHomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        if let destination = tripDestination {
-            titleLabel.text = "My Trip to \(destination)"
-        } else {
-            titleLabel.text = "My Trip"
-        }
     }
     
     @IBAction func deleteTripTapped(_ sender: Any) {
@@ -47,7 +39,7 @@ class MyTripHomeViewController: UIViewController {
     }
     
     private func performTripDeletion() {
-        guard let id = tripID else {
+        guard let id = trip?.id else {
             print("Missing trip ID")
             return
         }
@@ -78,9 +70,31 @@ class MyTripHomeViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             if segue.identifier == "toPhotoAlbumVC",
                let destinationVC = segue.destination as? PhotoAlbumViewController {
-                destinationVC.tripID = self.tripID
+                destinationVC.tripID = self.trip?.id
             }
         }
+    
+    @IBAction func goToTravelersTapped(_ sender: UIButton) {
+        // 1. Get a reference to the other storyboard.
+        let storyboard = UIStoryboard(name: "Ritika", bundle: nil)
+        
+        // 2. Instantiate the specific view controller using its Storyboard ID.
+        //    Make sure the ID matches what you set in the storyboard.
+        if let travelerVC = storyboard.instantiateViewController(withIdentifier: "travelersID") as? TravelerViewController {
+            print("✅ CHECKPOINT 1: Passing trip to TravelerVC. Travelers count: \(self.trip?.travelers.count ?? -1)")
+
+            // 3. Pass the trip data to the new view controller.
+            travelerVC.trip = self.trip
+            
+            // 4. Present the new view controller.
+            //    This assumes you are using a UINavigationController.
+            self.navigationController?.pushViewController(travelerVC, animated: true)
+            
+        } else {
+            // This will help you debug if the Storyboard ID is wrong or the class isn't set correctly.
+            print("Error: Could not instantiate TravelerViewController from Ritika.storyboard.")
+        }
+    }
     
     
 }
