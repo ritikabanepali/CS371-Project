@@ -6,7 +6,9 @@ class CreateTripViewController: UIViewController {
     @IBOutlet weak var continueButton: UIButton!
     @IBOutlet weak var endDatePicker: UIDatePicker!
     @IBOutlet weak var startDatePicker: UIDatePicker!
-
+    @IBOutlet weak var backgroundView: UIView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -15,7 +17,20 @@ class CreateTripViewController: UIViewController {
         
         // set initial minimum date for the end picker
         endDatePicker.minimumDate = startDatePicker.date
+        
+        setupInitialUI()
     }
+    
+    private func setupInitialUI() {
+        backgroundView.layer.cornerRadius = 17
+        backgroundView.backgroundColor = .white
+
+        backgroundView.layer.shadowColor = UIColor.black.cgColor
+        backgroundView.layer.shadowOpacity = 0.2
+        backgroundView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        backgroundView.layer.shadowRadius = 5
+    }
+    
     
     @IBAction func continueButtonTapped(_ sender: Any) {
         
@@ -43,9 +58,8 @@ class CreateTripViewController: UIViewController {
                 switch result {
                 case .success(let newTrip):
                     print("Successfully created trip to \(newTrip.destination)!")
-                    // On success, goes to my trip vc
-                    let storyboard = UIStoryboard(name: "Julia", bundle: nil)
-                    if let myTripVC = storyboard.instantiateViewController(withIdentifier: "MyTripHomeViewController") as? MyTripHomeViewController {
+                    let storyboard = UIStoryboard(name: "Abha", bundle: nil)
+                    if let myTripVC = storyboard.instantiateViewController(withIdentifier: "NewTripHomeViewController") as? NewTripHomeViewController {
                         self?.navigationController?.pushViewController(myTripVC, animated: true)
                     }
                     

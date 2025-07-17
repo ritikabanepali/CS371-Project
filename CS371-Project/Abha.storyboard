@@ -284,11 +284,17 @@
                                             <action selector="continueButtonTapped:" destination="Rem-cx-Prs" eventType="touchUpInside" id="D3a-vC-wJt"/>
                                         </connections>
                                     </button>
-                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="D3F-kL-sMP">
-                                        <rect key="frame" x="93" y="252" width="117" height="34"/>
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="mL8-eR-NFV">
+                                        <rect key="frame" x="0.0" y="174" width="210" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="210" id="7xR-Sd-0Pt"/>
+                                        </constraints>
                                     </datePicker>
-                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="mL8-eR-NFV">
-                                        <rect key="frame" x="93" y="174" width="117" height="34"/>
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="D3F-kL-sMP">
+                                        <rect key="frame" x="3" y="252" width="207" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="207" id="lJ4-IG-c1S" userLabel="width = 210"/>
+                                        </constraints>
                                     </datePicker>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -299,16 +305,15 @@
                         <constraints>
                             <constraint firstItem="UaG-Zl-nGg" firstAttribute="bottom" secondItem="mL8-eR-NFV" secondAttribute="bottom" constant="247" id="4f8-HD-6sU"/>
                             <constraint firstItem="mL8-eR-NFV" firstAttribute="top" secondItem="UaG-Zl-nGg" secondAttribute="top" constant="341" id="6oo-0e-8DP"/>
-                            <constraint firstItem="mL8-eR-NFV" firstAttribute="leading" secondItem="UaG-Zl-nGg" secondAttribute="leading" constant="134" id="E4h-p0-Dr8"/>
                             <constraint firstItem="UaG-Zl-nGg" firstAttribute="bottom" secondItem="D3F-kL-sMP" secondAttribute="bottom" constant="169" id="LHD-th-oku"/>
                             <constraint firstItem="UaG-Zl-nGg" firstAttribute="trailing" secondItem="D3F-kL-sMP" secondAttribute="trailing" constant="142" id="LX3-j8-dwy"/>
-                            <constraint firstItem="D3F-kL-sMP" firstAttribute="leading" secondItem="UaG-Zl-nGg" secondAttribute="leading" constant="134" id="OYs-D2-tHz"/>
                             <constraint firstItem="D3F-kL-sMP" firstAttribute="top" secondItem="UaG-Zl-nGg" secondAttribute="top" constant="419" id="RAv-Bq-TU0"/>
                             <constraint firstItem="UaG-Zl-nGg" firstAttribute="trailing" secondItem="mL8-eR-NFV" secondAttribute="trailing" constant="142" id="nVP-ha-BxY"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="sWh-Jn-RLK"/>
                     <connections>
+                        <outlet property="backgroundView" destination="DfS-Bu-7p4" id="elb-bA-5A3"/>
                         <outlet property="continueButton" destination="6b1-pg-5Jl" id="4L3-e7-KuM"/>
                         <outlet property="destinationField" destination="DZM-1w-rhe" id="P6K-Bi-JIV"/>
                         <outlet property="endDatePicker" destination="D3F-kL-sMP" id="4bj-Pq-Yqv"/>
@@ -670,10 +675,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemFillColor">
-            <color red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

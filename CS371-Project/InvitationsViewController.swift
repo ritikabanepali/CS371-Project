@@ -128,8 +128,6 @@ class InvitationCell: UITableViewCell {
     var onDecline: (() -> Void)?
     
     
-    
-    
     @IBAction func acceptTapped(_ sender: UIButton) {
         onAccept?()
     }
