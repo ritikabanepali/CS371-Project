@@ -181,8 +181,32 @@
                                     <action selector="notificationsToggled:" destination="7yr-zd-LFl" eventType="valueChanged" id="eMI-3j-9x6"/>
                                 </connections>
                             </switch>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="n1V-lx-jVz">
+                                <rect key="frame" x="97" y="527" width="198" height="32"/>
+                                <segments>
+                                    <segment title="Blue/Green"/>
+                                    <segment title="Red/Orange"/>
+                                </segments>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color Scheme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k9Y-CZ-Ahk">
+                                <rect key="frame" x="138" y="480" width="116" height="22"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="highlightedColor" systemColor="systemGrayColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1gL-F5-qEW">
+                                <rect key="frame" x="124" y="600" width="144" height="38"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Save Settings" cornerStyle="medium">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
+                                    <color key="baseBackgroundColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="saveSettingsButtonTapped:" destination="7yr-zd-LFl" eventType="touchUpInside" id="xN9-mO-kWG"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4gI-Ig-9zo">
-                                <rect key="frame" x="99" y="515" width="195" height="54"/>
+                                <rect key="frame" x="99" y="730" width="195" height="54"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="ft8-ej-EXd"/>
                                     <constraint firstAttribute="width" constant="195" id="mJE-X8-ak5"/>
@@ -204,28 +228,37 @@
                         <constraints>
                             <constraint firstItem="Ua2-rC-3WT" firstAttribute="top" secondItem="zhd-RL-up4" secondAttribute="bottom" constant="26.999999999999972" id="0Cm-lw-Sgq"/>
                             <constraint firstItem="xRg-gq-vfH" firstAttribute="trailing" secondItem="5aQ-kF-NtY" secondAttribute="trailing" constant="144" id="2Xc-Aw-b5E"/>
+                            <constraint firstItem="xRg-gq-vfH" firstAttribute="trailing" secondItem="1gL-F5-qEW" secondAttribute="trailing" constant="125" id="2oG-1j-hfe"/>
                             <constraint firstItem="xRg-gq-vfH" firstAttribute="trailing" secondItem="Ua2-rC-3WT" secondAttribute="trailing" constant="92" id="7lZ-fv-szi"/>
-                            <constraint firstItem="xRg-gq-vfH" firstAttribute="trailing" secondItem="4gI-Ig-9zo" secondAttribute="trailing" constant="99" id="Gjj-qa-T0w"/>
+                            <constraint firstItem="n1V-lx-jVz" firstAttribute="top" secondItem="xRg-gq-vfH" secondAttribute="top" constant="365" id="GCK-Fv-t4N"/>
                             <constraint firstItem="Ua2-rC-3WT" firstAttribute="leading" secondItem="xRg-gq-vfH" secondAttribute="leading" constant="92" id="H3v-9B-D38"/>
-                            <constraint firstItem="4gI-Ig-9zo" firstAttribute="top" secondItem="Qso-d6-meO" secondAttribute="bottom" constant="82" id="JyE-nt-3J5"/>
                             <constraint firstItem="zhd-RL-up4" firstAttribute="centerX" secondItem="HpM-EM-E7t" secondAttribute="centerX" id="P1W-N7-Nsa"/>
                             <constraint firstItem="Qso-d6-meO" firstAttribute="top" secondItem="5aQ-kF-NtY" secondAttribute="bottom" constant="19" id="P2y-Ig-RfB"/>
+                            <constraint firstItem="4gI-Ig-9zo" firstAttribute="top" secondItem="xRg-gq-vfH" secondAttribute="top" constant="568" id="S0M-ke-iZI"/>
+                            <constraint firstItem="xRg-gq-vfH" firstAttribute="trailing" secondItem="4gI-Ig-9zo" secondAttribute="trailing" constant="99" id="Sfg-w0-oRY"/>
                             <constraint firstItem="Qso-d6-meO" firstAttribute="leading" secondItem="xRg-gq-vfH" secondAttribute="leading" constant="170" id="bGS-SE-yka"/>
                             <constraint firstItem="5aQ-kF-NtY" firstAttribute="top" secondItem="Ua2-rC-3WT" secondAttribute="bottom" constant="47.666666666666742" id="cAf-ZJ-fvE"/>
-                            <constraint firstItem="4gI-Ig-9zo" firstAttribute="leading" secondItem="xRg-gq-vfH" secondAttribute="leading" constant="99" id="fK3-96-Ak8"/>
+                            <constraint firstItem="k9Y-CZ-Ahk" firstAttribute="top" secondItem="xRg-gq-vfH" secondAttribute="top" constant="318" id="eSY-A2-TVl"/>
                             <constraint firstItem="zhd-RL-up4" firstAttribute="top" secondItem="xRg-gq-vfH" secondAttribute="top" id="gTC-MZ-XZ1"/>
                             <constraint firstItem="5aQ-kF-NtY" firstAttribute="leading" secondItem="xRg-gq-vfH" secondAttribute="leading" constant="144" id="gcK-E2-Hwk"/>
                             <constraint firstItem="xRg-gq-vfH" firstAttribute="trailing" secondItem="Qso-d6-meO" secondAttribute="trailing" constant="174" id="l0h-hS-ixS"/>
+                            <constraint firstItem="1gL-F5-qEW" firstAttribute="top" secondItem="xRg-gq-vfH" secondAttribute="top" constant="438" id="nfV-kp-wyc"/>
+                            <constraint firstItem="xRg-gq-vfH" firstAttribute="trailing" secondItem="n1V-lx-jVz" secondAttribute="trailing" constant="98" id="rMv-6N-Ccf"/>
+                            <constraint firstItem="k9Y-CZ-Ahk" firstAttribute="leading" secondItem="xRg-gq-vfH" secondAttribute="leading" constant="138" id="vQd-op-Y20"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="1wB-z3-4l7"/>
                     <connections>
+                        <outlet property="colorSchemeController" destination="n1V-lx-jVz" id="GgI-uc-5Am"/>
+                        <outlet property="logoutButton" destination="4gI-Ig-9zo" id="D6u-P3-aDT"/>
                         <outlet property="notificationsSwitch" destination="Qso-d6-meO" id="zQX-Yn-Kwa"/>
+                        <outlet property="saveSettingsButton" destination="1gL-F5-qEW" id="L3V-5o-kOn"/>
+                        <outlet property="settingsLabel" destination="zhd-RL-up4" id="Wu5-A0-y4s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d7p-d8-esh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="453" y="1070"/>
+            <point key="canvasLocation" x="452.67175572519085" y="1069.7183098591549"/>
         </scene>
         <!--CreateTripViewController-->
         <scene sceneID="2mG-5o-2MN">
