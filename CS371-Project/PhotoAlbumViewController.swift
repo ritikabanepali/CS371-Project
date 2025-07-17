@@ -7,10 +7,14 @@ let cloudinary = CLDCloudinary(configuration: config)
 
 class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    @IBOutlet weak var loadingView: UIView!
 
     @IBOutlet weak var photoCollection: UICollectionView!
     var tripID: String?
     var images: [UIImage] = []
+    var needsRefresh = false
+
+    
     
     @IBAction func cameraButtonTapped(_ sender: UIButton) {
         openCamera()
@@ -29,9 +33,44 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         } else {
             print("Error: tripID is nil")
         }
-
-        loadSavedImageURLs()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+    
+        if images.isEmpty || needsRefresh {
+            loadingView.isHidden = false
+            needsRefresh = false
+
+            DispatchQueue.global(qos: .userInitiated).async {
+                guard let tripID = self.tripID else { return }
+                let key = "savedImageURLs_\(tripID)"
+                let urls = UserDefaults.standard.stringArray(forKey: key) ?? []
+
+                var loadedImages: [UIImage] = []
+
+                for urlString in urls {
+                    if let url = URL(string: urlString),
+                       let data = try? Data(contentsOf: url),
+                       let image = UIImage(data: data) {
+                        loadedImages.append(image)
+                    }
+                }
+
+                DispatchQueue.main.async {
+                    self.images = loadedImages
+                    self.photoCollection.reloadData()
+                    self.loadingView.isHidden = true
+                }
+            }
+        }
+    }
+
+
+
+       
+
 
     // MARK: - Add Photo Button
     @IBAction func addPhotosButtonTapped(_ sender: Any) {
@@ -112,19 +151,25 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
     // MARK: - Load Saved Image URLs
     func loadSavedImageURLs() {
         guard let tripID = tripID else { return }
-
+        
         let key = "savedImageURLs_\(tripID)"
         let urls = UserDefaults.standard.stringArray(forKey: key) ?? []
 
         for urlString in urls {
-            if let url = URL(string: urlString),
-               let data = try? Data(contentsOf: url),
-               let image = UIImage(data: data) {
-                self.images.append(image)
-            }
+            guard let url = URL(string: urlString) else { continue }
+            
+            // Asynchronous image download
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                if let data = data, let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self.images.append(image)
+                        self.photoCollection.reloadData()
+                    }
+                }
+            }.resume()
         }
-        self.photoCollection.reloadData()
     }
+
 
     // MARK: - UICollectionView Data Source
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -174,6 +219,7 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         if let fullscreenVC = storyboard.instantiateViewController(withIdentifier: "FullscreenPhotoVC") as? FullscreenPhotoViewController {
             fullscreenVC.images = images
             fullscreenVC.currentIndex = indexPath.item
+            fullscreenVC.tripID = self.tripID
             fullscreenVC.modalPresentationStyle = .fullScreen
             navigationController?.pushViewController(fullscreenVC, animated: true)
         }
