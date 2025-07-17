@@ -17,7 +17,7 @@ class MyTripHomeViewController: UIViewController {
         super.viewDidLoad()
         
         if let destination = trip?.destination {
-            titleLabel.text = "My Trip to \(destination)"
+            titleLabel.text = "\(destination)"
         } else {
             titleLabel.text = "My Trip"
         }

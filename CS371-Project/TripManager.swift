@@ -9,6 +9,16 @@ import Foundation
 import FirebaseFirestore
 import FirebaseAuth
 
+// handles invitations that a user receives
+struct Invitation {
+    let id: String
+    let tripID: String
+    let tripName: String
+    let ownerName: String
+    let ownerUID: String
+    let inviteeUID: String
+}
+
 // The Trip object that manages the data of a Trip that a user has
 struct Trip {
     let id: String // The document ID from Firestore
@@ -77,23 +87,26 @@ class TripManager {
     }
     
     // invites another traveler to an existing trip
-    func inviteTraveler(withEmail email: String, to trip: Trip, completion: @escaping (Error?) -> Void) {
-        // find the user's UID from their email
+    func sendInvitation(toEmail email: String, forTrip trip: Trip, fromUser inviter: String, completion: @escaping (Error?) -> Void) {
+        // 1. Find the user being invited
         UserManager.shared.findUser(byEmail: email) { result in
             switch result {
-            case .success(let newTravelerUID):
-                // get a reference to the trip document
-                let tripRef = self.db.collection("Users").document(trip.ownerUID).collection("trips").document(trip.id)
+            case .success(let inviteeUID):
+                // 2. Prepare the invitation data
+                let invitationData: [String: Any] = [
+                    "tripID": trip.id,
+                    "tripName": trip.destination,
+                    "ownerUID": trip.ownerUID,
+                    "ownerName": inviter,
+                    "inviteeUID": inviteeUID,
+                    "status": "pending"
+                ]
                 
-                //  update the travelers map by adding the new user with "pending" status
-                tripRef.updateData([
-                    "travelers.\(newTravelerUID)": "pending"
-                ]) { error in
+                // 3. Add a new document to the "invitations" collection
+                self.db.collection("invitations").addDocument(data: invitationData) { error in
                     completion(error)
                 }
-                
             case .failure(let error):
-                // The user wasn't found or another error occurred
                 completion(error)
             }
         }
@@ -174,87 +187,60 @@ class TripManager {
         }
     }
     
-    func fetchPendingInvitations(completion: @escaping (Result<[Trip], Error>) -> Void) {
-        guard let currentUserID = UserManager.shared.currentUserID else {
-            let error = NSError(domain: "TripManagerError", code: 401, userInfo: [NSLocalizedDescriptionKey: "User is not logged in."])
-            completion(.failure(error))
-            return
-        }
+    func fetchPendingInvitations(completion: @escaping (Result<[Invitation], Error>) -> Void) {
+        guard let currentUserID = UserManager.shared.currentUserID else { return }
         
-        // get all user documents
-        db.collection("Users").getDocuments { (userQuerySnapshot, userError) in
-            if let userError = userError {
-                completion(.failure(userError))
-                return
-            }
-            
-            guard let userDocuments = userQuerySnapshot?.documents, !userDocuments.isEmpty else {
-                completion(.success([]))
-                return
-            }
-            
-            var pendingInvitations: [Trip] = []
-            var completedFetches = 0
-            let totalFetches = userDocuments.count
-            var encounteredError: Error? = nil
-            
-            for userDoc in userDocuments {
-                let ownerUID = userDoc.documentID
-                self.db.collection("Users").document(ownerUID).collection("trips")
-                    .whereField("travelers.\(currentUserID)", isEqualTo: "pending")
-                    .getDocuments { (tripQuerySnapshot, tripError) in
-                        
-                        if let tripError = tripError {
-                            //save error but keep going
-                            if encounteredError == nil {
-                                encounteredError = tripError
-                            }
-                        } else if let tripDocuments = tripQuerySnapshot?.documents {
-                            //get trip information to append to trip
-                            for doc in tripDocuments {
-                                let data = doc.data()
-                                let trip = Trip(
-                                    id: doc.documentID,
-                                    ownerUID: data["ownerUID"] as? String ?? "",
-                                    destination: data["destination"] as? String ?? "Unknown Destination",
-                                    startDate: (data["startDate"] as? Timestamp)?.dateValue() ?? Date(),
-                                    endDate: (data["endDate"] as? Timestamp)?.dateValue() ?? Date(),
-                                    travelers: data["travelers"] as? [String: String] ?? [:]
-                                )
-                                pendingInvitations.append(trip)
-                            }
-                        }
-                        
-                        completedFetches += 1
-                        
-                        if completedFetches == totalFetches {
-                            if let error = encounteredError {
-                                completion(.failure(error))
-                            } else {
-                                completion(.success(pendingInvitations))
-                            }
-                        }
-                    }
-            }
-        }
+        db.collection("invitations")
+          .whereField("inviteeUID", isEqualTo: currentUserID)
+          .whereField("status", isEqualTo: "pending")
+          .getDocuments { (querySnapshot, error) in
+              if let error = error {
+                  completion(.failure(error))
+                  return
+              }
+              
+              let invitations = querySnapshot?.documents.compactMap { doc -> Invitation? in
+                  let data = doc.data()
+                  return Invitation(
+                      id: doc.documentID,
+                      tripID: data["tripID"] as? String ?? "",
+                      tripName: data["tripName"] as? String ?? "",
+                      ownerName: data["ownerName"] as? String ?? "Someone",
+                      ownerUID: data["ownerUID"] as? String ?? "",
+                      inviteeUID: data["inviteeUID"] as? String ?? ""
+                  )
+              } ?? []
+              
+              completion(.success(invitations))
+          }
     }
     
-    
-    func updateTraveler(forTrip trip: Trip, travelerUID: String, newStatus: String, completion: @escaping (Error?) -> Void) {
-        let tripRef = db.collection("Users").document(trip.ownerUID).collection("trips").document(trip.id)
+    func acceptInvitation(_ invitation: Invitation, completion: @escaping (Error?) -> Void) {
+        let tripRef = db.collection("Users").document(invitation.ownerUID).collection("trips").document(invitation.tripID)
+        let invitationRef = db.collection("invitations").document(invitation.id)
+        
+        // 1. Add user to the main trip document as "confirmed"
         tripRef.updateData([
-            "travelers.\(travelerUID)": newStatus
+            "travelers.\(invitation.inviteeUID)": "confirmed"
         ]) { error in
             if let error = error {
-                print("Error updating traveler status for trip \(trip.id): \(error.localizedDescription)")
+                completion(error) // Failed to update the trip, so stop.
+                return
+            }
+            // 2. If trip update succeeds, delete the invitation document
+            invitationRef.delete { error in
                 completion(error)
-            } else {
-                print("Traveler \(travelerUID) status updated to '\(newStatus)' for trip \(trip.id).")
-                completion(nil)
             }
         }
     }
-    
+
+    func declineInvitation(_ invitation: Invitation, completion: @escaping (Error?) -> Void) {
+        // Just delete the invitation document
+        db.collection("invitations").document(invitation.id).delete { error in
+            completion(error)
+        }
+    }
+
 
     func fetchAcceptedInvitations(completion: @escaping (Result<[Trip], Error>) -> Void) {
         guard let currentUserID = UserManager.shared.currentUserID else {

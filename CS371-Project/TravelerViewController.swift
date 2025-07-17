@@ -88,33 +88,33 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func inviteButtonTapped(_ sender: Any) {
         guard let email = enterEmailTextField.text, !email.isEmpty else {
-            showAlert(title: "Missing Email", message: "Please enter an email to invite a traveler.")
-            return
-        }
-        
-        guard let tripToUpdate = self.trip else { return }
-        
-        inviteButton.isEnabled = false // Disable button to prevent double-taps
-        
-        TripManager.shared.inviteTraveler(withEmail: email, to: tripToUpdate) { [weak self] error in
-            guard let self = self else { return }
-            
-            // Re-enable the button on the main thread
-            DispatchQueue.main.async {
-                self.inviteButton.isEnabled = true
-                self.enterEmailTextField.text = "" // Clear the text field
-            }
-            
-            if let error = error {
-                self.showAlert(title: "Invite Error", message: error.localizedDescription)
-                return
-            }
-            
-            // Since the invite was successful, we can just show a success message.
-            // A full implementation would require re-fetching the trip or using a listener
-            // to show the new invitee instantly.
-            self.showAlert(title: "Success!", message: "\(email) has been invited to the trip.")
-        }
+             showAlert(title: "Missing Email", message: "Please enter an email to invite a traveler.")
+             return
+         }
+         
+         guard let tripToUpdate = self.trip,
+               let inviterName = UserManager.shared.currentUserFirstName else { // Get current user's name
+             return
+         }
+         
+         inviteButton.isEnabled = false
+         
+         // Call the new 'sendInvitation' function
+         TripManager.shared.sendInvitation(toEmail: email, forTrip: tripToUpdate, fromUser: inviterName) { [weak self] error in
+             guard let self = self else { return }
+             
+             DispatchQueue.main.async {
+                 self.inviteButton.isEnabled = true
+                 self.enterEmailTextField.text = ""
+             }
+             
+             if let error = error {
+                 self.showAlert(title: "Invite Error", message: error.localizedDescription)
+                 return
+             }
+             
+             self.showAlert(title: "Success!", message: "\(email) has been invited to the trip.")
+         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -9,10 +9,9 @@ import UIKit
 import FirebaseAuth
 
 class InvitationsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
-
+    
     @IBOutlet weak var invitationsTable: UITableView!
-    var pendingInvitations: [Trip] = []
-    var inviterNames: [String: String] = [:]
+    var pendingInvitations: [Invitation] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,40 +27,19 @@ class InvitationsViewController: UIViewController, UITableViewDataSource, UITabl
     func fetchPendingInvitations() {
         TripManager.shared.fetchPendingInvitations { [weak self] result in
             guard let self = self else { return }
-
-            switch result {
-            case .success(let trips):
-                self.pendingInvitations = trips
-                self.fetchInviterNames(for: trips) // Fetch names after getting trips
-            case .failure(let error):
-                print("Error fetching pending invitations: \(error.localizedDescription)")
-                DispatchQueue.main.async {
+            
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let invitations):
+                    print("Successfully fetched \(invitations.count) pending invitations.")
+                    self.pendingInvitations = invitations
+                    self.invitationsTable.reloadData()
+                case .failure(let error):
+                    print("Error fetching pending invitations: \(error.localizedDescription)")
                     self.pendingInvitations = []
                     self.invitationsTable.reloadData()
                 }
             }
-        }
-    }
-    
-    func fetchInviterNames(for trips: [Trip]) {
-        let group = DispatchGroup()
-        for trip in trips {
-            group.enter()
-            UserManager.shared.fetchName(forUserWithUID: trip.ownerUID) { result in
-                switch result {
-                case .success(let name):
-                    // Store the fetched name using the owner's UID as the key
-                    self.inviterNames[trip.ownerUID] = name
-                case .failure:
-                    self.inviterNames[trip.ownerUID] = "Unknown Inviter"
-                }
-                group.leave()
-            }
-        }
-        
-        group.notify(queue: .main) {
-            // Once all names are fetched, reload the table
-            self.invitationsTable.reloadData()
         }
     }
     
@@ -71,46 +49,49 @@ class InvitationsViewController: UIViewController, UITableViewDataSource, UITabl
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "InvitationCell", for: indexPath) as! InvitationCell
-        let trip = pendingInvitations[indexPath.row]
         
-        // Configure cell labels
-        cell.destinationLabel.text = trip.destination
-        cell.inviterLabel.text = "Invited by: \(inviterNames[trip.ownerUID] ?? "...")"
+        // 3. Configure the cell with the 'Invitation' object.
+        let invitation = pendingInvitations[indexPath.row]
         
-        // Handle "Accept" button tap
+        cell.destinationLabel.text = invitation.tripName
+        cell.inviterLabel.text = "Invited by: \(invitation.ownerName)"
+        
+        // 4. Update the button actions to call the new manager functions.
         cell.onAccept = { [weak self] in
-            guard let self = self, let currentUserUID = Auth.auth().currentUser?.uid else { return }
-            
-            TripManager.shared.updateTraveler(forTrip: trip, travelerUID: currentUserUID, newStatus: "confirmed") { error in
+            TripManager.shared.acceptInvitation(invitation) { error in
                 if let error = error {
                     print("Error accepting invite: \(error.localizedDescription)")
-                    // Optionally show an alert to the user
                 } else {
                     print("Invite accepted successfully!")
-                    // Remove the accepted invitation and refresh the table
-                    DispatchQueue.main.async {
-                        self.pendingInvitations.remove(at: indexPath.row)
-                        tableView.deleteRows(at: [indexPath], with: .automatic)
-                    }
+                    // Optimistically remove the cell from the UI.
+                    self?.removeInvitation(at: indexPath)
                 }
             }
         }
         
-        // Handle "Decline" button tap
         cell.onDecline = { [weak self] in
-            // To decline, you can either remove the user from the travelers map
-            // or update their status to "declined". For now, we'll just remove it locally.
-            print("Declined invite for trip to \(trip.destination)")
-            DispatchQueue.main.async {
-                self?.pendingInvitations.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+            TripManager.shared.declineInvitation(invitation) { error in
+                if let error = error {
+                    print("Error ignoring invite: \(error.localizedDescription)")
+                } else {
+                    print("Invite ignored successfully!")
+                    self?.removeInvitation(at: indexPath)
+                }
             }
         }
         
         return cell
     }
     
-    
+    // Helper function to remove a row from the table safely.
+    private func removeInvitation(at indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            if self.pendingInvitations.indices.contains(indexPath.row) {
+                self.pendingInvitations.remove(at: indexPath.row)
+                self.invitationsTable.deleteRows(at: [indexPath], with: .automatic)
+            }
+        }
+    }
 }
 
 class InvitationCell: UITableViewCell {
