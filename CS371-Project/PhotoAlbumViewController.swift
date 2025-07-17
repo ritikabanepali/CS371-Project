@@ -5,11 +5,17 @@ import Cloudinary
 let config = CLDConfiguration(cloudName: "dzemwygcg", secure: true)
 let cloudinary = CLDCloudinary(configuration: config)
 
-class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
 
     @IBOutlet weak var photoCollection: UICollectionView!
     var tripID: String?
     var images: [UIImage] = []
+    
+    @IBAction func cameraButtonTapped(_ sender: UIButton) {
+        openCamera()
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +42,19 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         picker.delegate = self
         present(picker, animated: true)
     }
+    
+    func openCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.sourceType = .camera
+            picker.allowsEditing = false
+            present(picker, animated: true)
+        } else {
+            print("Camera not available")
+        }
+    }
+
 
     // MARK: - PHPicker Delegate
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
@@ -52,6 +71,22 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
             }
         }
     }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true)
+
+        if let image = info[.originalImage] as? UIImage {
+            self.images.append(image)
+            self.photoCollection.reloadData()
+            self.uploadImageToCloudinary(image)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+
+
 
     // MARK: - Cloudinary Upload
     func uploadImageToCloudinary(_ image: UIImage) {

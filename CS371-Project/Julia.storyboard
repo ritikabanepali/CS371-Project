@@ -3,6 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -254,8 +255,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fff-aY-JE4">
-                                <rect key="frame" x="0.0" y="152" width="393" height="517"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Fff-aY-JE4">
+                                <rect key="frame" x="33" y="152" width="326.33333333333348" height="517"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aQC-W5-41p">
                                     <size key="itemSize" width="128" height="128"/>
@@ -289,11 +290,29 @@
                                 <color key="textColor" red="0.29803922770000002" green="0.41568624970000001" blue="0.1686274707" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LDw-Er-p5m">
-                                <rect key="frame" x="102" y="693" width="189" height="80"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dde-qY-hqn">
+                                <rect key="frame" x="279" y="693" width="80" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="189" id="4z5-Fp-fyY"/>
+                                    <constraint firstAttribute="width" constant="80" id="DR0-bx-Wmm"/>
+                                    <constraint firstAttribute="height" constant="80" id="Nex-l8-Hlw"/>
+                                </constraints>
+                                <color key="tintColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.91764706370000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" cornerStyle="capsule">
+                                    <imageReference key="image" image="camera.fill" catalog="system" symbolScale="large"/>
+                                    <color key="baseForegroundColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.91764706370000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="addPhotosButtonTapped:" destination="zry-E2-PTr" eventType="touchUpInside" id="pAw-oJ-6Pi"/>
+                                    <action selector="cameraButtonTapped:" destination="zry-E2-PTr" eventType="touchUpInside" id="ckJ-cn-3Yz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LDw-Er-p5m">
+                                <rect key="frame" x="33" y="692" width="229" height="80"/>
+                                <constraints>
                                     <constraint firstAttribute="height" constant="80" id="A5q-jZ-TgB"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="229" id="p69-aK-052"/>
                                 </constraints>
                                 <color key="tintColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.91764706370000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
@@ -311,12 +330,13 @@
                         <constraints>
                             <constraint firstItem="rET-aN-X7J" firstAttribute="bottom" secondItem="LDw-Er-p5m" secondAttribute="bottom" constant="10" id="38e-3U-P3Z"/>
                             <constraint firstItem="o09-Lp-F0C" firstAttribute="top" secondItem="rET-aN-X7J" secondAttribute="top" constant="38" id="7li-hQ-Qdg"/>
+                            <constraint firstItem="Dde-qY-hqn" firstAttribute="leading" secondItem="LDw-Er-p5m" secondAttribute="trailing" constant="8" symbolic="YES" id="8YY-sF-pJG"/>
                             <constraint firstItem="Fff-aY-JE4" firstAttribute="top" secondItem="o09-Lp-F0C" secondAttribute="bottom" constant="22" id="B2I-hK-oDF"/>
+                            <constraint firstItem="LDw-Er-p5m" firstAttribute="leading" secondItem="rET-aN-X7J" secondAttribute="leading" constant="33" id="BYP-9T-gJ7"/>
                             <constraint firstItem="o09-Lp-F0C" firstAttribute="centerX" secondItem="rET-aN-X7J" secondAttribute="centerX" id="BjT-wS-uay"/>
                             <constraint firstItem="rET-aN-X7J" firstAttribute="bottom" secondItem="Fff-aY-JE4" secondAttribute="bottom" constant="114" id="Cy9-K1-kSd"/>
-                            <constraint firstItem="LDw-Er-p5m" firstAttribute="leading" secondItem="rET-aN-X7J" secondAttribute="leading" constant="102" id="Lm0-ae-hAD"/>
-                            <constraint firstItem="rET-aN-X7J" firstAttribute="trailing" secondItem="LDw-Er-p5m" secondAttribute="trailing" constant="102" id="RMm-V1-iAt"/>
                             <constraint firstItem="rET-aN-X7J" firstAttribute="trailing" secondItem="Fff-aY-JE4" secondAttribute="trailing" id="TTh-Me-S1j"/>
+                            <constraint firstItem="Dde-qY-hqn" firstAttribute="centerY" secondItem="LDw-Er-p5m" secondAttribute="centerY" id="V4h-vj-MY2"/>
                             <constraint firstItem="Fff-aY-JE4" firstAttribute="leading" secondItem="rET-aN-X7J" secondAttribute="leading" id="cTU-jE-zgQ"/>
                         </constraints>
                     </view>
@@ -398,11 +418,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="camera.fill" catalog="system" width="128" height="93"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
