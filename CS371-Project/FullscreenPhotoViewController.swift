@@ -13,9 +13,10 @@ class FullscreenPhotoViewController: UIViewController {
 
     var images: [UIImage] = []
     var likes: [Int] = []
-
     var currentIndex: Int = 0
     var tripID: String?
+    var pageIndicatorStack: UIStackView!
+
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
@@ -37,8 +38,21 @@ class FullscreenPhotoViewController: UIViewController {
         loadLikes()
         styleButtons()
         updateLikeButtonState()
+
         
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        if pageIndicatorStack == nil {
+            createIndicator()
+            updatePageIndicator()
+        }
+
+        positionIndicator()
+    }
+ 
 
     @objc func dismissSelf() {
         dismiss(animated: true, completion: nil)
@@ -56,6 +70,8 @@ class FullscreenPhotoViewController: UIViewController {
                 imageView.image = images[currentIndex]
             }
         }
+      
+        updatePageIndicator()
         updateLikeButtonState()
     }
     
@@ -171,9 +187,80 @@ class FullscreenPhotoViewController: UIViewController {
         return UserManager.shared.currentUserID
     }
 
+    //MARK: Indicator
+    func updatePageIndicator() {
+        print("Dots count: \(images.count), Current: \(currentIndex)")
 
+        pageIndicatorStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        
+        let maxVisible = 7
+        let total = images.count
+        let current = currentIndex
+        
+        let start: Int
+        if total <= maxVisible {
+            start = 0
+        } else {
+            let half = maxVisible / 2
+            if current <= half {
+                start = 0
+            } else if current >= total - half - 1 {
+                start = total - maxVisible
+            } else {
+                start = current - half
+            }
+        }
 
+        let end = min(start + maxVisible, total)
+        
+        for i in start..<end {
+            let dot = UIView()
+            dot.translatesAutoresizingMaskIntoConstraints = false
+            dot.heightAnchor.constraint(equalToConstant: 8).isActive = true
+            dot.widthAnchor.constraint(equalToConstant: 8).isActive = true
+            dot.layer.cornerRadius = 4
+            dot.backgroundColor = (i == currentIndex) ? .white : UIColor.white.withAlphaComponent(0.4)
+            pageIndicatorStack.addArrangedSubview(dot)
+        }
+    }
+    
+    func createIndicator() {
+        pageIndicatorStack = UIStackView()
+        pageIndicatorStack.axis = .horizontal
+        pageIndicatorStack.alignment = .center
+        pageIndicatorStack.distribution = .equalSpacing
+        pageIndicatorStack.spacing = 6
+        pageIndicatorStack.translatesAutoresizingMaskIntoConstraints = true
+        pageIndicatorStack.backgroundColor = .clear // remove debug color
 
+        view.addSubview(pageIndicatorStack)
+    }
+    
+    func positionIndicator() {
+        guard let image = imageView.image else { return }
 
+        // Compute actual image frame inside imageView when aspectFit is used
+        let imageSize = image.size
+        let viewSize = imageView.bounds.size
+
+        let scale = min(viewSize.width / imageSize.width, viewSize.height / imageSize.height)
+        let displaySize = CGSize(width: imageSize.width * scale, height: imageSize.height * scale)
+
+        let imageOrigin = CGPoint(
+            x: imageView.frame.origin.x + (viewSize.width - displaySize.width) / 2,
+            y: imageView.frame.origin.y + (viewSize.height - displaySize.height) / 2
+        )
+
+        let imageFrame = CGRect(origin: imageOrigin, size: displaySize)
+
+        // Position the indicator
+        let stackWidth = CGFloat(min(images.count, 7)) * 8 + CGFloat(min(images.count, 7) - 1) * pageIndicatorStack.spacing
+        pageIndicatorStack.frame = CGRect(
+            x: imageFrame.midX - stackWidth / 2,
+            y: imageFrame.maxY - 20,
+            width: stackWidth,
+            height: 10
+        )
+    }
 
 }
