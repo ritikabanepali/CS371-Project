@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 struct TravelerViewModel {
     let uid: String
@@ -24,6 +25,7 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var trip: Trip?
     private var travelers: [TravelerViewModel] = []
+    private var tripListener: ListenerRegistration?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,8 +57,38 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         
         applyShadow(to: inviteButton)
         
-        loadTravelerData()
+        setupTripListener()
     }
+    
+    deinit {
+        // Removes the listener when the view controller is deallocated
+        tripListener?.remove()
+        print("TravelerViewController deinit, listener removed.")
+    }
+    
+    private func setupTripListener() {
+        guard let trip = trip else { return }
+        
+        let db = Firestore.firestore()
+        let tripRef = db.collection("Users").document(trip.ownerUID).collection("trips").document(trip.id)
+        
+        tripListener = tripRef.addSnapshotListener { [weak self] documentSnapshot, error in
+            guard let self = self else { return }
+            
+            guard let document = documentSnapshot, document.exists else {
+                print("Trip document not found or error: \(error?.localizedDescription ?? "unknown")")
+                return
+            }
+            
+            // Get the updated list of traveler UIDs from the document
+            if let updatedTravelerUIDs = document.data()?["travelerUIDs"] as? [String] {
+                // Update the local trip object and reload the data
+                self.trip?.travelerUIDs = updatedTravelerUIDs
+                self.loadTravelerData()
+            }
+        }
+    }
+    
     
     private func loadTravelerData() {
         guard let trip = trip else { return }
