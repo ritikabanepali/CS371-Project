@@ -390,17 +390,6 @@
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="457" id="flK-MO-aYa"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZMN-b9-baT">
-                                <rect key="frame" x="100" y="679" width="49.666666666666657" height="34.333333333333371"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain">
-                                    <imageReference key="image" image="heart.circle" catalog="system" symbolScale="large"/>
-                                    <color key="baseForegroundColor" red="0.83232717803030298" green="0.40509616091173983" blue="0.54094438216818475" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="likeButtonTapped:" destination="Jhb-gh-t7O" eventType="touchUpInside" id="WVE-Vi-qJm"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUO-VU-Ct6">
                                 <rect key="frame" x="238" y="679" width="50" height="35"/>
                                 <state key="normal" title="Button"/>
@@ -411,20 +400,30 @@
                                     <action selector="deleteButtonTapped:" destination="Jhb-gh-t7O" eventType="touchUpInside" id="YaU-Uc-G8w"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZMN-b9-baT">
+                                <rect key="frame" x="100" y="679" width="49.666666666666657" height="34.333333333333371"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <imageReference key="image" image="heart.circle" catalog="system" symbolScale="large"/>
+                                    <color key="baseForegroundColor" red="0.83232717803030298" green="0.40509616091173983" blue="0.54094438216818475" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="likeButtonTapped:" destination="Jhb-gh-t7O" eventType="touchUpInside" id="WVE-Vi-qJm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="EUB-XN-OLy"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="EUB-XN-OLy" firstAttribute="bottom" secondItem="B1C-jx-pij" secondAttribute="bottom" constant="169" id="02W-6T-qdm"/>
-                            <constraint firstItem="ZMN-b9-baT" firstAttribute="top" secondItem="B1C-jx-pij" secondAttribute="bottom" constant="64" id="NGZ-Yi-SBV"/>
-                            <constraint firstItem="EUB-XN-OLy" firstAttribute="trailing" secondItem="dUO-VU-Ct6" secondAttribute="trailing" constant="100" id="PhU-8R-NAB"/>
-                            <constraint firstItem="ZMN-b9-baT" firstAttribute="leading" secondItem="EUB-XN-OLy" secondAttribute="leading" constant="100" id="Zob-uO-SPD"/>
+                            <constraint firstItem="ZMN-b9-baT" firstAttribute="top" secondItem="B1C-jx-pij" secondAttribute="bottom" id="NGZ-Yi-SBV"/>
+                            <constraint firstItem="EUB-XN-OLy" firstAttribute="trailing" secondItem="dUO-VU-Ct6" secondAttribute="trailing" constant="85" id="PhU-8R-NAB"/>
+                            <constraint firstItem="ZMN-b9-baT" firstAttribute="leading" secondItem="EUB-XN-OLy" secondAttribute="leading" constant="115" id="Zob-uO-SPD"/>
                             <constraint firstItem="EUB-XN-OLy" firstAttribute="trailing" secondItem="B1C-jx-pij" secondAttribute="trailing" id="Zq0-0V-7pI"/>
                             <constraint firstItem="B1C-jx-pij" firstAttribute="top" secondItem="EUB-XN-OLy" secondAttribute="top" constant="40" id="evP-ri-4vE"/>
                             <constraint firstItem="dUO-VU-Ct6" firstAttribute="centerY" secondItem="ZMN-b9-baT" secondAttribute="centerY" id="fJB-OD-YqY"/>
                             <constraint firstItem="dUO-VU-Ct6" firstAttribute="leading" secondItem="ZMN-b9-baT" secondAttribute="trailing" constant="88.333333333333343" id="gZe-DR-R1M"/>
                             <constraint firstItem="B1C-jx-pij" firstAttribute="leading" secondItem="EUB-XN-OLy" secondAttribute="leading" id="xPg-lG-vFB"/>
-                            <constraint firstItem="ZMN-b9-baT" firstAttribute="leading" secondItem="EUB-XN-OLy" secondAttribute="leading" constant="100" id="ym5-Lm-Jqf"/>
                         </constraints>
                     </view>
                     <connections>
