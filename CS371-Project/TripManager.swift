@@ -241,28 +241,30 @@ class TripManager {
         }
     }
 
-
-    func fetchAcceptedInvitations(completion: @escaping (Result<[Trip], Error>) -> Void) {
+    func fetchAcceptedInvitations(completion: @escaping (Result<([Trip], [Trip]), Error>) -> Void) {
         guard let currentUserID = UserManager.shared.currentUserID else {
             let error = NSError(domain: "TripManagerError", code: 401, userInfo: [NSLocalizedDescriptionKey: "User not logged in."])
             completion(.failure(error))
             return
         }
         
-        // This query is inefficient for a large user base, but will work for your project.
-        // It finds all trips where the current user is a confirmed traveler but not the owner.
         db.collectionGroup("trips")
-            .whereField("travelerUIDs", arrayContains: currentUserID)
-          .whereField("ownerUID", isNotEqualTo: currentUserID) // Exclude trips you own
+          .whereField("travelerUIDs", arrayContains: currentUserID)
+          .whereField("ownerUID", isNotEqualTo: currentUserID)
           .getDocuments { (querySnapshot, error) in
             if let error = error {
                 completion(.failure(error))
                 return
             }
 
-            let trips = querySnapshot?.documents.compactMap { doc -> Trip? in
+            var futureTrips: [Trip] = []
+            var pastTrips: [Trip] = []
+            
+            let documents = querySnapshot?.documents ?? []
+
+            for doc in documents {
                 let data = doc.data()
-                return Trip(
+                let trip = Trip(
                     id: doc.documentID,
                     ownerUID: data["ownerUID"] as? String ?? "",
                     destination: data["destination"] as? String ?? "Unknown Destination",
@@ -270,9 +272,35 @@ class TripManager {
                     endDate: (data["endDate"] as? Timestamp)?.dateValue() ?? Date(),
                     travelerUIDs: data["travelerUIDs"] as? [String] ?? []
                 )
-            } ?? []
+                
+                // Sort the trip into the correct array
+                if trip.isPastTrip {
+                    pastTrips.append(trip)
+                } else {
+                    futureTrips.append(trip)
+                }
+            }
             
-            completion(.success(trips))
+            // Return both arrays in the completion handler
+            completion(.success((futureTrips, pastTrips)))
+        }
+    }
+    
+    func removeTraveler(from trip: Trip, userToRemoveUID: String, completion: @escaping (Error?) -> Void) {
+        // A trip owner cannot remove themselves, they must delete the trip.
+        if trip.ownerUID == userToRemoveUID {
+            let error = NSError(domain: "TripManagerError", code: 403, userInfo: [NSLocalizedDescriptionKey: "A trip owner cannot leave their own trip."])
+            completion(error)
+            return
+        }
+
+        let tripRef = db.collection("Users").document(trip.ownerUID).collection("trips").document(trip.id)
+        
+        // Use FieldValue.arrayRemove to safely remove the UID from the array
+        tripRef.updateData([
+            "travelerUIDs": FieldValue.arrayRemove([userToRemoveUID])
+        ]) { error in
+            completion(error)
         }
     }
 }

@@ -30,40 +30,37 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
     func fetchTrips() {
         let group = DispatchGroup()
         var ownedPastTrips: [Trip] = []
-        var acceptedTrips: [Trip] = []
+        var acceptedPastTrips: [Trip] = [] // Renamed for clarity
 
-        // 1. Fetch trips the user owns
+        // 1. Fetch owned trips (this part is unchanged)
         group.enter()
         TripManager.shared.fetchUserTrips { result in
-            // The change is here: We use the 'pastTrips' array from the result
             if case .success(let (_, pastTrips)) = result {
                 ownedPastTrips = pastTrips
             }
             group.leave()
         }
 
-        // 2. Fetch trips the user has accepted invites for
+        // 2. Fetch accepted trips (this part is now simpler)
         group.enter()
         TripManager.shared.fetchAcceptedInvitations { result in
-            if case .success(let trips) = result {
-                acceptedTrips = trips
+            // Now you can directly get the past trips from the result
+            if case .success(let (_, pastTrips)) = result {
+                acceptedPastTrips = pastTrips
             }
             group.leave()
         }
 
-        // 3. When both are done, combine, filter, and update the UI
+        // 3. Combine and update the UI (this part is now more efficient)
         group.notify(queue: .main) {
-            // Combine the two arrays using a dictionary to prevent duplicates
+            // Combine the two arrays of ALREADY-FILTERED past trips
             var combinedTrips = [String: Trip]()
-            (ownedPastTrips + acceptedTrips).forEach { trip in
+            (ownedPastTrips + acceptedPastTrips).forEach { trip in
                 combinedTrips[trip.id] = trip
             }
-
-            // Filter the combined list to ensure we only have past trips
-            let allPastTrips = Array(combinedTrips.values).filter { $0.isPastTrip }
-
-            // Sort by end date to show the most recently-ended trip first
-            self.trips = allPastTrips.sorted { $0.endDate > $1.endDate }
+            
+            // No need to filter again, just sort and reload
+            self.trips = Array(combinedTrips.values).sorted { $0.endDate > $1.endDate }
             self.tableView.reloadData()
         }
     }

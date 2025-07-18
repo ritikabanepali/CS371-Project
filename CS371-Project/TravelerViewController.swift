@@ -9,6 +9,7 @@ import UIKit
 import FirebaseAuth
 
 struct TravelerViewModel {
+    let uid: String
     let name: String
     let status: String // "confirmed" or "pending"
     let surveyStatus: String
@@ -68,12 +69,12 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
             UserManager.shared.fetchName(forUserWithUID: uid) { result in
                 switch result {
                 case .success(let name):
-                    let traveler = TravelerViewModel(name: name, status: "confirmed", surveyStatus: "N") // <-- 2. Hardcode the status
+                    let traveler = TravelerViewModel(uid: uid, name: name, status: "confirmed", surveyStatus: "N")
                     fetchedTravelers.append(traveler)
                 case .failure(let error):
                     print("Could not fetch name for UID \(uid): \(error)")
                     // Also update the placeholder to use "confirmed"
-                    let traveler = TravelerViewModel(name: "Unknown User", status: "confirmed", surveyStatus: "N")
+                    let traveler = TravelerViewModel(uid: uid, name: "Unknown User", status: "confirmed", surveyStatus: "N") 
                     fetchedTravelers.append(traveler)
                 }
                 group.leave()
@@ -122,6 +123,69 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
              
              self.showAlert(title: "Success!", message: "\(email) has been invited to the trip.")
          }
+    }
+    
+
+    // This function determines which rows can be swiped.
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        guard let currentUserUID = Auth.auth().currentUser?.uid, let trip = self.trip else {
+            return false
+        }
+        
+        let travelerToRemove = travelers[indexPath.row]
+
+        // Allow editing if:
+        // 1. The current user is the trip owner and isn't trying to remove themselves.
+        if currentUserUID == trip.ownerUID && currentUserUID != travelerToRemove.uid {
+            return true
+        }
+
+        // 2. The current user is trying to remove themselves (and they aren't the owner).
+        if currentUserUID == travelerToRemove.uid && currentUserUID != trip.ownerUID {
+            return true
+        }
+
+        return false
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // This immediately deselects the row after it's been tapped.
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    // This function handles the actual deletion.
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            guard let trip = self.trip else { return }
+            
+            let travelerToRemove = travelers[indexPath.row]
+            let isLeaving = travelerToRemove.uid == Auth.auth().currentUser?.uid
+            let alertTitle = isLeaving ? "Leave Trip?" : "Remove Traveler?"
+            let alertMessage = isLeaving ? "Are you sure you want to leave this trip?" : "Are you sure you want to remove \(travelerToRemove.name)?"
+
+            // Show a confirmation alert
+            let confirmationAlert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+            confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            confirmationAlert.addAction(UIAlertAction(title: isLeaving ? "Leave" : "Remove", style: .destructive, handler: { _ in
+                
+                // Call the manager to remove the user from Firestore
+                TripManager.shared.removeTraveler(from: trip, userToRemoveUID: travelerToRemove.uid) { [weak self] error in
+                    guard let self = self else { return }
+                    
+                    if let error = error {
+                        self.showAlert(title: "Error", message: error.localizedDescription)
+                        return
+                    }
+                    
+                    // If successful, remove the user from the local array and table view
+                    DispatchQueue.main.async {
+                        self.travelers.remove(at: indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .automatic)
+                    }
+                }
+            }))
+            self.present(confirmationAlert, animated: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

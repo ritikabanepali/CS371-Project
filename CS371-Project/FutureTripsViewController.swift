@@ -45,9 +45,10 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
         // 2. Fetch trips the user has accepted invites for
         group.enter()
         TripManager.shared.fetchAcceptedInvitations { result in
-            // This will tell you if the query failed or just returned empty
-            if case .success(let trips) = result {
-                acceptedTrips = trips
+            // Unpack the tuple and take only the first array (futureTrips)
+            if case .success(let (futureTrips, _)) = result {
+                // Assign the future trips to your local variable
+                acceptedTrips = futureTrips
             }
             group.leave()
         }
