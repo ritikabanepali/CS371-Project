@@ -12,8 +12,9 @@ import UIKit
 class FullscreenPhotoViewController: UIViewController {
 
     var images: [UIImage] = []
+    var likes: [Int] = []
+
     var currentIndex: Int = 0
-    var likedImages: Set<String> = []
     var tripID: String?
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var likeButton: UIButton!
@@ -33,7 +34,9 @@ class FullscreenPhotoViewController: UIViewController {
         swipeRight.direction = .right
         view.addGestureRecognizer(swipeRight)
         
+        loadLikes()
         styleButtons()
+        updateLikeButtonState()
         
     }
 
@@ -65,19 +68,28 @@ class FullscreenPhotoViewController: UIViewController {
     }
     
     @IBAction func likeButtonTapped(_ sender: UIButton) {
-        guard let key = imageKey(for: currentIndex) else { return }
-        var liked = UserDefaults.standard.stringArray(forKey: "likedPhotos") ?? []
+        guard let key = imageKey(for: currentIndex),
+              let tripID = tripID,
+              let userID = getCurrentUserID() else { return }
+
+        let likedKey = "likedPhotos_\(tripID)_\(userID)"
+        var liked = UserDefaults.standard.stringArray(forKey: likedKey) ?? []
 
         if liked.contains(key) {
             liked.removeAll { $0 == key }
-            likeButton.setImage(UIImage(systemName: "heart.circle"), for: .normal)
+            likes[currentIndex] = max(likes[currentIndex] - 1, 0)
         } else {
             liked.append(key)
-            likeButton.setImage(UIImage(systemName: "heart.circle.fill"), for: .normal)
+            likes[currentIndex] += 1
         }
 
-        UserDefaults.standard.set(liked, forKey: "likedPhotos")
+        UserDefaults.standard.set(liked, forKey: likedKey)
+        UserDefaults.standard.set(likes, forKey: "likes_\(tripID)_\(userID)")
+
+        updateLikeButtonState()
     }
+
+
     
     @IBAction func deleteButtonTapped(_ sender: UIButton) {
         guard let tripID = tripID,
@@ -112,15 +124,40 @@ class FullscreenPhotoViewController: UIViewController {
             updateLikeButtonState()
         }
     }
+    
+    //MARK: likes
 
     
     func updateLikeButtonState() {
-        guard let key = imageKey(for: currentIndex) else { return }
-        let liked = UserDefaults.standard.stringArray(forKey: "likedPhotos") ?? []
+        guard let key = imageKey(for: currentIndex),
+              let tripID = tripID,
+              let userID = getCurrentUserID() else { return }
+
+        let liked = UserDefaults.standard.stringArray(forKey: "likedPhotos_\(tripID)_\(userID)") ?? []
         let isLiked = liked.contains(key)
-        let iconName = isLiked ? "heart.fill" : "heart"
-        likeButton.setImage(UIImage(systemName: iconName), for: .normal)
+        let iconName = isLiked ? "heart.circle.fill" : "heart.circle"
+
+        let config = UIImage.SymbolConfiguration(pointSize: 40, weight: .regular)
+        likeButton.setImage(UIImage(systemName: iconName, withConfiguration: config), for: .normal)
     }
+
+
+    
+    func loadLikes() {
+        guard let tripID = tripID,
+              let userID = getCurrentUserID() else { return }
+
+        let key = "likes_\(tripID)_\(userID)"
+        let savedLikes = UserDefaults.standard.array(forKey: key) as? [Int] ?? []
+
+        // Ensure same size as images
+        if savedLikes.count == images.count {
+            likes = savedLikes
+        } else {
+            likes = Array(repeating: 0, count: images.count)
+        }
+    }
+
     
     //MARK: styling
     func styleButtons(){
@@ -129,6 +166,11 @@ class FullscreenPhotoViewController: UIViewController {
         deleteButton.setImage(largeTrash, for: .normal)
         
     }
+    
+    func getCurrentUserID() -> String? {
+        return UserManager.shared.currentUserID
+    }
+
 
 
 
