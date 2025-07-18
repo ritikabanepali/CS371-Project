@@ -26,7 +26,6 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("✅ CHECKPOINT 2: TravelerVC received trip. Travelers count: \(self.trip?.travelers.count ?? -1)")
         invitedTableView.dataSource = self
         invitedTableView.delegate = self
         
@@ -54,27 +53,25 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         let group = DispatchGroup()
         var fetchedTravelers: [TravelerViewModel] = []
 
-        for (uid, status) in trip.travelers {
-            print("✅ CHECKPOINT 3: Loop is running for UID: \(uid)")
-            group.enter() // Enter the group for each async call
+        for uid in trip.travelerUIDs { // <-- 1. Get only the uid
+            group.enter()
             UserManager.shared.fetchName(forUserWithUID: uid) { result in
                 switch result {
                 case .success(let name):
-                    let traveler = TravelerViewModel(name: name, status: status, surveyStatus: "N")
+                    let traveler = TravelerViewModel(name: name, status: "confirmed", surveyStatus: "N") // <-- 2. Hardcode the status
                     fetchedTravelers.append(traveler)
                 case .failure(let error):
                     print("Could not fetch name for UID \(uid): \(error)")
-                    // Add a placeholder if the name fetch fails
-                    let traveler = TravelerViewModel(name: "Unknown User", status: status, surveyStatus: "N")
+                    // Also update the placeholder to use "confirmed"
+                    let traveler = TravelerViewModel(name: "Unknown User", status: "confirmed", surveyStatus: "N")
                     fetchedTravelers.append(traveler)
                 }
-                group.leave() // Leave the group when the call is done
+                group.leave()
             }
         }
         
         // This closure runs only after ALL fetchName calls have completed
         group.notify(queue: .main) {
-            print("✅ CHECKPOINT 4: All names fetched. Final array count: \(fetchedTravelers.count). Reloading table.")
 
             // Sort to show confirmed users first
             self.travelers = fetchedTravelers.sorted {

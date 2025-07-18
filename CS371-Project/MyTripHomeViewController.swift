@@ -88,7 +88,6 @@ class MyTripHomeViewController: UIViewController {
         // 2. Instantiate the specific view controller using its Storyboard ID.
         //    Make sure the ID matches what you set in the storyboard.
         if let travelerVC = storyboard.instantiateViewController(withIdentifier: "travelersID") as? TravelerViewController {
-            print("✅ CHECKPOINT 1: Passing trip to TravelerVC. Travelers count: \(self.trip?.travelers.count ?? -1)")
 
             // 3. Pass the trip data to the new view controller.
             travelerVC.trip = self.trip

@@ -25,7 +25,7 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
     }
 
 
-    // Replace the old fetchTrips() function with this new one
+    // In FutureTripsViewController.swift
 
     func fetchTrips() {
         let group = DispatchGroup()
@@ -35,6 +35,7 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
         // 1. Fetch trips the user owns
         group.enter()
         TripManager.shared.fetchUserTrips { result in
+            // We only care about future trips from this result
             if case .success(let (futureTrips, _)) = result {
                 ownedTrips = futureTrips
             }
@@ -44,27 +45,30 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
         // 2. Fetch trips the user has accepted invites for
         group.enter()
         TripManager.shared.fetchAcceptedInvitations { result in
+            // This will tell you if the query failed or just returned empty
             if case .success(let trips) = result {
                 acceptedTrips = trips
             }
             group.leave()
         }
         
-        // 3. When both are done, combine and update the UI
+        // 3. When both are done, combine the results and update the UI
         group.notify(queue: .main) {
-            // Combine the two arrays and remove duplicates
+            // Combine the two arrays. A dictionary handles any duplicates automatically.
             var combinedTrips = [String: Trip]()
             (ownedTrips + acceptedTrips).forEach { trip in
                 combinedTrips[trip.id] = trip
             }
             
-            // Sort the final list by start date
-            self.trips = Array(combinedTrips.values).sorted { $0.startDate < $1.startDate }
-            
+            // Filter out any trips that might have ended, sort by date, and reload the table
+            let allFutureTrips = Array(combinedTrips.values).filter { !$0.isPastTrip }
+            self.trips = allFutureTrips.sorted { $0.startDate < $1.startDate }
             self.tableView.reloadData()
         }
     }
-
+    
+    
+    
     // MARK: - TableView Data Source
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -81,7 +85,7 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
         cell.destinationLabel.text = trip.destination
         cell.dateLabel.text = "\(formatter.string(from: trip.startDate)) → \(formatter.string(from: trip.endDate))"
         
-        cell.travelersLabel.text = "\(trip.travelers.count) travelers"
+        cell.travelersLabel.text = "\(trip.travelerUIDs.count) travelers"
 
         // Style cell
         cell.containerView.layer.cornerRadius = 12

@@ -20,14 +20,15 @@ struct Invitation {
 }
 
 // The Trip object that manages the data of a Trip that a user has
+// Change this struct
 struct Trip {
-    let id: String // The document ID from Firestore
+    let id: String
     let ownerUID: String
     let destination: String
     let startDate: Date
     let endDate: Date
-    var travelers: [String: String] // travelers a part of a trip
-    
+    var travelerUIDs: [String]
+
     var isPastTrip: Bool {
         return Date() > endDate
     }
@@ -53,7 +54,7 @@ class TripManager {
         let userTripsCollection = db.collection("Users").document(ownerUID).collection("trips")
         
         // the owner is automatically a "confirmed" member of the trip.
-        let initialTravelers = [ownerUID: "confirmed"]
+        let initialTravelers = [ownerUID]
         
         // prepare the data to be saved to Firestore.
         let tripData: [String: Any] = [
@@ -61,7 +62,7 @@ class TripManager {
             "destination": destination,
             "startDate": Timestamp(date: startDate),
             "endDate": Timestamp(date: endDate),
-            "travelers": initialTravelers
+            "travelerUIDs": initialTravelers
         ]
         
         // add a new document to the "trips" collection.
@@ -79,7 +80,7 @@ class TripManager {
                     destination: destination,
                     startDate: startDate,
                     endDate: endDate,
-                    travelers: initialTravelers
+                    travelerUIDs: initialTravelers
                 )
                 completion(.success(newTrip))
             }
@@ -147,13 +148,13 @@ class TripManager {
                 let ownerUID = data["ownerUID"] as? String ?? ""
                 let destination = data["destination"] as? String ?? "Unknown Destination"
                 
-                let travelers = data["travelers"] as? [String: String] ?? [:]
+                let travelers = data["travelerUIDs"] as? [String] ?? []
                 
                 // convert Firestore Timestamps back to Swift Dates
                 let startDate = (data["startDate"] as? Timestamp)?.dateValue() ?? Date()
                 let endDate = (data["endDate"] as? Timestamp)?.dateValue() ?? Date()
                 
-                let trip = Trip(id: id, ownerUID: ownerUID, destination: destination, startDate: startDate, endDate: endDate, travelers: travelers)
+                let trip = Trip(id: id, ownerUID: ownerUID, destination: destination, startDate: startDate, endDate: endDate, travelerUIDs: travelers)
                 
                 // sort the trip into the correct array
                 if trip.isPastTrip {
@@ -218,21 +219,20 @@ class TripManager {
     func acceptInvitation(_ invitation: Invitation, completion: @escaping (Error?) -> Void) {
         let tripRef = db.collection("Users").document(invitation.ownerUID).collection("trips").document(invitation.tripID)
         let invitationRef = db.collection("invitations").document(invitation.id)
-        
-        // 1. Add user to the main trip document as "confirmed"
+
+        // Use arrayUnion to add the new traveler's UID to the array
         tripRef.updateData([
-            "travelers.\(invitation.inviteeUID)": "confirmed"
+            "travelerUIDs": FieldValue.arrayUnion([invitation.inviteeUID])
         ]) { error in
             if let error = error {
-                completion(error) // Failed to update the trip, so stop.
+                completion(error)
                 return
             }
-            // 2. If trip update succeeds, delete the invitation document
-            invitationRef.delete { error in
-                completion(error)
-            }
+            // Step 2: Delete the invitation document
+            invitationRef.delete(completion: completion)
         }
     }
+    
 
     func declineInvitation(_ invitation: Invitation, completion: @escaping (Error?) -> Void) {
         // Just delete the invitation document
@@ -252,7 +252,7 @@ class TripManager {
         // This query is inefficient for a large user base, but will work for your project.
         // It finds all trips where the current user is a confirmed traveler but not the owner.
         db.collectionGroup("trips")
-          .whereField("travelers.\(currentUserID)", isEqualTo: "confirmed")
+            .whereField("travelerUIDs", arrayContains: currentUserID)
           .whereField("ownerUID", isNotEqualTo: currentUserID) // Exclude trips you own
           .getDocuments { (querySnapshot, error) in
             if let error = error {
@@ -268,7 +268,7 @@ class TripManager {
                     destination: data["destination"] as? String ?? "Unknown Destination",
                     startDate: (data["startDate"] as? Timestamp)?.dateValue() ?? Date(),
                     endDate: (data["endDate"] as? Timestamp)?.dateValue() ?? Date(),
-                    travelers: data["travelers"] as? [String: String] ?? [:]
+                    travelerUIDs: data["travelerUIDs"] as? [String] ?? []
                 )
             } ?? []
             
