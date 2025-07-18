@@ -138,6 +138,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="bQU-nn-OmL"/>
                     <connections>
+                        <outlet property="createButton" destination="UFD-k9-JBA" id="Qxx-i9-9jS"/>
+                        <outlet property="pastButton" destination="rmn-89-fFj" id="kVx-s7-ft7"/>
+                        <outlet property="pendingButton" destination="i24-Z2-Yjv" id="WUI-s1-G8W"/>
+                        <outlet property="settingsButton" destination="TJZ-fL-0H1" id="CQJ-Au-aaF"/>
+                        <outlet property="upcomingButton" destination="goR-0D-MoO" id="6gc-KY-srV"/>
                         <outlet property="welcomeLabel" destination="kO4-3U-M88" id="9fF-5E-gjT"/>
                     </connections>
                 </viewController>

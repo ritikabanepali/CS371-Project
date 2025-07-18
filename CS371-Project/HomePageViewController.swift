@@ -11,6 +11,9 @@ import FirebaseAuth
 class HomePageViewController: UIViewController {
     var handle: AuthStateDidChangeListenerHandle?
     
+    @IBOutlet var signinButton: UIButton!
+    @IBOutlet var createButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }

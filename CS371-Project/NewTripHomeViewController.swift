@@ -10,6 +10,13 @@ import UIKit
 class NewTripHomeViewController: UIViewController {
     
     @IBOutlet weak var welcomeLabel: UILabel!
+    
+    @IBOutlet var createButton: UIButton!
+    @IBOutlet var upcomingButton: UIButton!
+    @IBOutlet var pastButton: UIButton!
+    @IBOutlet var pendingButton: UIButton!
+    
+    
     @IBOutlet weak var futureTripsButton: UIButton!
     @IBOutlet weak var pastTripsButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
@@ -17,6 +24,12 @@ class NewTripHomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        applyShadow(to: createButton)
+        applyShadow(to: upcomingButton)
+        applyShadow(to: pastButton)
+        applyShadow(to: pendingButton)
+        applyShadow(to: settingsButton)
         
         // set the welcome text, later username will be sign in username
         if let firstName = UserManager.shared.currentUserFirstName {
@@ -27,10 +40,13 @@ class NewTripHomeViewController: UIViewController {
         }
     }
     
-    //    @IBAction func createNewTripTapped(_ sender: UIButton) {
-    //        let vc = storyboard?.instantiateViewController(withIdentifier: "CreateTripViewController") as! CreateTripViewController
-    //        navigationController?.pushViewController(vc, animated: true)
-    //    }
+    func applyShadow(to button: UIButton) {
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowRadius = 4
+        button.layer.masksToBounds = false
+    }
     
     @IBAction func pastTripsTapped(_ sender: UIButton) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "PastTripsViewController") as! PastTripsViewController

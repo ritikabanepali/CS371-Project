@@ -10,6 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class UserManager {
+    static let didUpdateUserData = Notification.Name("didUpdateUserDataNotification")
     static let shared = UserManager()
     private let db = Firestore.firestore()
     
@@ -58,6 +59,7 @@ class UserManager {
                     email: data?["Email"] as? String ?? ""
                 )
                 print("UserManager: User profile successfully fetched and set.")
+                NotificationCenter.default.post(name: UserManager.didUpdateUserData, object: nil)
                 completion(nil)
             } else {
                 print("UserManager: User document does not exist for UID: \(uid)")

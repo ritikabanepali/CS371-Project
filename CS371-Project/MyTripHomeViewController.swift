@@ -11,16 +11,33 @@ class MyTripHomeViewController: UIViewController {
     
     var trip: Trip?
     
+    @IBOutlet var travelersButton: UIButton!
+    @IBOutlet var photoButton: UIButton!
+    @IBOutlet var genButton: UIButton!
+    @IBOutlet var surveyButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        applyShadow(to: travelersButton)
+        applyShadow(to: photoButton)
+        applyShadow(to: genButton)
+        applyShadow(to: surveyButton)
         
         if let destination = trip?.destination {
             titleLabel.text = "\(destination)"
         } else {
             titleLabel.text = "My Trip"
         }
+    }
+    
+    func applyShadow(to button: UIButton) {
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowRadius = 4
+        button.layer.masksToBounds = false
     }
     
     override func viewWillAppear(_ animated: Bool) {

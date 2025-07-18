@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -94,6 +95,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Q9X-H1-oLe"/>
+                    <connections>
+                        <outlet property="createButton" destination="Lrd-KT-Pws" id="bjf-9l-Y0Q"/>
+                        <outlet property="signinButton" destination="VvZ-Wb-CPU" id="88L-mw-RRe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -107,14 +112,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w6A-bI-cCw">
-                                <rect key="frame" x="36" y="295" width="320" height="330"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Br-cp-zNc">
+                                <rect key="frame" x="36" y="295" width="320" height="324"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PasswordImage" translatesAutoresizingMaskIntoConstraints="NO" id="gmv-ao-FUi">
                                 <rect key="frame" x="51" y="491" width="44" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -193,6 +195,7 @@
                     <connections>
                         <outlet property="emailTextField" destination="bOd-kw-UZ3" id="uYK-LF-PiX"/>
                         <outlet property="passwordTextField" destination="ppk-jO-fbz" id="b2L-kV-3eO"/>
+                        <outlet property="uiView" destination="5Br-cp-zNc" id="mir-an-Rpi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GSw-Ja-B5k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -217,14 +220,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xzf-Ql-8OB">
-                                <rect key="frame" x="37" y="283" width="320" height="420"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JUz-Rb-Gr9">
+                                <rect key="frame" x="36" y="283" width="320" height="420"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Auq-55-OAT">
                                 <rect key="frame" x="56" y="344" width="288" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -313,6 +313,7 @@
                         <outlet property="firstNameTextField" destination="Auq-55-OAT" id="Am1-Pj-XHX"/>
                         <outlet property="lastNameTextField" destination="9ee-cD-9jS" id="haL-aS-DaM"/>
                         <outlet property="passwordTextField" destination="UcQ-W9-TgT" id="dSr-ap-nqp"/>
+                        <outlet property="uiView" destination="JUz-Rb-Gr9" id="dSw-V8-v3H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fFt-2q-2Ue" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -339,11 +340,14 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="xXi-Dy-VX1"/>
+        <segue reference="gVu-kz-UDa"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="HomepageBackgroundImage" width="574" height="1244"/>
         <image name="LoginImage" width="130" height="134"/>
         <image name="PasswordImage" width="106" height="94"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

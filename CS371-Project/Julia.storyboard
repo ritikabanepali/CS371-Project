@@ -240,7 +240,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="Y3V-Ak-LMd"/>
                     <connections>
+                        <outlet property="genButton" destination="gap-EK-ku2" id="ZgH-ra-J6M"/>
+                        <outlet property="photoButton" destination="tex-Io-x1D" id="dk5-qQ-75N"/>
+                        <outlet property="surveyButton" destination="BE6-lz-PRm" id="cPT-DR-EmE"/>
                         <outlet property="titleLabel" destination="NXu-9K-4Ut" id="3x1-AY-1pU"/>
+                        <outlet property="travelersButton" destination="15F-Pr-SYR" id="aAP-dJ-liE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="360-h7-Eya" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
