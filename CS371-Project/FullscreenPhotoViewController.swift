@@ -32,6 +32,9 @@ class FullscreenPhotoViewController: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
         swipeRight.direction = .right
         view.addGestureRecognizer(swipeRight)
+        
+        styleButtons()
+        
     }
 
     @objc func dismissSelf() {
@@ -117,6 +120,14 @@ class FullscreenPhotoViewController: UIViewController {
         let isLiked = liked.contains(key)
         let iconName = isLiked ? "heart.fill" : "heart"
         likeButton.setImage(UIImage(systemName: iconName), for: .normal)
+    }
+    
+    //MARK: styling
+    func styleButtons(){
+        let config = UIImage.SymbolConfiguration(pointSize: 40, weight: .regular)
+        let largeTrash = UIImage(systemName: "trash.circle", withConfiguration: config)
+        deleteButton.setImage(largeTrash, for: .normal)
+        
     }
 
 

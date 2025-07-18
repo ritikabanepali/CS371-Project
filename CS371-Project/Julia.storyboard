@@ -390,7 +390,7 @@
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="457" id="flK-MO-aYa"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZMN-b9-baT">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZMN-b9-baT">
                                 <rect key="frame" x="100" y="679" width="49.666666666666657" height="34.333333333333371"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain">
@@ -401,8 +401,8 @@
                                     <action selector="likeButtonTapped:" destination="Jhb-gh-t7O" eventType="touchUpInside" id="WVE-Vi-qJm"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUO-VU-Ct6">
-                                <rect key="frame" x="230" y="678.66666666666663" width="50" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUO-VU-Ct6">
+                                <rect key="frame" x="238" y="679" width="50" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="trash.circle" catalog="system">
                                     <color key="baseForegroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -417,11 +417,12 @@
                         <constraints>
                             <constraint firstItem="EUB-XN-OLy" firstAttribute="bottom" secondItem="B1C-jx-pij" secondAttribute="bottom" constant="169" id="02W-6T-qdm"/>
                             <constraint firstItem="ZMN-b9-baT" firstAttribute="top" secondItem="B1C-jx-pij" secondAttribute="bottom" constant="64" id="NGZ-Yi-SBV"/>
+                            <constraint firstItem="EUB-XN-OLy" firstAttribute="trailing" secondItem="dUO-VU-Ct6" secondAttribute="trailing" constant="100" id="PhU-8R-NAB"/>
                             <constraint firstItem="ZMN-b9-baT" firstAttribute="leading" secondItem="EUB-XN-OLy" secondAttribute="leading" constant="100" id="Zob-uO-SPD"/>
                             <constraint firstItem="EUB-XN-OLy" firstAttribute="trailing" secondItem="B1C-jx-pij" secondAttribute="trailing" id="Zq0-0V-7pI"/>
                             <constraint firstItem="B1C-jx-pij" firstAttribute="top" secondItem="EUB-XN-OLy" secondAttribute="top" constant="40" id="evP-ri-4vE"/>
-                            <constraint firstItem="dUO-VU-Ct6" firstAttribute="leading" secondItem="ZMN-b9-baT" secondAttribute="trailing" constant="80.333333333333343" id="fCr-fU-D8b"/>
                             <constraint firstItem="dUO-VU-Ct6" firstAttribute="centerY" secondItem="ZMN-b9-baT" secondAttribute="centerY" id="fJB-OD-YqY"/>
+                            <constraint firstItem="dUO-VU-Ct6" firstAttribute="leading" secondItem="ZMN-b9-baT" secondAttribute="trailing" constant="88.333333333333343" id="gZe-DR-R1M"/>
                             <constraint firstItem="B1C-jx-pij" firstAttribute="leading" secondItem="EUB-XN-OLy" secondAttribute="leading" id="xPg-lG-vFB"/>
                             <constraint firstItem="ZMN-b9-baT" firstAttribute="leading" secondItem="EUB-XN-OLy" secondAttribute="leading" constant="100" id="ym5-Lm-Jqf"/>
                         </constraints>
