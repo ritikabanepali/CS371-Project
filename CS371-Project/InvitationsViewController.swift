@@ -53,8 +53,21 @@ class InvitationsViewController: UIViewController, UITableViewDataSource, UITabl
         // 3. Configure the cell with the 'Invitation' object.
         let invitation = pendingInvitations[indexPath.row]
         
-        cell.destinationLabel.text = invitation.tripName
-        cell.inviterLabel.text = "Invited by: \(invitation.ownerName)"
+        cell.destinationLabel.text = "     \(invitation.tripName)"
+        cell.inviterLabel.text = "     \(invitation.ownerName)"
+        
+        // Style cell
+        cell.containerView.layer.cornerRadius = 12
+        cell.containerView.backgroundColor = .white
+        cell.backgroundColor = .clear
+        cell.contentView.backgroundColor = .clear
+        cell.selectionStyle = .none
+
+        // Shadow
+        cell.containerView.layer.shadowColor = UIColor.black.cgColor
+        cell.containerView.layer.shadowOpacity = 0.1
+        cell.containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cell.containerView.layer.shadowRadius = 4
         
         // 4. Update the button actions to call the new manager functions.
         cell.onAccept = { [weak self] in
@@ -101,7 +114,7 @@ class InvitationCell: UITableViewCell {
     @IBOutlet weak var destinationLabel: UILabel!
     @IBOutlet weak var declineButton: UIButton!
     @IBOutlet weak var acceptButton: UIButton!
-    
+    @IBOutlet weak var containerView: UIView!
     
     
     // Closures to handle button taps in the view controller
@@ -116,5 +129,6 @@ class InvitationCell: UITableViewCell {
     @IBAction func declineTapped(_ sender: UIButton) {
         onDecline?()
     }
+    
 }
 
