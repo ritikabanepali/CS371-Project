@@ -74,10 +74,6 @@ class SignInViewController: UIViewController {
         }
     }
     
-    @IBAction func needAccountButton(_ sender: Any) {
-        performSegue(withIdentifier: "CreateAccountPageSegue", sender: self)
-    }
-    
     func showAlert(title: String, message: String) {
         // Make sure we are on the main thread before presenting an alert
         DispatchQueue.main.async {
@@ -86,4 +82,5 @@ class SignInViewController: UIViewController {
             self.present(alert, animated: true)
         }
     }
+    
 }

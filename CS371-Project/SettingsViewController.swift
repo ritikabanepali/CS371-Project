@@ -37,12 +37,14 @@ class SettingsViewController: UIViewController {
         }
         
         UNUserNotificationCenter.current().getNotificationSettings { settings in
-            if settings.authorizationStatus == .denied {
-                self.notificationsSwitch.isOn = false
-                self.notificationsSwitch.isEnabled = false
-                
-            } else {
-                self.notificationsSwitch.isEnabled = true
+            DispatchQueue.main.async {
+                if settings.authorizationStatus == .denied {
+                    self.notificationsSwitch.isOn = false
+                    self.notificationsSwitch.isEnabled = false
+                    
+                } else {
+                    self.notificationsSwitch.isEnabled = true
+                }
             }
         }
         
