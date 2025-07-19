@@ -314,4 +314,37 @@ class TripManager {
             completion(responses)
         }
     }
+    
+    func fetchTravelerSteps(forTrip trip: Trip, completion: @escaping (Result<([String: Int], [String: String]), Error>) -> Void) {
+        let travelerStepsCollection = db.collection("Users").document(trip.ownerUID)
+                                          .collection("trips").document(trip.id)
+                                          .collection("travelerSteps")
+
+        travelerStepsCollection.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("TripManager: Error fetching traveler steps for trip \(trip.id): \(error.localizedDescription)")
+                completion(.failure(error))
+                return
+            }
+
+            guard let documents = querySnapshot?.documents else {
+                print("TripManager: No traveler step documents found for trip \(trip.id).")
+                completion(.success(([:], [:]))) 
+                return
+            }
+
+            var stepsByUID: [String: Int] = [:]
+            var namesByUID: [String: String] = [:]
+
+            for document in documents {
+                let travelerUID = document.documentID
+                let steps = document.data()["totalSteps"] as? Int ?? 0
+                let name = document.data()["travelerName"] as? String ?? "Unknown User"
+                
+                stepsByUID[travelerUID] = steps
+                namesByUID[travelerUID] = name
+            }
+            completion(.success((stepsByUID, namesByUID)))
+        }
+    }
 }
