@@ -47,9 +47,8 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
         // Fetch accepted trips
         group.enter()
         TripManager.shared.fetchAcceptedInvitations { result in
-            // Now you can directly get the past trips from the result
-            if case .success(let (_, pastTrips)) = result {
-                acceptedPastTrips = pastTrips
+            if case .success(let trips) = result {
+                acceptedPastTrips = trips.filter { $0.isPastTrip }
             }
             group.leave()
         }

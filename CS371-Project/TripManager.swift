@@ -188,6 +188,24 @@ class TripManager {
         }
     }
     
+    func removeTraveler(from trip: Trip, userToRemoveUID: String, completion: @escaping (Error?) -> Void) {
+        let db = Firestore.firestore()
+        let tripRef = db.collection("Users").document(trip.ownerUID).collection("trips").document(trip.id)
+
+        tripRef.updateData([
+            "travelerUIDs": FieldValue.arrayRemove([userToRemoveUID])
+        ]) { error in
+            if let error = error {
+                print("Error removing traveler: \(error)")
+                completion(error)
+            } else {
+                print("Traveler removed successfully.")
+                completion(nil)
+            }
+        }
+    }
+
+    
     func fetchPendingInvitations(completion: @escaping (Result<[Invitation], Error>) -> Void) {
         guard let currentUserID = UserManager.shared.currentUserID else { return }
         
