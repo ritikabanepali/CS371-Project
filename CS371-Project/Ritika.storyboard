@@ -1153,8 +1153,9 @@
                         <outlet property="southAsianButton" destination="Pq3-BK-f1o" id="arV-xh-JaJ"/>
                         <outlet property="startDatePicker" destination="sZi-SO-nxN" id="bOY-0v-Ce1"/>
                         <outlet property="streetFoodButton" destination="Upq-ns-XQL" id="SGA-MI-kPe"/>
+                        <outlet property="submitButton" destination="dDQ-yb-23S" id="b2J-ES-Yt7"/>
                         <outlet property="submitSurveyButton" destination="dDQ-yb-23S" id="wOR-5r-P9A"/>
-                        <outlet property="tripInputTitleLabel" destination="8Pc-Ut-KxN" id="CJu-oM-875"/>
+                        <outlet property="tripInputTitleLabel" destination="8Pc-Ut-KxN" id="oM3-Jo-io1"/>
                         <outlet property="veganButton" destination="NFY-2V-YXm" id="HTt-vK-Lbu"/>
                         <outlet property="vegetarianButton" destination="pEp-L7-RSR" id="YUJ-8K-6oT"/>
                         <outlet property="wineButton" destination="CrJ-Pv-3Rj" id="uWu-Io-COv"/>
