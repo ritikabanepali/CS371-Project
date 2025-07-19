@@ -7,8 +7,6 @@
 
 import UIKit
 
-
-
 class FullscreenPhotoViewController: UIViewController {
     
     var images: [UIImage] = []
@@ -114,7 +112,7 @@ class FullscreenPhotoViewController: UIViewController {
         deleteButton.setImage(filledTrash, for: .normal)
         
         // short delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.performDeletion()
         }
         

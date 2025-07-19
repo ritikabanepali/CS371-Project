@@ -221,6 +221,24 @@
                                     <action selector="deleteTripTapped:" destination="SJL-RG-8Xp" eventType="touchUpInside" id="5Qw-s6-tNy"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9h-4w-BRa">
+                                <rect key="frame" x="311" y="749" width="36" height="35"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="36" id="bZP-b4-KEh"/>
+                                    <constraint firstAttribute="height" constant="35" id="npg-3r-fJx"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted">
+                                    <imageReference key="image" image="message.circle" catalog="system" symbolScale="large"/>
+                                    <color key="baseForegroundColor" red="0.32549020649999999" green="0.43921568989999998" blue="0.20000001789999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="baseBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <segue destination="eaZ-pg-DqU" kind="show" identifier="toChatVC" id="hO6-rJ-nD6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Upm-Ff-8Hg"/>
                         <color key="backgroundColor" red="0.98039215800000001" green="0.98039215800000001" blue="0.97254902119999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -228,9 +246,11 @@
                             <constraint firstItem="tex-Io-x1D" firstAttribute="top" secondItem="gap-EK-ku2" secondAttribute="bottom" constant="35" id="0UH-HY-eVq"/>
                             <constraint firstItem="BE6-lz-PRm" firstAttribute="top" secondItem="NXu-9K-4Ut" secondAttribute="bottom" constant="8" symbolic="YES" id="3BU-GT-m3s"/>
                             <constraint firstItem="NXu-9K-4Ut" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="48" id="6tC-e8-lnK"/>
+                            <constraint firstItem="Upm-Ff-8Hg" firstAttribute="bottom" secondItem="S9h-4w-BRa" secondAttribute="bottom" id="AZc-Nf-Lg0"/>
                             <constraint firstItem="tex-Io-x1D" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="Jxl-ut-Bz9"/>
                             <constraint firstItem="gap-EK-ku2" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="KvT-U6-Wx7"/>
                             <constraint firstItem="15F-Pr-SYR" firstAttribute="top" secondItem="tex-Io-x1D" secondAttribute="bottom" constant="35" id="NAq-Qo-0aw"/>
+                            <constraint firstItem="Upm-Ff-8Hg" firstAttribute="trailing" secondItem="S9h-4w-BRa" secondAttribute="trailing" constant="46" id="Tds-hw-q3g"/>
                             <constraint firstItem="BE6-lz-PRm" firstAttribute="leading" secondItem="Upm-Ff-8Hg" secondAttribute="leading" constant="82" id="d06-Yi-on2"/>
                             <constraint firstItem="hxP-5C-yhb" firstAttribute="top" secondItem="15F-Pr-SYR" secondAttribute="bottom" constant="44" id="eO1-5F-sUH"/>
                             <constraint firstItem="NXu-9K-4Ut" firstAttribute="top" secondItem="Upm-Ff-8Hg" secondAttribute="top" id="hDK-BR-mXi"/>
@@ -251,6 +271,57 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="360-h7-Eya" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2669.4656488549617" y="-32.394366197183103"/>
+        </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="HWv-Qt-hby">
+            <objects>
+                <viewController storyboardIdentifier="ChatViewController" id="eaZ-pg-DqU" customClass="ChatViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9Uh-TQ-4UV">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3fR-Fz-5mr">
+                                <rect key="frame" x="0.0" y="59" width="393" height="664"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I5a-bT-YQi">
+                                <rect key="frame" x="331.66666666666669" y="722" width="61.333333333333314" height="35"/>
+                                <color key="backgroundColor" red="0.87417761862055532" green="0.91764706370000004" blue="0.89993208983727635" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="send">
+                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="12M-rU-u4y">
+                                <rect key="frame" x="0.0" y="722.66666666666663" width="335" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="TQx-WN-kLq"/>
+                                    <constraint firstAttribute="width" constant="335" id="kx3-Jg-1FO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="sqx-iU-yLo"/>
+                        <color key="backgroundColor" red="0.98039215800000001" green="0.98039215800000001" blue="0.97254902119999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="12M-rU-u4y" firstAttribute="centerY" secondItem="I5a-bT-YQi" secondAttribute="centerY" id="877-DA-eqX"/>
+                            <constraint firstItem="3fR-Fz-5mr" firstAttribute="top" secondItem="sqx-iU-yLo" secondAttribute="top" id="Aqh-pG-LZ2"/>
+                            <constraint firstItem="I5a-bT-YQi" firstAttribute="top" secondItem="3fR-Fz-5mr" secondAttribute="bottom" constant="-1" id="GHn-bw-GQD"/>
+                            <constraint firstItem="I5a-bT-YQi" firstAttribute="leading" secondItem="12M-rU-u4y" secondAttribute="trailing" constant="-3.3333333333333144" id="L6q-xG-gjN"/>
+                            <constraint firstItem="3fR-Fz-5mr" firstAttribute="leading" secondItem="sqx-iU-yLo" secondAttribute="leading" id="Re8-cL-3Y0"/>
+                            <constraint firstItem="sqx-iU-yLo" firstAttribute="trailing" secondItem="I5a-bT-YQi" secondAttribute="trailing" id="Wef-m8-Th2"/>
+                            <constraint firstItem="sqx-iU-yLo" firstAttribute="bottom" secondItem="3fR-Fz-5mr" secondAttribute="bottom" constant="60" id="h8v-8f-Dko"/>
+                            <constraint firstItem="sqx-iU-yLo" firstAttribute="trailing" secondItem="3fR-Fz-5mr" secondAttribute="trailing" id="z1k-ab-KFQ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="sRw-i2-b7O"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mNS-OW-6mc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2687.7862595419847" y="626.76056338028172"/>
         </scene>
         <!--Photo Album View Controller-->
         <scene sceneID="Xec-0m-8vB">
@@ -481,6 +552,7 @@
     <resources>
         <image name="camera.fill" catalog="system" width="128" height="93"/>
         <image name="heart.circle" catalog="system" width="128" height="123"/>
+        <image name="message.circle" catalog="system" width="128" height="123"/>
         <image name="trash.circle" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
