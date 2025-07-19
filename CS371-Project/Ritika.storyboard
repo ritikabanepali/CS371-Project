@@ -148,6 +148,7 @@
                         <outlet property="enterEmailTextField" destination="hoJ-9g-pk0" id="0wK-Cp-5Xn"/>
                         <outlet property="inviteButton" destination="XB7-po-soC" id="g9b-jS-D6D"/>
                         <outlet property="invitedTableView" destination="IKi-jW-Aw1" id="lzf-8J-HaW"/>
+                        <outlet property="travelersTitleLabel" destination="bdm-Ih-Teq" id="AoF-TK-jh6"/>
                         <outlet property="tripNameLabel" destination="zeT-Re-WQ1" id="eej-Ml-Z8L"/>
                     </connections>
                 </viewController>
@@ -253,6 +254,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="8cK-uH-0MG"/>
+                    <connections>
+                        <outlet property="itineraryTitleLabel" destination="3cX-MY-8Eu" id="zwH-sA-n1e"/>
+                        <outlet property="moreLocationsButton" destination="OgS-gG-ksL" id="TwG-p2-uZp"/>
+                        <outlet property="orderButton" destination="wAb-Fz-P9A" id="mMk-TJ-zvK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7zd-Lp-vAy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -318,6 +324,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Ctf-Fv-rfR"/>
+                    <connections>
+                        <outlet property="locationTitleLabel" destination="eRc-g7-zqA" id="WeX-ky-ci4"/>
+                        <outlet property="shareLocationButton" destination="ldt-Bh-756" id="hrS-OJ-HXp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qsc-GY-3e1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1143,6 +1153,8 @@
                         <outlet property="southAsianButton" destination="Pq3-BK-f1o" id="arV-xh-JaJ"/>
                         <outlet property="startDatePicker" destination="sZi-SO-nxN" id="bOY-0v-Ce1"/>
                         <outlet property="streetFoodButton" destination="Upq-ns-XQL" id="SGA-MI-kPe"/>
+                        <outlet property="submitSurveyButton" destination="dDQ-yb-23S" id="wOR-5r-P9A"/>
+                        <outlet property="tripInputTitleLabel" destination="8Pc-Ut-KxN" id="CJu-oM-875"/>
                         <outlet property="veganButton" destination="NFY-2V-YXm" id="HTt-vK-Lbu"/>
                         <outlet property="vegetarianButton" destination="pEp-L7-RSR" id="YUJ-8K-6oT"/>
                         <outlet property="wineButton" destination="CrJ-Pv-3Rj" id="uWu-Io-COv"/>
@@ -1150,7 +1162,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="upe-AZ-6dg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1800.7633587786258" y="3.5211267605633805"/>
+            <point key="canvasLocation" x="1801" y="-169"/>
         </scene>
     </scenes>
     <resources>

@@ -18,6 +18,7 @@ struct TravelerViewModel {
 
 class TravelerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var travelersTitleLabel: UILabel!
     @IBOutlet weak var enterEmailTextField: UITextField!
     @IBOutlet weak var inviteButton: UIButton!
     @IBOutlet weak var invitedTableView: UITableView!
@@ -31,6 +32,11 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
         invitedTableView.dataSource = self
         invitedTableView.delegate = self
+        travelersTitleLabel.textColor = SettingsManager.shared.titleColor
+        
+        var inviteButtonConfig = inviteButton.configuration ?? .filled()
+        inviteButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        inviteButton.configuration = inviteButtonConfig
         
         // helper method
         configureView()

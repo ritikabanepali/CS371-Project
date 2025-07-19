@@ -8,11 +8,17 @@
 import UIKit
 
 class LocationViewController: UIViewController {
-
+    
+    @IBOutlet weak var locationTitleLabel: UILabel!
+    @IBOutlet weak var shareLocationButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        locationTitleLabel.textColor = SettingsManager.shared.titleColor
+        
+        var locationButtonConfig = shareLocationButton.configuration ?? .filled()
+        locationButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        shareLocationButton.configuration = locationButtonConfig
     }
-
+    
 }
