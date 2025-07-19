@@ -29,3 +29,6 @@ xcuserdata/
 
 # Specific file causing your current issue
 CS371-Project.xcodeproj/project.xcworkspace/xcuserdata/suhanigoswami.xcuserdatad/UserInterfaceState.xcuserstate
+
+# Ignore local API secrets
+CS371-Project/Secrets.plist
