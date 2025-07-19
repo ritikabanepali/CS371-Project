@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class FutureTripsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var upcomingTripsTitleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     var trips: [Trip] = []
     
@@ -22,17 +24,15 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchTrips()
+        upcomingTripsTitleLabel.textColor = SettingsManager.shared.titleColor
     }
-
-
-    // In FutureTripsViewController.swift
 
     func fetchTrips() {
         let group = DispatchGroup()
         var ownedTrips: [Trip] = []
         var acceptedTrips: [Trip] = []
         
-        // 1. Fetch trips the user owns
+        // Fetch trips the user owns
         group.enter()
         TripManager.shared.fetchUserTrips { result in
             // We only care about future trips from this result
@@ -42,20 +42,19 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
             group.leave()
         }
         
-        // 2. Fetch trips the user has accepted invites for
+        // Fetch trips the user has accepted invites for
         group.enter()
         TripManager.shared.fetchAcceptedInvitations { result in
             // Unpack the tuple and take only the first array (futureTrips)
             if case .success(let (futureTrips, _)) = result {
-                // Assign the future trips to your local variable
                 acceptedTrips = futureTrips
             }
             group.leave()
         }
         
-        // 3. When both are done, combine the results and update the UI
+        // When both are done, combine the results and update the UI
         group.notify(queue: .main) {
-            // Combine the two arrays. A dictionary handles any duplicates automatically.
+            // Combine the two arrays
             var combinedTrips = [String: Trip]()
             (ownedTrips + acceptedTrips).forEach { trip in
                 combinedTrips[trip.id] = trip
@@ -87,34 +86,16 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
         cell.dateLabel.text = "\(formatter.string(from: trip.startDate)) → \(formatter.string(from: trip.endDate))"
         
         cell.travelersLabel.text = "\(trip.travelerUIDs.count) travelers"
-
-        // Style cell
-        cell.containerView.layer.cornerRadius = 12
-        cell.containerView.backgroundColor = .white
-        cell.backgroundColor = .clear
-        cell.contentView.backgroundColor = .clear
-        cell.selectionStyle = .none
-
-        // Shadow
-        cell.containerView.layer.shadowColor = UIColor.black.cgColor
-        cell.containerView.layer.shadowOpacity = 0.1
-        cell.containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        cell.containerView.layer.shadowRadius = 4
+        
+        cell.updateButtonColor()
 
         cell.onOpenTripTapped = { [weak self] in
             guard let self = self else { return }
             let selectedTrip = self.trips[indexPath.row]
 
-            // 1. Use Julia's storyboard
             let storyboard = UIStoryboard(name: "Julia", bundle: nil)
-            
-            // 2. Instantiate MyTripHomeViewController using its Storyboard ID
             if let myTripVC = storyboard.instantiateViewController(withIdentifier: "MyTripHomeViewController") as? MyTripHomeViewController {
-                
-                // 3. Pass the ENTIRE selected trip object
                 myTripVC.trip = selectedTrip
-                
-                // 4. Push the correct view controller
                 self.navigationController?.pushViewController(myTripVC, animated: true)
             }
         }

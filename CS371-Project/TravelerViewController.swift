@@ -37,14 +37,6 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         navigationController?.navigationBar.tintColor = .black
     }
     
-    func applyShadow(to button: UIButton) {
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.1
-        button.layer.shadowOffset = CGSize(width: 0, height: 2)
-        button.layer.shadowRadius = 4
-        button.layer.masksToBounds = false
-    }
-    
     private func configureView() {
         guard let trip = trip else {
             print("Error: Trip object was not provided.")
@@ -54,8 +46,6 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         
         tripNameLabel.text = "\(trip.destination)"
         tripNameLabel.numberOfLines = 2 // Allow the text to wrap
-        
-        applyShadow(to: inviteButton)
         
         setupTripListener()
     }
@@ -92,10 +82,10 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
     
     private func loadTravelerData() {
         guard let trip = trip else { return }
-
+        
         let group = DispatchGroup()
         var fetchedTravelers: [TravelerViewModel] = []
-
+        
         for uid in trip.travelerUIDs { // <-- 1. Get only the uid
             group.enter()
             UserManager.shared.fetchName(forUserWithUID: uid) { result in
@@ -106,7 +96,7 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
                 case .failure(let error):
                     print("Could not fetch name for UID \(uid): \(error)")
                     // Also update the placeholder to use "confirmed"
-                    let traveler = TravelerViewModel(uid: uid, name: "Unknown User", status: "confirmed", surveyStatus: "N") 
+                    let traveler = TravelerViewModel(uid: uid, name: "Unknown User", status: "confirmed", surveyStatus: "N")
                     fetchedTravelers.append(traveler)
                 }
                 group.leave()
@@ -115,7 +105,7 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // This closure runs only after ALL fetchName calls have completed
         group.notify(queue: .main) {
-
+            
             // Sort to show confirmed users first
             self.travelers = fetchedTravelers.sorted {
                 if $0.status == "confirmed" && $1.status == "pending" { return true }
@@ -128,36 +118,36 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func inviteButtonTapped(_ sender: Any) {
         guard let email = enterEmailTextField.text, !email.isEmpty else {
-             showAlert(title: "Missing Email", message: "Please enter an email to invite a traveler.")
-             return
-         }
-         
-         guard let tripToUpdate = self.trip,
-               let inviterName = UserManager.shared.currentUserFirstName else { // Get current user's name
-             return
-         }
-         
-         inviteButton.isEnabled = false
-         
-         // Call the new 'sendInvitation' function
-         TripManager.shared.sendInvitation(toEmail: email, forTrip: tripToUpdate, fromUser: inviterName) { [weak self] error in
-             guard let self = self else { return }
-             
-             DispatchQueue.main.async {
-                 self.inviteButton.isEnabled = true
-                 self.enterEmailTextField.text = ""
-             }
-             
-             if let error = error {
-                 self.showAlert(title: "Invite Error", message: error.localizedDescription)
-                 return
-             }
-             
-             self.showAlert(title: "Success!", message: "\(email) has been invited to the trip.")
-         }
+            showAlert(title: "Missing Email", message: "Please enter an email to invite a traveler.")
+            return
+        }
+        
+        guard let tripToUpdate = self.trip,
+              let inviterName = UserManager.shared.currentUserFirstName else { // Get current user's name
+            return
+        }
+        
+        inviteButton.isEnabled = false
+        
+        // Call the new 'sendInvitation' function
+        TripManager.shared.sendInvitation(toEmail: email, forTrip: tripToUpdate, fromUser: inviterName) { [weak self] error in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self.inviteButton.isEnabled = true
+                self.enterEmailTextField.text = ""
+            }
+            
+            if let error = error {
+                self.showAlert(title: "Invite Error", message: error.localizedDescription)
+                return
+            }
+            
+            self.showAlert(title: "Success!", message: "\(email) has been invited to the trip.")
+        }
     }
     
-
+    
     // This function determines which rows can be swiped.
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         guard let currentUserUID = Auth.auth().currentUser?.uid, let trip = self.trip else {
@@ -165,18 +155,18 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         let travelerToRemove = travelers[indexPath.row]
-
+        
         // Allow editing if:
         // 1. The current user is the trip owner and isn't trying to remove themselves.
         if currentUserUID == trip.ownerUID && currentUserUID != travelerToRemove.uid {
             return true
         }
-
+        
         // 2. The current user is trying to remove themselves (and they aren't the owner).
         if currentUserUID == travelerToRemove.uid && currentUserUID != trip.ownerUID {
             return true
         }
-
+        
         return false
     }
     
@@ -184,7 +174,7 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         // This immediately deselects the row after it's been tapped.
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
+    
     // This function handles the actual deletion.
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -194,7 +184,7 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
             let isLeaving = travelerToRemove.uid == Auth.auth().currentUser?.uid
             let alertTitle = isLeaving ? "Leave Trip?" : "Remove Traveler?"
             let alertMessage = isLeaving ? "Are you sure you want to leave this trip?" : "Are you sure you want to remove \(travelerToRemove.name)?"
-
+            
             // Show a confirmation alert
             let confirmationAlert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
             confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -253,7 +243,7 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
             self.present(alert, animated: true)
         }
     }
-
+    
 }
 
 class TravelerCell: UITableViewCell {

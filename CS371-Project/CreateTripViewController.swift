@@ -18,8 +18,6 @@ class CreateTripViewController: UIViewController {
         
         // set initial minimum date for the end picker
         endDatePicker.minimumDate = startDatePicker.date
-        
-        setupInitialUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,16 +27,6 @@ class CreateTripViewController: UIViewController {
         continueButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
         continueButton.configuration = continueButtonConfig
         
-    }
-    
-    private func setupInitialUI() {
-        backgroundView.layer.cornerRadius = 17
-        backgroundView.backgroundColor = .white
-        
-        backgroundView.layer.shadowColor = UIColor.black.cgColor
-        backgroundView.layer.shadowOpacity = 0.2
-        backgroundView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        backgroundView.layer.shadowRadius = 5
     }
     
     

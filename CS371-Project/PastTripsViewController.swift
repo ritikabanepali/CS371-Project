@@ -33,9 +33,9 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
     func fetchTrips() {
         let group = DispatchGroup()
         var ownedPastTrips: [Trip] = []
-        var acceptedPastTrips: [Trip] = [] // Renamed for clarity
+        var acceptedPastTrips: [Trip] = []
         
-        // 1. Fetch owned trips (this part is unchanged)
+        // Fetch owned trips
         group.enter()
         TripManager.shared.fetchUserTrips { result in
             if case .success(let (_, pastTrips)) = result {
@@ -44,7 +44,7 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
             group.leave()
         }
         
-        // 2. Fetch accepted trips (this part is now simpler)
+        // Fetch accepted trips
         group.enter()
         TripManager.shared.fetchAcceptedInvitations { result in
             // Now you can directly get the past trips from the result
@@ -54,15 +54,13 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
             group.leave()
         }
         
-        // 3. Combine and update the UI (this part is now more efficient)
+        // Combine and update the UI
         group.notify(queue: .main) {
-            // Combine the two arrays of ALREADY-FILTERED past trips
             var combinedTrips = [String: Trip]()
             (ownedPastTrips + acceptedPastTrips).forEach { trip in
                 combinedTrips[trip.id] = trip
             }
             
-            // No need to filter again, just sort and reload
             self.trips = Array(combinedTrips.values).sorted { $0.endDate > $1.endDate }
             self.tableView.reloadData()
         }
@@ -83,17 +81,6 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
         cell.dateLabel.text = "\(formatter.string(from: trip.startDate)) → \(formatter.string(from: trip.endDate))"
         cell.travelersLabel.text = "\(trip.travelerUIDs.count) travelers"
         
-        
-        cell.containerView.layer.cornerRadius = 17
-        cell.containerView.backgroundColor = .white
-        cell.backgroundColor = .clear
-        cell.contentView.backgroundColor = .clear
-        cell.selectionStyle = .none
-        
-        cell.containerView.layer.shadowColor = UIColor.black.cgColor
-        cell.containerView.layer.shadowOpacity = 0.2
-        cell.containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        cell.containerView.layer.shadowRadius = 5
         cell.myButton.tag = indexPath.row
         
         var myButtonConfig = cell.myButton.configuration ?? .filled()

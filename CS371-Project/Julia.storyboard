@@ -120,6 +120,7 @@
                     <navigationItem key="navigationItem" id="MbB-Sx-tiI"/>
                     <connections>
                         <outlet property="tableView" destination="INv-gS-ZEP" id="1qR-vh-AIs"/>
+                        <outlet property="upcomingTripsTitleLabel" destination="cjV-PG-mmr" id="QUt-IQ-YpU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -368,7 +369,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="Tyc-K6-2XT"/>
                     <connections>
+                        <outlet property="addPhotoButton" destination="LDw-Er-p5m" id="0ds-kO-YT2"/>
                         <outlet property="loadingView" destination="1UX-pV-jVj" id="Dp2-2j-1Oc"/>
+                        <outlet property="photoAlbumTitle" destination="o09-Lp-F0C" id="9b5-oS-Sha"/>
                         <outlet property="photoCollection" destination="Fff-aY-JE4" id="Feh-H8-dzG"/>
                     </connections>
                 </viewController>

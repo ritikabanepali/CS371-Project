@@ -13,14 +13,21 @@ class TripCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var travelersLabel: UILabel!
     @IBOutlet weak var myButton: UIButton!
-
+    
     var onOpenTripTapped: (() -> Void)? // Callback closure
-
+    
+    func updateButtonColor (){
+        var myButtonConfig = myButton.configuration ?? .filled()
+        myButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        myButton.configuration = myButtonConfig
+        
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         myButton.addTarget(self, action: #selector(openTripPressed), for: .touchUpInside)
     }
-
+    
     @objc func openTripPressed() {
         onOpenTripTapped?()
     }

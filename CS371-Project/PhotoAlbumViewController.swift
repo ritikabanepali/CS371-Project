@@ -6,28 +6,27 @@ let config = CLDConfiguration(cloudName: "dzemwygcg", secure: true)
 let cloudinary = CLDCloudinary(configuration: config)
 
 class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
+    @IBOutlet weak var addPhotoButton: UIButton!
+    @IBOutlet weak var photoAlbumTitle: UILabel!
     @IBOutlet weak var loadingView: UIView!
-
+    
     @IBOutlet weak var photoCollection: UICollectionView!
     var tripID: String?
     var images: [UIImage] = []
     var needsRefresh = false
-
-    
     
     @IBAction func cameraButtonTapped(_ sender: UIButton) {
         openCamera()
     }
-
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         photoCollection.dataSource = self
         photoCollection.delegate = self
         photoCollection.isScrollEnabled = true
-
+        
         if let tripID = tripID {
             print("Trip ID:", tripID)
         } else {
@@ -37,19 +36,22 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-    
+        photoAlbumTitle.textColor = SettingsManager.shared.titleColor
+        var myButtonConfig = addPhotoButton.configuration ?? .filled()
+        myButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        addPhotoButton.configuration = myButtonConfig
+        
         if images.isEmpty || needsRefresh {
             loadingView.isHidden = false
             needsRefresh = false
-
+            
             DispatchQueue.global(qos: .userInitiated).async {
                 guard let tripID = self.tripID else { return }
                 let key = "savedImageURLs_\(tripID)"
                 let urls = UserDefaults.standard.stringArray(forKey: key) ?? []
-
+                
                 var loadedImages: [UIImage] = []
-
+                
                 for urlString in urls {
                     if let url = URL(string: urlString),
                        let data = try? Data(contentsOf: url),
@@ -57,7 +59,7 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
                         loadedImages.append(image)
                     }
                 }
-
+                
                 DispatchQueue.main.async {
                     self.images = loadedImages
                     self.photoCollection.reloadData()
@@ -66,13 +68,7 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
             }
         }
     }
-
-
-
-       
-
-
-    // MARK: - Add Photo Button
+    
     @IBAction func addPhotosButtonTapped(_ sender: Any) {
         var config = PHPickerConfiguration()
         config.filter = .images
@@ -93,13 +89,12 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
             print("Camera not available")
         }
     }
-
-
-    // MARK: - PHPicker Delegate
+    
+    
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
         guard let result = results.first else { return }
-
+        
         result.itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
             if let image = object as? UIImage {
                 DispatchQueue.main.async {
@@ -113,7 +108,7 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true)
-
+        
         if let image = info[.originalImage] as? UIImage {
             self.images.append(image)
             self.photoCollection.reloadData()
@@ -124,14 +119,11 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
     }
-
-
-
-    // MARK: - Cloudinary Upload
+    
     func uploadImageToCloudinary(_ image: UIImage) {
         guard let imageData = image.jpegData(compressionQuality: 0.8),
               let tripID = tripID else { return }
-
+        
         let params = CLDUploadRequestParams()
         cloudinary.createUploader().upload(data: imageData, uploadPreset: "unsigned_preset", params: params, progress: nil) { result, error in
             if let error = error {
@@ -147,14 +139,13 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
             }
         }
     }
-
-    // MARK: - Load Saved Image URLs
+    
     func loadSavedImageURLs() {
         guard let tripID = tripID else { return }
         
         let key = "savedImageURLs_\(tripID)"
         let urls = UserDefaults.standard.stringArray(forKey: key) ?? []
-
+        
         for urlString in urls {
             guard let url = URL(string: urlString) else { continue }
             
@@ -169,13 +160,12 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
             }.resume()
         }
     }
-
-
-    // MARK: - UICollectionView Data Source
+    
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath)
         if let imageView = cell.contentView.viewWithTag(1) as? UIImageView {
@@ -191,8 +181,7 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         cell.layer.masksToBounds = false
         return cell
     }
-
-    // MARK: - UICollectionView Layout
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let spacing: CGFloat = 8
         let columns: CGFloat = 3
@@ -200,20 +189,19 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         let width = (collectionView.bounds.width - totalSpacing) / columns
         return CGSize(width: width, height: width)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 8
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 8
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
     }
-
-    // MARK: - Image Tap
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Julia", bundle: nil)
         if let fullscreenVC = storyboard.instantiateViewController(withIdentifier: "FullscreenPhotoVC") as? FullscreenPhotoViewController {

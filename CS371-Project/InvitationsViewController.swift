@@ -59,19 +59,6 @@ class InvitationsViewController: UIViewController, UITableViewDataSource, UITabl
         cell.destinationLabel.text = "     \(invitation.tripName)"
         cell.inviterLabel.text = "     \(invitation.ownerName)"
         
-        // Style cell
-        cell.containerView.layer.cornerRadius = 12
-        cell.containerView.backgroundColor = .white
-        cell.backgroundColor = .clear
-        cell.contentView.backgroundColor = .clear
-        cell.selectionStyle = .none
-        
-        // Shadow
-        cell.containerView.layer.shadowColor = UIColor.black.cgColor
-        cell.containerView.layer.shadowOpacity = 0.1
-        cell.containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        cell.containerView.layer.shadowRadius = 4
-        
         cell.applyColorScheme()
         
         // 4. Update the button actions to call the new manager functions.
@@ -113,7 +100,6 @@ class InvitationsViewController: UIViewController, UITableViewDataSource, UITabl
 }
 
 class InvitationCell: UITableViewCell {
-    // Outlets for your labels and buttons in the prototype cell
     
     @IBOutlet weak var inviterLabel: UILabel!
     @IBOutlet weak var destinationLabel: UILabel!
@@ -122,7 +108,6 @@ class InvitationCell: UITableViewCell {
     @IBOutlet weak var containerView: UIView!
     
     
-    // Closures to handle button taps in the view controller
     var onAccept: (() -> Void)?
     var onDecline: (() -> Void)?
     

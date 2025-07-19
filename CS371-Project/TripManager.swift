@@ -28,7 +28,7 @@ struct Trip {
     let startDate: Date
     let endDate: Date
     var travelerUIDs: [String]
-
+    
     var isPastTrip: Bool {
         return Date() > endDate
     }
@@ -192,34 +192,34 @@ class TripManager {
         guard let currentUserID = UserManager.shared.currentUserID else { return }
         
         db.collection("invitations")
-          .whereField("inviteeUID", isEqualTo: currentUserID)
-          .whereField("status", isEqualTo: "pending")
-          .getDocuments { (querySnapshot, error) in
-              if let error = error {
-                  completion(.failure(error))
-                  return
-              }
-              
-              let invitations = querySnapshot?.documents.compactMap { doc -> Invitation? in
-                  let data = doc.data()
-                  return Invitation(
-                      id: doc.documentID,
-                      tripID: data["tripID"] as? String ?? "",
-                      tripName: data["tripName"] as? String ?? "",
-                      ownerName: data["ownerName"] as? String ?? "Someone",
-                      ownerUID: data["ownerUID"] as? String ?? "",
-                      inviteeUID: data["inviteeUID"] as? String ?? ""
-                  )
-              } ?? []
-              
-              completion(.success(invitations))
-          }
+            .whereField("inviteeUID", isEqualTo: currentUserID)
+            .whereField("status", isEqualTo: "pending")
+            .getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                let invitations = querySnapshot?.documents.compactMap { doc -> Invitation? in
+                    let data = doc.data()
+                    return Invitation(
+                        id: doc.documentID,
+                        tripID: data["tripID"] as? String ?? "",
+                        tripName: data["tripName"] as? String ?? "",
+                        ownerName: data["ownerName"] as? String ?? "Someone",
+                        ownerUID: data["ownerUID"] as? String ?? "",
+                        inviteeUID: data["inviteeUID"] as? String ?? ""
+                    )
+                } ?? []
+                
+                completion(.success(invitations))
+            }
     }
     
     func acceptInvitation(_ invitation: Invitation, completion: @escaping (Error?) -> Void) {
         let tripRef = db.collection("Users").document(invitation.ownerUID).collection("trips").document(invitation.tripID)
         let invitationRef = db.collection("invitations").document(invitation.id)
-
+        
         // Use arrayUnion to add the new traveler's UID to the array
         tripRef.updateData([
             "travelerUIDs": FieldValue.arrayUnion([invitation.inviteeUID])
@@ -233,14 +233,14 @@ class TripManager {
         }
     }
     
-
+    
     func declineInvitation(_ invitation: Invitation, completion: @escaping (Error?) -> Void) {
         // Just delete the invitation document
         db.collection("invitations").document(invitation.id).delete { error in
             completion(error)
         }
     }
-
+    
     func fetchAcceptedInvitations(completion: @escaping (Result<([Trip], [Trip]), Error>) -> Void) {
         guard let currentUserID = UserManager.shared.currentUserID else {
             let error = NSError(domain: "TripManagerError", code: 401, userInfo: [NSLocalizedDescriptionKey: "User not logged in."])
@@ -249,41 +249,41 @@ class TripManager {
         }
         
         db.collectionGroup("trips")
-          .whereField("travelerUIDs", arrayContains: currentUserID)
-          .whereField("ownerUID", isNotEqualTo: currentUserID)
-          .getDocuments { (querySnapshot, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-
-            var futureTrips: [Trip] = []
-            var pastTrips: [Trip] = []
-            
-            let documents = querySnapshot?.documents ?? []
-
-            for doc in documents {
-                let data = doc.data()
-                let trip = Trip(
-                    id: doc.documentID,
-                    ownerUID: data["ownerUID"] as? String ?? "",
-                    destination: data["destination"] as? String ?? "Unknown Destination",
-                    startDate: (data["startDate"] as? Timestamp)?.dateValue() ?? Date(),
-                    endDate: (data["endDate"] as? Timestamp)?.dateValue() ?? Date(),
-                    travelerUIDs: data["travelerUIDs"] as? [String] ?? []
-                )
-                
-                // Sort the trip into the correct array
-                if trip.isPastTrip {
-                    pastTrips.append(trip)
-                } else {
-                    futureTrips.append(trip)
+            .whereField("travelerUIDs", arrayContains: currentUserID)
+            .whereField("ownerUID", isNotEqualTo: currentUserID)
+            .getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    completion(.failure(error))
+                    return
                 }
+                
+                var futureTrips: [Trip] = []
+                var pastTrips: [Trip] = []
+                
+                let documents = querySnapshot?.documents ?? []
+                
+                for doc in documents {
+                    let data = doc.data()
+                    let trip = Trip(
+                        id: doc.documentID,
+                        ownerUID: data["ownerUID"] as? String ?? "",
+                        destination: data["destination"] as? String ?? "Unknown Destination",
+                        startDate: (data["startDate"] as? Timestamp)?.dateValue() ?? Date(),
+                        endDate: (data["endDate"] as? Timestamp)?.dateValue() ?? Date(),
+                        travelerUIDs: data["travelerUIDs"] as? [String] ?? []
+                    )
+                    
+                    // Sort the trip into the correct array
+                    if trip.isPastTrip {
+                        pastTrips.append(trip)
+                    } else {
+                        futureTrips.append(trip)
+                    }
+                }
+                
+                // Return both arrays in the completion handler
+                completion(.success((futureTrips, pastTrips)))
             }
-            
-            // Return both arrays in the completion handler
-            completion(.success((futureTrips, pastTrips)))
-        }
     }
     
     func removeTraveler(from trip: Trip, userToRemoveUID: String, completion: @escaping (Error?) -> Void) {
@@ -293,7 +293,7 @@ class TripManager {
             completion(error)
             return
         }
-
+        
         let tripRef = db.collection("Users").document(trip.ownerUID).collection("trips").document(trip.id)
         
         // Use FieldValue.arrayRemove to safely remove the UID from the array
