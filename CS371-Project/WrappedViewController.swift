@@ -13,6 +13,8 @@ class WrappedViewController: UIViewController {
     var tripDestination: String?
     
     @IBOutlet weak var wrappedTitle: UILabel!
+    @IBOutlet weak var totalStepsLabel: UILabel!
+    @IBOutlet weak var tripLeaderLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
