@@ -1,4 +1,5 @@
 import UIKit
+import FirebaseFirestore
 
 class CreateTripViewController: UIViewController {
     
@@ -7,7 +8,7 @@ class CreateTripViewController: UIViewController {
     @IBOutlet weak var endDatePicker: UIDatePicker!
     @IBOutlet weak var startDatePicker: UIDatePicker!
     @IBOutlet weak var backgroundView: UIView!
-    
+    @IBOutlet weak var createNewTripTitleLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +22,19 @@ class CreateTripViewController: UIViewController {
         setupInitialUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        createNewTripTitleLabel.textColor = SettingsManager.shared.titleColor
+        
+        var continueButtonConfig = continueButton.configuration ?? .filled()
+        continueButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        continueButton.configuration = continueButtonConfig
+        
+    }
+    
     private func setupInitialUI() {
         backgroundView.layer.cornerRadius = 17
         backgroundView.backgroundColor = .white
-
+        
         backgroundView.layer.shadowColor = UIColor.black.cgColor
         backgroundView.layer.shadowOpacity = 0.2
         backgroundView.layer.shadowOffset = CGSize(width: 0, height: 2)

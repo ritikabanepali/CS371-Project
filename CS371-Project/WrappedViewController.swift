@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class WrappedViewController: UIViewController {
     var selectedTrip: Trip?
@@ -24,5 +25,6 @@ class WrappedViewController: UIViewController {
         }
         wrappedTitle.adjustsFontSizeToFitWidth = true
         wrappedTitle.minimumScaleFactor = 0.5
+        wrappedTitle.textColor = SettingsManager.shared.titleColor
     }
 }

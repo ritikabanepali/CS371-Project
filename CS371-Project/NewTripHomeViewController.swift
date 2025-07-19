@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class NewTripHomeViewController: UIViewController {
     
@@ -15,12 +16,7 @@ class NewTripHomeViewController: UIViewController {
     @IBOutlet var upcomingButton: UIButton!
     @IBOutlet var pastButton: UIButton!
     @IBOutlet var pendingButton: UIButton!
-    
-    
-    @IBOutlet weak var futureTripsButton: UIButton!
-    @IBOutlet weak var pastTripsButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
-    @IBOutlet weak var pendingRequestsButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +36,42 @@ class NewTripHomeViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        applyColorScheme()
+    }
+    
     func applyShadow(to button: UIButton) {
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.1
         button.layer.shadowOffset = CGSize(width: 0, height: 2)
         button.layer.shadowRadius = 4
         button.layer.masksToBounds = false
+    }
+    
+    func applyColorScheme(){
+        welcomeLabel.textColor = SettingsManager.shared.titleColor
+        
+        var createButtonConfig = createButton.configuration ?? .filled()
+        createButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        createButton.configuration = createButtonConfig
+        
+        var upcomingButtonConfig = upcomingButton.configuration ?? .filled()
+        upcomingButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        upcomingButton.configuration = upcomingButtonConfig
+        
+        var pastButtonConfig = pastButton.configuration ?? .filled()
+        pastButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        pastButton.configuration = pastButtonConfig
+        
+        var pendingButtonConfig = pendingButton.configuration ?? .filled()
+        pendingButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        pendingButton.configuration = pendingButtonConfig
+        
+        var settingsButtonConfig = settingsButton.configuration ?? .filled()
+        settingsButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        settingsButton.configuration = settingsButtonConfig
+        
     }
     
     @IBAction func pastTripsTapped(_ sender: UIButton) {

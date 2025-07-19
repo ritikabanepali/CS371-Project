@@ -7,9 +7,11 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class InvitationsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
     
+    @IBOutlet weak var invitationsTitleLabel: UILabel!
     @IBOutlet weak var invitationsTable: UITableView!
     var pendingInvitations: [Invitation] = []
     
@@ -22,6 +24,7 @@ class InvitationsViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchPendingInvitations()
+        invitationsTitleLabel.textColor = SettingsManager.shared.titleColor
     }
     
     func fetchPendingInvitations() {
@@ -62,12 +65,14 @@ class InvitationsViewController: UIViewController, UITableViewDataSource, UITabl
         cell.backgroundColor = .clear
         cell.contentView.backgroundColor = .clear
         cell.selectionStyle = .none
-
+        
         // Shadow
         cell.containerView.layer.shadowColor = UIColor.black.cgColor
         cell.containerView.layer.shadowOpacity = 0.1
         cell.containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
         cell.containerView.layer.shadowRadius = 4
+        
+        cell.applyColorScheme()
         
         // 4. Update the button actions to call the new manager functions.
         cell.onAccept = { [weak self] in
@@ -121,6 +126,16 @@ class InvitationCell: UITableViewCell {
     var onAccept: (() -> Void)?
     var onDecline: (() -> Void)?
     
+    
+    func applyColorScheme() {
+        var acceptButtonConfig = acceptButton.configuration ?? .filled()
+        acceptButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        acceptButton.configuration = acceptButtonConfig
+        
+        var declineButtonConfig = declineButton.configuration ?? .filled()
+        declineButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        declineButton.configuration = declineButtonConfig
+    }
     
     @IBAction func acceptTapped(_ sender: UIButton) {
         onAccept?()

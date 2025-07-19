@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class HomePageViewController: UIViewController {
     var handle: AuthStateDidChangeListenerHandle?
@@ -28,10 +29,15 @@ class HomePageViewController: UIViewController {
                 UserManager.shared.fetchUserProfile(forUserID: user.uid) {error in
                     if error == nil {
                         // User is already signed in
-                        let storyboard = UIStoryboard(name: "Abha", bundle: nil)
-                        if let abhaNavVC = storyboard.instantiateViewController(withIdentifier: "AbhaNavController") as? UINavigationController {
-                            abhaNavVC.modalPresentationStyle = .fullScreen
-                            self?.present(abhaNavVC, animated: true, completion: nil)
+                        SettingsManager.shared.loadSettings {
+                            DispatchQueue.main.async{
+                                let storyboard = UIStoryboard(name: "Abha", bundle: nil)
+                                if let abhaNavVC = storyboard.instantiateViewController(withIdentifier: "AbhaNavController") as? UINavigationController {
+                                    abhaNavVC.modalPresentationStyle = .fullScreen
+                                    self?.present(abhaNavVC, animated: true, completion: nil)
+                                }
+                            }
+                            
                         }
                     } else {
                         do {

@@ -353,6 +353,7 @@
                     <connections>
                         <outlet property="backgroundView" destination="DfS-Bu-7p4" id="elb-bA-5A3"/>
                         <outlet property="continueButton" destination="6b1-pg-5Jl" id="4L3-e7-KuM"/>
+                        <outlet property="createNewTripTitleLabel" destination="xGx-An-OQ1" id="70c-Hq-IXA"/>
                         <outlet property="destinationField" destination="DZM-1w-rhe" id="P6K-Bi-JIV"/>
                         <outlet property="endDatePicker" destination="D3F-kL-sMP" id="4bj-Pq-Yqv"/>
                         <outlet property="startDatePicker" destination="mL8-eR-NFV" id="goh-aU-pcT"/>
@@ -474,6 +475,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="4XT-gx-fnJ"/>
                     <connections>
+                        <outlet property="pastTripsTitle" destination="1Iv-LB-sNA" id="Lgi-JK-H1c"/>
                         <outlet property="tableView" destination="k6R-hD-dNH" id="Vjx-Wl-051"/>
                     </connections>
                 </viewController>
@@ -714,6 +716,7 @@
                     <navigationItem key="navigationItem" id="lpR-mG-EDn"/>
                     <connections>
                         <outlet property="invitationsTable" destination="7sE-bl-uqb" id="sHG-M7-aAr"/>
+                        <outlet property="invitationsTitleLabel" destination="yV5-eG-sWv" id="M3N-PS-r80"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JAk-bm-3Qu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
