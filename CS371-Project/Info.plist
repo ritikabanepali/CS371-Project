@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string></string>
+	<string>App needs access to update stepcount data</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string></string>
+	<string>App needs to access stepcount data to share progress after the trip.</string>
 	<key>CFBundleIdentifier</key>
 	<string></string>
 	<key>UIApplicationSceneManifest</key>
