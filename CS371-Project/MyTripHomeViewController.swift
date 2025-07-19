@@ -103,7 +103,6 @@ class MyTripHomeViewController: UIViewController {
             destinationVC.tripID = self.trip?.id
         }
         
-        // Add this block for SurveyViewController
         else if segue.identifier == "surveyID",
                 let surveyVC = segue.destination as? SurveyViewController {
             surveyVC.currentTrip = self.trip
@@ -114,7 +113,12 @@ class MyTripHomeViewController: UIViewController {
             itineraryVC.currentTrip = self.trip
         }
         
+        else if segue.identifier == "toChatVC",
+                let chatVC = segue.destination as? ChatViewController {
+            chatVC.tripID = self.trip?.id
+        }
     }
+
     
     @IBAction func goToTravelersTapped(_ sender: UIButton) {
         // 1. Get a reference to the other storyboard.
@@ -136,5 +140,8 @@ class MyTripHomeViewController: UIViewController {
             print("Error: Could not instantiate TravelerViewController from Ritika.storyboard.")
         }
     }
+    
+    
+
     
 }
