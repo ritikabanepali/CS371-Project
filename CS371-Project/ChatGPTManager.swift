@@ -63,6 +63,15 @@ class ChatGPTManager {
                 return
             }
 
+            // Debug: Print HTTP status code
+            if let httpResponse = response as? HTTPURLResponse {
+                print("HTTP Status Code: \(httpResponse.statusCode)")
+            }
+
+            // Debug: Print full raw response body
+            print("Full raw response data: \(String(data: data, encoding: .utf8) ?? "")")
+
+            // Attempt to parse
             if let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                let choices = responseJSON["choices"] as? [[String: Any]],
                let message = choices.first?["message"] as? [String: Any],
@@ -73,5 +82,6 @@ class ChatGPTManager {
                 completion(nil)
             }
         }.resume()
+
     }
 }
