@@ -8,6 +8,29 @@ class IteneraryViewController: UIViewController {
     @IBOutlet weak var itineraryTitleLabel: UILabel!
     @IBOutlet weak var moreLocationsButton: UIButton!
     @IBOutlet weak var orderButton: UIButton!
+    
+    @IBAction func saveItinerary(_ sender: UIButton) {
+        guard let text = itineraryTextView.attributedText else { return }
+        let archived = try? NSKeyedArchiver.archivedData(withRootObject: text, requiringSecureCoding: false)
+        UserDefaults.standard.set(archived, forKey: "SavedItinerary")
+        showAlert(title: "Saved", message: "Your itinerary has been saved.")
+    }
+
+    @IBAction func clearItinerary(_ sender: UIButton) {
+        itineraryTextView.text = ""
+        showAlert(title: "Cleared", message: "Your itinerary has been cleared.")
+    }
+
+    @IBAction func regenerateItinerary(_ sender: UIButton) {
+        viewDidLoad() // rerun the logic
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,6 +39,14 @@ class IteneraryViewController: UIViewController {
             print("No trip passed to itinerary generator")
             return
         }
+        
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        let start = formatter.string(from: trip.startDate)
+        let end = formatter.string(from: trip.endDate)
+
+        itineraryTitleLabel.text = "Your itinerary to \(trip.destination): \(start) – \(end)"
+
 
         TripManager.shared.fetchSurveyResponses(for: trip) { responses in
             var experienceCount: [String: Int] = [:]
@@ -83,6 +114,15 @@ class IteneraryViewController: UIViewController {
                     }
                 }
             }
+        }
+        
+        itineraryTextView.isEditable = false
+        itineraryTextView.isSelectable = true
+        itineraryTextView.dataDetectorTypes = [.link]
+        
+        if let savedData = UserDefaults.standard.data(forKey: "SavedItinerary"),
+           let savedAttrString = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(savedData) as? NSAttributedString {
+            itineraryTextView.attributedText = savedAttrString
         }
     }
 
@@ -168,13 +208,18 @@ class IteneraryViewController: UIViewController {
                     .paragraphStyle: paragraphStyle
                 ]
                 fullText.append(NSAttributedString(string: "\(dayTitle)\n", attributes: attributes))
-            } else if trimmed.hasPrefix("-") {
-                let item = trimmed.replacingOccurrences(of: "- ", with: "• ")
-                let attributes: [NSAttributedString.Key: Any] = [
+            } else if trimmed.lowercased().hasPrefix("• address:") {
+                let address = trimmed.replacingOccurrences(of: "• Address: ", with: "")
+                let encoded = address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                let mapURL = "http://maps.apple.com/?q=\(encoded)"
+                let linkAttributes: [NSAttributedString.Key: Any] = [
+                    .link: URL(string: mapURL)!,
                     .font: UIFont.systemFont(ofSize: 15),
+                    .foregroundColor: UIColor.systemBlue,
+                    .underlineStyle: NSUnderlineStyle.single.rawValue,
                     .paragraphStyle: paragraphStyle
                 ]
-                fullText.append(NSAttributedString(string: "\(item)\n", attributes: attributes))
+                fullText.append(NSAttributedString(string: "\(address)\n", attributes: linkAttributes))
             } else {
                 let attributes: [NSAttributedString.Key: Any] = [
                     .font: UIFont.italicSystemFont(ofSize: 14),
