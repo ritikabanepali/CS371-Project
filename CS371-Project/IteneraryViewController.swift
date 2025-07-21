@@ -13,8 +13,11 @@ class IteneraryViewController: UIViewController {
     var currentTrip: Trip!
     
     @IBOutlet weak var itineraryTextView: UITextView!
-    
+    @IBOutlet weak var itineraryTitleLabel: UILabel!
 
+    @IBOutlet weak var moreLocationsButton: UIButton!
+    @IBOutlet weak var orderButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

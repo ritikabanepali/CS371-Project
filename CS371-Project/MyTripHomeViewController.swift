@@ -156,5 +156,15 @@ class MyTripHomeViewController: UIViewController {
     
     
     
+    @IBAction func generateItineraryTapped(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Ritika", bundle: nil)
+        if let itineraryVC = storyboard.instantiateViewController(withIdentifier: "iteneraryID") as? IteneraryViewController {
+            itineraryVC.currentTrip = self.trip
+            self.navigationController?.pushViewController(itineraryVC, animated: true)
+        } else {
+            print("Failed to instantiate IteneraryViewController from Ritika storyboard.")
+        }
+    }
+
     
 }

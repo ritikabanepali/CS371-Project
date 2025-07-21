@@ -165,10 +165,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B0c-VF-acS">
-                                <rect key="frame" x="0.0" y="162" width="393" height="622"/>
+                                <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yx8-hN-IkC">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="622"/>
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yx8-hN-IkC">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="844.66666666666663"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&lt;TRIP NAME&gt;" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WV6-zz-GMM">
                                                 <rect key="frame" x="22" y="36" width="350" height="103"/>
@@ -212,11 +212,11 @@
                                                 </connections>
                                             </button>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ZEG-nb-AoF">
-                                                <rect key="frame" x="22" y="240" width="350" height="382"/>
+                                                <rect key="frame" x="22" y="222.66666666666669" width="350" height="382.00000000000006"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="382" id="mB5-SV-kYT"/>
                                                     <constraint firstAttribute="width" constant="350" id="rvr-Ib-VEA"/>
+                                                    <constraint firstAttribute="height" constant="382" id="sth-dK-8Xm"/>
                                                 </constraints>
                                                 <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -229,8 +229,6 @@
                                             <constraint firstItem="OgS-gG-ksL" firstAttribute="top" secondItem="2Hd-hv-0ua" secondAttribute="bottom" constant="19" id="6cP-D0-Q7z"/>
                                             <constraint firstItem="ZEG-nb-AoF" firstAttribute="leading" secondItem="Yx8-hN-IkC" secondAttribute="leading" constant="22" id="6f6-1Y-dsf"/>
                                             <constraint firstItem="3cX-MY-8Eu" firstAttribute="top" secondItem="Yx8-hN-IkC" secondAttribute="top" constant="8" id="7YK-qz-rwG"/>
-                                            <constraint firstItem="ZEG-nb-AoF" firstAttribute="top" secondItem="wAb-Fz-P9A" secondAttribute="bottom" constant="28" id="GsH-s9-w1U"/>
-                                            <constraint firstItem="ZEG-nb-AoF" firstAttribute="centerY" secondItem="Yx8-hN-IkC" secondAttribute="centerY" id="bX2-mG-Tm8"/>
                                             <constraint firstItem="2Hd-hv-0ua" firstAttribute="leading" secondItem="Yx8-hN-IkC" secondAttribute="leading" constant="75" id="c5d-JR-Pls"/>
                                             <constraint firstItem="2Hd-hv-0ua" firstAttribute="top" secondItem="WV6-zz-GMM" secondAttribute="bottom" constant="-19" id="hYi-6l-fgs"/>
                                             <constraint firstItem="3cX-MY-8Eu" firstAttribute="leading" secondItem="Yx8-hN-IkC" secondAttribute="leading" constant="87" id="jOD-SD-fVk"/>
@@ -238,7 +236,7 @@
                                             <constraint firstAttribute="trailing" secondItem="ZEG-nb-AoF" secondAttribute="trailing" constant="21" id="kOb-lq-ikm"/>
                                             <constraint firstItem="WV6-zz-GMM" firstAttribute="top" secondItem="3cX-MY-8Eu" secondAttribute="bottom" constant="-12" id="l53-Pe-Q55"/>
                                             <constraint firstItem="OgS-gG-ksL" firstAttribute="leading" secondItem="Yx8-hN-IkC" secondAttribute="leading" constant="225" id="mYZ-hZ-B9c"/>
-                                            <constraint firstItem="ZEG-nb-AoF" firstAttribute="centerX" secondItem="Yx8-hN-IkC" secondAttribute="centerX" id="neA-EC-jEO"/>
+                                            <constraint firstItem="ZEG-nb-AoF" firstAttribute="top" secondItem="wAb-Fz-P9A" secondAttribute="bottom" constant="19.333333333333258" id="tSs-Ag-Nuw"/>
                                             <constraint firstItem="wAb-Fz-P9A" firstAttribute="top" secondItem="2Hd-hv-0ua" secondAttribute="bottom" constant="19" id="yhT-FK-gT1"/>
                                         </constraints>
                                     </view>
@@ -260,16 +258,15 @@
                         <constraints>
                             <constraint firstItem="B0c-VF-acS" firstAttribute="top" secondItem="5f3-tj-cm0" secondAttribute="top" id="7MF-fg-hA9"/>
                             <constraint firstItem="B0c-VF-acS" firstAttribute="leading" secondItem="5f3-tj-cm0" secondAttribute="leading" id="TUz-4h-rFw"/>
-                            <constraint firstItem="5f3-tj-cm0" firstAttribute="bottom" secondItem="B0c-VF-acS" secondAttribute="bottom" id="oTZ-8T-MHo"/>
                             <constraint firstItem="5f3-tj-cm0" firstAttribute="trailing" secondItem="B0c-VF-acS" secondAttribute="trailing" id="z1t-cv-nUP"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="8cK-uH-0MG"/>
                     <connections>
                         <outlet property="itineraryTextView" destination="ZEG-nb-AoF" id="Og8-i3-90a"/>
-                        <outlet property="itineraryTitleLabel" destination="3cX-MY-8Eu" id="zwH-sA-n1e"/>
-                        <outlet property="moreLocationsButton" destination="OgS-gG-ksL" id="TwG-p2-uZp"/>
-                        <outlet property="orderButton" destination="wAb-Fz-P9A" id="mMk-TJ-zvK"/>
+                        <outlet property="itineraryTitleLabel" destination="3cX-MY-8Eu" id="xZr-H6-Abb"/>
+                        <outlet property="moreLocationsButton" destination="OgS-gG-ksL" id="Auz-OS-Hpg"/>
+                        <outlet property="orderButton" destination="wAb-Fz-P9A" id="gS3-iM-cwu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7zd-Lp-vAy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1166,7 +1163,6 @@
                         <outlet property="startDatePicker" destination="sZi-SO-nxN" id="bOY-0v-Ce1"/>
                         <outlet property="streetFoodButton" destination="Upq-ns-XQL" id="SGA-MI-kPe"/>
                         <outlet property="submitButton" destination="dDQ-yb-23S" id="b2J-ES-Yt7"/>
-                        <outlet property="submitSurveyButton" destination="dDQ-yb-23S" id="wOR-5r-P9A"/>
                         <outlet property="tripInputTitleLabel" destination="8Pc-Ut-KxN" id="oM3-Jo-io1"/>
                         <outlet property="veganButton" destination="NFY-2V-YXm" id="HTt-vK-Lbu"/>
                         <outlet property="vegetarianButton" destination="pEp-L7-RSR" id="YUJ-8K-6oT"/>
