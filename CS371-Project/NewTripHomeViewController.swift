@@ -21,6 +21,12 @@ class NewTripHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        applyShadow(to: createButton)
+        applyShadow(to: upcomingButton)
+        applyShadow(to: pastButton)
+        applyShadow(to: pendingButton)
+        applyShadow(to: settingsButton)
+        
         // set the welcome text, later username will be sign in username
         if let firstName = UserManager.shared.currentUserFirstName {
             welcomeLabel.text = "Hello, \(firstName)!"
@@ -28,6 +34,14 @@ class NewTripHomeViewController: UIViewController {
             welcomeLabel.text = "Hello!"
             print("User first name not found in UserManager.")
         }
+    }
+    
+    func applyShadow(to button: UIButton) {
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowRadius = 4
+        button.layer.masksToBounds = false
     }
     
     override func viewWillAppear(_ animated: Bool) {

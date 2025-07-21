@@ -18,6 +18,14 @@ class CreateTripViewController: UIViewController {
         
         // set initial minimum date for the end picker
         endDatePicker.minimumDate = startDatePicker.date
+        
+        backgroundView.layer.cornerRadius = 17
+        backgroundView.backgroundColor = .white
+        
+        backgroundView.layer.shadowColor = UIColor.black.cgColor
+        backgroundView.layer.shadowOpacity = 0.2
+        backgroundView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        backgroundView.layer.shadowRadius = 5
     }
     
     override func viewWillAppear(_ animated: Bool) {

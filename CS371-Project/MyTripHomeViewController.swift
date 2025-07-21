@@ -20,6 +20,11 @@ class MyTripHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        applyShadow(to: travelersButton)
+        applyShadow(to: photoButton)
+        applyShadow(to: genButton)
+        applyShadow(to: surveyButton)
+        
         if let destination = trip?.destination {
             titleLabel.text = "\(destination)"
         } else {
@@ -34,6 +39,14 @@ class MyTripHomeViewController: UIViewController {
                 print("HealthKit: Permission denied or error")
             }
         }
+    }
+    
+    func applyShadow(to button: UIButton) {
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowRadius = 4
+        button.layer.masksToBounds = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -118,7 +131,7 @@ class MyTripHomeViewController: UIViewController {
             chatVC.tripID = self.trip?.id
         }
     }
-
+    
     
     @IBAction func goToTravelersTapped(_ sender: UIButton) {
         // 1. Get a reference to the other storyboard.
@@ -142,6 +155,6 @@ class MyTripHomeViewController: UIViewController {
     }
     
     
-
+    
     
 }

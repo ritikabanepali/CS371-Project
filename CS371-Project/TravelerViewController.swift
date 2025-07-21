@@ -43,6 +43,14 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         navigationController?.navigationBar.tintColor = .black
     }
     
+    func applyShadow(to button: UIButton) {
+            button.layer.shadowColor = UIColor.black.cgColor
+            button.layer.shadowOpacity = 0.1
+            button.layer.shadowOffset = CGSize(width: 0, height: 2)
+            button.layer.shadowRadius = 4
+            button.layer.masksToBounds = false
+        }
+    
     private func configureView() {
         guard let trip = trip else {
             print("Error: Trip object was not provided.")
@@ -53,6 +61,8 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         tripNameLabel.text = "\(trip.destination)"
         tripNameLabel.numberOfLines = 2 // Allow the text to wrap
         
+        applyShadow(to: inviteButton)
+
         setupTripListener()
     }
     

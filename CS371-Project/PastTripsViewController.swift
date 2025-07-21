@@ -80,6 +80,17 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
         cell.dateLabel.text = "\(formatter.string(from: trip.startDate)) → \(formatter.string(from: trip.endDate))"
         cell.travelersLabel.text = "\(trip.travelerUIDs.count) travelers"
         
+        cell.containerView.layer.cornerRadius = 17
+        cell.containerView.backgroundColor = .white
+        cell.backgroundColor = .clear
+        cell.contentView.backgroundColor = .clear
+        cell.selectionStyle = .none
+        
+        cell.containerView.layer.shadowColor = UIColor.black.cgColor
+        cell.containerView.layer.shadowOpacity = 0.2
+        cell.containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cell.containerView.layer.shadowRadius = 5
+        
         cell.myButton.tag = indexPath.row
         
         var myButtonConfig = cell.myButton.configuration ?? .filled()

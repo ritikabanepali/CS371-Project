@@ -10,6 +10,16 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Style for the view's background and corners
+        uiView.backgroundColor = .white
+        uiView.layer.cornerRadius = 12
+        
+        // Style for the shadow
+        uiView.layer.shadowColor = UIColor.black.cgColor
+        uiView.layer.shadowOpacity = 0.1
+        uiView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        uiView.layer.shadowRadius = 4
     }
     
     override func viewWillAppear(_ animated: Bool) {
