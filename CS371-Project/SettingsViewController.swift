@@ -23,6 +23,17 @@ class SettingsViewController: UIViewController {
             
             self.updateFromSettingsManager()
             self.applyColorScheme()
+            
+            applyShadow(to: saveSettingsButton)
+            applyShadow(to: logoutButton)
+        }
+        
+        func applyShadow(to button: UIButton) {
+            button.layer.shadowColor = UIColor.black.cgColor
+            button.layer.shadowOpacity = 0.1
+            button.layer.shadowOffset = CGSize(width: 0, height: 2)
+            button.layer.shadowRadius = 4
+            button.layer.masksToBounds = false
         }
         
         
