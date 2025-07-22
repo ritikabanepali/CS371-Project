@@ -256,10 +256,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="8cK-uH-0MG"/>
                     <connections>
+                        <outlet property="clearItineraryButton" destination="H4U-3G-JYA" id="Tuv-Tz-7xJ"/>
                         <outlet property="itineraryDatesLabel" destination="2Hd-hv-0ua" id="EDS-oV-TWw"/>
                         <outlet property="itineraryTextView" destination="ZEG-nb-AoF" id="Og8-i3-90a"/>
                         <outlet property="itineraryTitleLabel" destination="3cX-MY-8Eu" id="xZr-H6-Abb"/>
                         <outlet property="moreLocationsButton" destination="OgS-gG-ksL" id="Auz-OS-Hpg"/>
+                        <outlet property="regenerateItineraryButton" destination="tPD-ef-YmO" id="qK5-Qp-kS3"/>
+                        <outlet property="saveItineraryButton" destination="2hd-8H-NcT" id="g0F-zF-hwt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7zd-Lp-vAy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
