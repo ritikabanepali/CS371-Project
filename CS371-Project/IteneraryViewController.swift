@@ -7,7 +7,8 @@ class IteneraryViewController: UIViewController {
     @IBOutlet weak var itineraryTextView: UITextView!
     @IBOutlet weak var itineraryTitleLabel: UILabel!
     @IBOutlet weak var moreLocationsButton: UIButton!
-    @IBOutlet weak var orderButton: UIButton!
+    @IBOutlet weak var itineraryDatesLabel: UILabel!
+
     
     @IBAction func saveItinerary(_ sender: UIButton) {
         guard let text = itineraryTextView.attributedText else { return }
@@ -45,7 +46,8 @@ class IteneraryViewController: UIViewController {
         let start = formatter.string(from: trip.startDate)
         let end = formatter.string(from: trip.endDate)
 
-        itineraryTitleLabel.text = "Your itinerary to \(trip.destination): \(start) – \(end)"
+        itineraryTitleLabel.text = "Your itinerary to \(trip.destination):"
+        itineraryDatesLabel.text = "\(start) – \(end)"
 
 
         TripManager.shared.fetchSurveyResponses(for: trip) { responses in
