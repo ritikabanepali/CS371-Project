@@ -6,6 +6,10 @@
 //
 
 import UIKit
+import HealthKit
+import UserNotifications
+import FirebaseAuth
+import FirebaseFirestore
 
 class MyTripHomeViewController: UIViewController {
     
@@ -32,7 +36,7 @@ class MyTripHomeViewController: UIViewController {
         }
         
         HealthKitManager.shared.requestAuthorization { [weak self] authorized in
-            guard let self = self else { return }
+            guard self != nil else { return }
             if authorized {
                 print("HealthKit: Permission granted for step count.")
             } else {
@@ -68,6 +72,72 @@ class MyTripHomeViewController: UIViewController {
         var surveyButtonConfig = surveyButton.configuration ?? .filled()
         surveyButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
         surveyButton.configuration = surveyButtonConfig
+        
+        if SettingsManager.shared.notificationsEnabled {
+            if let currentTrip = trip {
+                scheduleTripNotifications(for: currentTrip)
+            }
+        } else {
+            if let tripID = trip?.id {
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["trip-start-\(tripID)", "trip-end-\(tripID)"])
+            }
+        }
+    }
+    
+    func scheduleTripNotifications(for trip: Trip) {
+        guard SettingsManager.shared.notificationsEnabled else { return }
+        
+        let notifications = UNUserNotificationCenter.current()
+        
+        //clear old notifications so only one is ever set
+        notifications.removePendingNotificationRequests(withIdentifiers: ["trip start \(trip.id)", "trip end \(trip.id)"])
+        
+        //set up calendar integration
+        let calendar = Calendar.current
+        let today = Date()
+        let todayStart = calendar.startOfDay(for: today)
+        let tripStart = calendar.startOfDay(for: trip.startDate)
+        let tripEnd = calendar.startOfDay(for: trip.endDate)
+        
+        let startContent = UNMutableNotificationContent()
+        startContent.title = "Your trip is starting!"
+        startContent.body = "Today is first day of your trip to \(trip.destination)! Enjoy your travels!"
+        startContent.sound = UNNotificationSound.default
+        
+        let endContent = UNMutableNotificationContent()
+        endContent.title = "Your trip is ending!"
+        endContent.body = "Today is the last day of your trip to \(trip.destination)! Hope you had a great trip!"
+        endContent.sound = UNNotificationSound.default
+        
+        //cases: if trip is created on the same day, if trip is created & ends on the same day, or trip dates are not today
+        
+        if tripStart == todayStart {
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+            let request = UNNotificationRequest(identifier: "trip start \(trip.id)", content: startContent, trigger: trigger)
+            notifications.add(request)
+        } else if tripStart > todayStart {
+            var startDateComponents = calendar.dateComponents([.year, .month, .day], from: trip.startDate)
+            startDateComponents.hour = 0
+            startDateComponents.minute = 0
+            
+            let trigger = UNCalendarNotificationTrigger(dateMatching: startDateComponents, repeats: false)
+            let request = UNNotificationRequest(identifier: "trip start \(trip.id)", content: startContent, trigger: trigger)
+            notifications.add(request)
+        }
+        
+        if tripEnd == todayStart {
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+            let request = UNNotificationRequest(identifier: "trip end \(trip.id)", content: endContent, trigger: trigger)
+            notifications.add(request)
+        } else if tripEnd > todayStart {
+            var endDateComponents = calendar.dateComponents([.year, .month, .day], from: trip.endDate)
+            endDateComponents.hour = 0
+            endDateComponents.minute = 0
+            
+            let trigger = UNCalendarNotificationTrigger(dateMatching: endDateComponents, repeats: false)
+            let request = UNNotificationRequest(identifier: "trip end\(trip.id)", content: endContent, trigger: trigger)
+            notifications.add(request)
+        }
     }
     
     @IBAction func deleteTripTapped(_ sender: Any) {
@@ -134,27 +204,14 @@ class MyTripHomeViewController: UIViewController {
     
     
     @IBAction func goToTravelersTapped(_ sender: UIButton) {
-        // 1. Get a reference to the other storyboard.
         let storyboard = UIStoryboard(name: "Ritika", bundle: nil)
-        
-        // 2. Instantiate the specific view controller using its Storyboard ID.
-        //    Make sure the ID matches what you set in the storyboard.
         if let travelerVC = storyboard.instantiateViewController(withIdentifier: "travelersID") as? TravelerViewController {
-            
-            // 3. Pass the trip data to the new view controller.
             travelerVC.trip = self.trip
-            
-            // 4. Present the new view controller.
-            //    This assumes you are using a UINavigationController.
             self.navigationController?.pushViewController(travelerVC, animated: true)
-            
         } else {
-            // This will help you debug if the Storyboard ID is wrong or the class isn't set correctly.
             print("Error: Could not instantiate TravelerViewController from Ritika.storyboard.")
         }
     }
-    
-    
     
     @IBAction func generateItineraryTapped(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Ritika", bundle: nil)
@@ -165,6 +222,6 @@ class MyTripHomeViewController: UIViewController {
             print("Failed to instantiate IteneraryViewController from Ritika storyboard.")
         }
     }
-
+    
     
 }

@@ -30,7 +30,10 @@ struct Trip {
     var travelerUIDs: [String]
 
     var isPastTrip: Bool {
-        return Date() > endDate
+        let calendar = Calendar.current
+        let todayStart = calendar.startOfDay(for: Date())
+        let tripEnd = calendar.startOfDay(for: endDate)
+        return todayStart > tripEnd
     }
 }
 
