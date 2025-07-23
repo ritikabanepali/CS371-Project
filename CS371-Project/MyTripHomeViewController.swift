@@ -21,6 +21,9 @@ class MyTripHomeViewController: UIViewController {
     @IBOutlet var surveyButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
     
+    @IBOutlet var chatButton: UIButton!
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,6 +31,11 @@ class MyTripHomeViewController: UIViewController {
         applyShadow(to: photoButton)
         applyShadow(to: genButton)
         applyShadow(to: surveyButton)
+        
+        let config = UIImage.SymbolConfiguration(pointSize: 40, weight: .regular)
+           let largeChatImage = UIImage(systemName: "message.circle", withConfiguration: config)
+           chatButton.setImage(largeChatImage, for: .normal)
+
         
         if let destination = trip?.destination {
             titleLabel.text = "\(destination)"
