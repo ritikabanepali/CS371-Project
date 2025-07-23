@@ -66,6 +66,13 @@ class SurveyViewController: UIViewController, UITableViewDataSource {
         var submitButtonConfig = submitButton.configuration ?? .filled()
         submitButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
         submitButton.configuration = submitButtonConfig
+        
+        if let trip = currentTrip {
+            startDatePicker.minimumDate = trip.startDate
+            endDatePicker.maximumDate = trip.endDate
+            endDatePicker.minimumDate = startDatePicker.date
+            
+        }
     }
     
     func getSelectedTitles(from buttons: [UIButton]) -> [String] {
