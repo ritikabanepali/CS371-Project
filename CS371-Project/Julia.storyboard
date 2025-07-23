@@ -284,13 +284,44 @@
                                 <rect key="frame" x="0.0" y="59" width="393" height="624"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageCell" id="1TX-ID-13M">
-                                        <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageCell" rowHeight="77" id="1TX-ID-13M" customClass="MessageCell" customModule="CS371_Project" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="77"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1TX-ID-13M" id="taB-F6-9dR">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="77"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="message text" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gem-lp-MMf">
+                                                    <rect key="frame" x="20" y="42" width="353" height="20.333333333333329"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="353" id="qFh-Lr-gk7"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sender Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aHf-rs-FbQ">
+                                                    <rect key="frame" x="20" y="13" width="353" height="23"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="353" id="GPZ-3I-wrz"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="gem-lp-MMf" secondAttribute="bottom" constant="14.666666666666671" id="Cue-51-kmc"/>
+                                                <constraint firstItem="gem-lp-MMf" firstAttribute="leading" secondItem="taB-F6-9dR" secondAttribute="leading" constant="20" symbolic="YES" id="Dnr-zF-rzK"/>
+                                                <constraint firstItem="aHf-rs-FbQ" firstAttribute="top" secondItem="taB-F6-9dR" secondAttribute="top" constant="13" id="LPU-1u-sx3"/>
+                                                <constraint firstItem="gem-lp-MMf" firstAttribute="top" secondItem="aHf-rs-FbQ" secondAttribute="bottom" constant="6" id="Rpb-op-9mV"/>
+                                                <constraint firstItem="aHf-rs-FbQ" firstAttribute="leading" secondItem="taB-F6-9dR" secondAttribute="leading" constant="20" symbolic="YES" id="uv2-1C-9rG"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="messageLabel" destination="gem-lp-MMf" id="TzB-v0-O1S"/>
+                                            <outlet property="senderLabel" destination="aHf-rs-FbQ" id="NxG-Xw-M9V"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -314,6 +345,9 @@
                                 <buttonConfiguration key="configuration" style="plain" title="send">
                                     <color key="baseForegroundColor" red="0.32549020649999999" green="0.43921568989999998" blue="0.20000001789999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="sendTapped:" destination="eaG-bf-cZN" eventType="touchUpInside" id="t0y-Eq-KMs"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ojo-dj-tTj"/>
