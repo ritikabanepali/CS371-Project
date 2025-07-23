@@ -1,11 +1,11 @@
-// UPDATED IteneraryViewController.swift
+// ItineraryViewController.swift
 // Adds permissions: only trip owner can generate/save/clear itinerary,
 // and only after all invited travelers have submitted surveys
 
 import UIKit
 import FirebaseFirestore
 
-class IteneraryViewController: UIViewController {
+class ItineraryViewController: UIViewController {
     var currentTrip: Trip!
 
     @IBOutlet weak var itineraryTextView: UITextView!
@@ -26,7 +26,7 @@ class IteneraryViewController: UIViewController {
 
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
-        itineraryTitleLabel.text = "Your itinerary to \(trip.destination):"
+        itineraryTitleLabel.text = "Your Itinerary To \(trip.destination)"
         itineraryDatesLabel.text = "\(formatter.string(from: trip.startDate)) – \(formatter.string(from: trip.endDate))"
 
         let isOwner = isCurrentUserTripOwner()
@@ -44,7 +44,11 @@ class IteneraryViewController: UIViewController {
                     if !enable {
                         self.showAlert(title: "Wait", message: "All travelers must complete the survey before generating an itinerary.")
                     } else {
-                        self.generateItinerary()
+                        if self.loadSavedItineraryIfExists() {
+                            print("Loaded saved itinerary for owner.")
+                        } else {
+                            self.itineraryTextView.text = "No itinerary available yet. Tap 'Regenerate' to create one."
+                        }
                     }
                 }
             }
@@ -192,8 +196,9 @@ class IteneraryViewController: UIViewController {
     }
 
     func loadSavedItineraryForViewer() {
-        if let savedData = UserDefaults.standard.data(forKey: "SavedItinerary"),
-           let savedAttrString = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(savedData) as? NSAttributedString {
+        let key = "SavedItinerary_\(currentTrip.id)"
+        if let savedData = UserDefaults.standard.data(forKey: key),
+           let savedAttrString = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSAttributedString.self, from: savedData) {
             itineraryTextView.attributedText = savedAttrString
         } else {
             itineraryTextView.text = "No itinerary available."
@@ -201,26 +206,47 @@ class IteneraryViewController: UIViewController {
     }
 
     @IBAction func saveItinerary(_ sender: UIButton) {
+        guard let _ = currentTrip else {
+            showAlert(title: "Error", message: "Trip not found.")
+            return
+        }
         guard isCurrentUserTripOwner() else {
             showAlert(title: "Unauthorized", message: "Only the trip owner can save the itinerary.")
             return
         }
         guard let text = itineraryTextView.attributedText else { return }
         let archived = try? NSKeyedArchiver.archivedData(withRootObject: text, requiringSecureCoding: false)
-        UserDefaults.standard.set(archived, forKey: "SavedItinerary")
+        let key = "SavedItinerary_\(currentTrip.id)"
+        UserDefaults.standard.set(archived, forKey: key)
+
         showAlert(title: "Saved", message: "Your itinerary has been saved.")
     }
 
     @IBAction func clearItinerary(_ sender: UIButton) {
+        guard let trip = currentTrip else {
+            showAlert(title: "Error", message: "Trip not found.")
+            return
+        }
         guard isCurrentUserTripOwner() else {
             showAlert(title: "Unauthorized", message: "Only the trip owner can clear the itinerary.")
             return
         }
+
         itineraryTextView.text = ""
+
+        // Delete the saved version as well
+        let key = "SavedItinerary_\(trip.id)"
+        UserDefaults.standard.removeObject(forKey: key)
+
         showAlert(title: "Cleared", message: "Your itinerary has been cleared.")
     }
 
+
     @IBAction func regenerateItinerary(_ sender: UIButton) {
+        guard let _ = currentTrip else {
+            showAlert(title: "Error", message: "Trip not found.")
+            return
+        }
         guard isCurrentUserTripOwner() else {
             showAlert(title: "Unauthorized", message: "Only the trip owner can regenerate the itinerary.")
             return
@@ -272,5 +298,15 @@ class IteneraryViewController: UIViewController {
         }
 
         return fullText
+    }
+
+    func loadSavedItineraryIfExists() -> Bool {
+        let key = "SavedItinerary_\(currentTrip.id)"
+        if let savedData = UserDefaults.standard.data(forKey: key),
+           let savedAttrString = try? NSKeyedUnarchiver.unarchivedObject(ofClass: NSAttributedString.self, from: savedData) {
+            itineraryTextView.attributedText = savedAttrString
+            return true
+        }
+        return false
     }
 }

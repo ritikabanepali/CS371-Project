@@ -122,7 +122,7 @@ class MyTripHomeViewController: UIViewController {
         }
         
         else if segue.identifier == "iteneraryID",
-                let itineraryVC = segue.destination as? IteneraryViewController {
+                let itineraryVC = segue.destination as? ItineraryViewController {
             itineraryVC.currentTrip = self.trip
         }
         
@@ -158,7 +158,7 @@ class MyTripHomeViewController: UIViewController {
     
     @IBAction func generateItineraryTapped(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Ritika", bundle: nil)
-        if let itineraryVC = storyboard.instantiateViewController(withIdentifier: "iteneraryID") as? IteneraryViewController {
+        if let itineraryVC = storyboard.instantiateViewController(withIdentifier: "iteneraryID") as? ItineraryViewController {
             itineraryVC.currentTrip = self.trip
             self.navigationController?.pushViewController(itineraryVC, animated: true)
         } else {
