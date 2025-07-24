@@ -12,13 +12,15 @@ import CoreLocation
 class LocationCell: UITableViewCell {
     // These outlets will be connected to the labels in your storyboard cell
     @IBOutlet var locationNameLabel: UILabel!
-    @IBOutlet var activityLabel: UILabel!
     @IBOutlet var distanceLabel: UILabel!
     @IBOutlet var linkLabel: UILabel!
 }
 
 class LocationViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
     
+    @IBOutlet var searchTextField: UITextField!
+    
+    @IBOutlet var searchButtonTapped: UIButton!
     
     @IBOutlet weak var locationTitleLabel: UILabel!
     @IBOutlet var tableView: UITableView!
@@ -29,14 +31,44 @@ class LocationViewController: UIViewController, UITableViewDataSource, UITableVi
     
     private let locationManager = CLLocationManager()
     private var searchResults: [MKMapItem] = []
+    private var tripLocation: CLLocation? // To store the destination's location
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
         setupLocationServices()
+        fetchPlaces(query: "attractions")
 
     }
+    
+    
+    private func fetchPlaces(query: String) {
+          guard let trip = trip else {
+              print("Error: Trip data is missing.")
+              return
+          }
+
+          self.locationTitleLabel.text = "Finding places in \(trip.destination)..."
+          
+          let geocoder = CLGeocoder()
+          
+          // Use CoreLocation's CLGeocoder to turn the city name into coordinates
+          geocoder.geocodeAddressString(trip.destination) { [weak self] (placemarks, error) in
+              guard let self = self else { return }
+              
+              if let error = error {
+                  print("Geocoding error: \(error.localizedDescription)")
+                  self.locationTitleLabel.text = "Could not find destination."
+                  return
+              }
+              
+              if let placemarkLocation = placemarks?.first?.location {
+                  self.tripLocation = placemarkLocation // Save the location
+                  self.performSearch(near: placemarkLocation, query: query)
+              }
+          }
+      }
     
     private func setupLocationServices() {
         locationManager.delegate = self
@@ -56,11 +88,9 @@ class LocationViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     private func performSearch(near location: CLLocation, query: String) {
-        self.locationTitleLabel.text = "Finding places near you..."
-
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = query
-        request.region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 10000, longitudinalMeters: 10000) // Search in a 10km (approx. 6 mile) radius
+        request.region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 20000, longitudinalMeters: 20000) // Search in a 20km radius
 
         let search = MKLocalSearch(request: request)
         search.start { [weak self] (response, error) in
@@ -75,9 +105,21 @@ class LocationViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 self.searchResults = response?.mapItems ?? []
                 self.tableView.reloadData()
-                self.locationTitleLabel.text = "Showing results for '\(query)'"
+                self.locationTitleLabel.text = "Showing results for '\(query)' in \(self.trip?.destination ?? "")"
             }
         }
+    }
+    
+
+    @IBAction func searchButtonTapped(_ sender: Any) {
+        // Get query from text field, ensuring it's not empty
+        guard let query = searchTextField.text, !query.isEmpty else { return }
+        
+        // Hide the keyboard
+        searchTextField.resignFirstResponder()
+        
+        // Perform the search using the existing function
+        fetchPlaces(query: query)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -89,9 +131,19 @@ class LocationViewController: UIViewController, UITableViewDataSource, UITableVi
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! LocationCell
         let mapItem = searchResults[indexPath.row]
         
+        // Style cell
+        cell.contentView.layer.cornerRadius = 12
+        cell.contentView.backgroundColor = .white
+        cell.contentView.backgroundColor = .clear
+        
+        // Shadow
+        cell.contentView.layer.shadowColor = UIColor.black.cgColor
+        cell.contentView.layer.shadowOpacity = 0.1
+        cell.contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cell.contentView.layer.shadowRadius = 4
+        
         // Access the outlets directly on the cell
         cell.locationNameLabel.text = mapItem.name
-        cell.activityLabel.text = mapItem.pointOfInterestCategory?.rawValue ?? "Place of Interest"
         cell.linkLabel.text = mapItem.url?.host ?? "No website available"
         
         // Calculate and format the distance
@@ -104,6 +156,12 @@ class LocationViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        // Return a fixed height that fits all your labels.
+        // You can adjust this value to match your design.
+        return 100
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -123,13 +181,10 @@ class LocationViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let currentLocation = locations.first else { return }
-        
-        // We only need the location once, so stop updating to save battery
         manager.stopUpdatingLocation()
         
-        // Once we have the location, perform the search
-        performSearch(near: currentLocation, query: "attractions")
+        // We only need the location once, so stop updating to save battery
+        tableView.reloadData()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

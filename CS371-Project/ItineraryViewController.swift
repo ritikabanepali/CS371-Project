@@ -55,6 +55,7 @@ class ItineraryViewController: UIViewController {
         itineraryTextView.dataDetectorTypes = [.link]
     }
 
+    
     func observeItineraryUpdates() {
         let docRef = Firestore.firestore().collection("itineraries").document(currentTrip.id)
 
@@ -300,4 +301,19 @@ class ItineraryViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // 1. Check if this is the correct segue using the identifier you just set
+        if segue.identifier == "toLocationSearch" {
+            
+            // 2. Get a reference to the destination view controller
+            if let destinationVC = segue.destination as? LocationViewController {
+                
+                // 3. Pass the trip object to the destination
+                // (Make sure 'self.trip' holds the correct trip data before the segue)
+                destinationVC.trip = self.currentTrip
+            }
+        }
+    }
+    
 }
