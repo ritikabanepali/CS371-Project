@@ -98,32 +98,49 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
     
     private func loadTravelerData() {
         guard let trip = trip else { return }
+
+        // Get a reference to the trip document in Firestore
+        let db = Firestore.firestore()
+        let tripRef = db.collection("Users").document(trip.ownerUID).collection("trips").document(trip.id)
         
         let group = DispatchGroup()
         var fetchedTravelers: [TravelerViewModel] = []
-        
-        for uid in trip.travelerUIDs { // <-- 1. Get only the uid
-            group.enter()
-            UserManager.shared.fetchName(forUserWithUID: uid) { result in
-                switch result {
-                case .success(let name):
-                    let traveler = TravelerViewModel(uid: uid, name: name, status: "confirmed", surveyStatus: "N")
+
+        for uid in trip.travelerUIDs {
+            group.enter() // Enter the group for each traveler
+
+            // Step 1: Check if a survey response exists for this traveler's UID
+            tripRef.collection("surveyResponses").document(uid).getDocument { (document, error) in
+                
+                // Determine survey status: "Y" if document exists, otherwise "N"
+                let surveyCompleted = document?.exists ?? false
+                let surveyStatus = surveyCompleted ? "Y" : "N"
+                
+                // Step 2: Now that we have the status, fetch the traveler's name
+                UserManager.shared.fetchName(forUserWithUID: uid) { result in
+                    var travelerName = "Unknown User"
+                    if case .success(let name) = result {
+                        travelerName = name
+                    }
+                    
+                    // Step 3: Create the final view model with all the dynamic data
+                    let traveler = TravelerViewModel(
+                        uid: uid,
+                        name: travelerName,
+                        status: "confirmed", // As per your original logic
+                        surveyStatus: surveyStatus // Use the fetched status
+                    )
+                    
                     fetchedTravelers.append(traveler)
-                case .failure(let error):
-                    print("Could not fetch name for UID \(uid): \(error)")
-                    // Also update the placeholder to use "confirmed"
-                    let traveler = TravelerViewModel(uid: uid, name: "Unknown User", status: "confirmed", surveyStatus: "N")
-                    fetchedTravelers.append(traveler)
+                    group.leave() // Leave the group, signaling this traveler is done
                 }
-                group.leave()
             }
         }
-        
-        // This closure runs only after ALL fetchName calls have completed
+
+        // This block runs only after ALL travelers have been processed
         group.notify(queue: .main) {
-            
-            // Sort to show confirmed users first
             self.travelers = fetchedTravelers.sorted {
+                // Your existing sorting logic
                 if $0.status == "confirmed" && $1.status == "pending" { return true }
                 return false
             }
@@ -238,7 +255,7 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.nameLabel.text = traveler.name
         
         // This is where you would set the survey status text based on your data model
-        cell.surveyStatusLabel.text = "N" // Placeholder
+        cell.surveyStatusLabel.text = traveler.surveyStatus
         
         // Visually distinguish between pending and confirmed
         if traveler.status == "pending" {
