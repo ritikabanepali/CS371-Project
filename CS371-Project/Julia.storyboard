@@ -537,11 +537,18 @@
                                     <action selector="likeButtonTapped:" destination="Jhb-gh-t7O" eventType="touchUpInside" id="WVE-Vi-qJm"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WWz-gm-6YR">
+                                <rect key="frame" x="103" y="720" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.832327178" green="0.4050961609" blue="0.54094438219999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="EUB-XN-OLy"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="EUB-XN-OLy" firstAttribute="bottom" secondItem="B1C-jx-pij" secondAttribute="bottom" constant="169" id="02W-6T-qdm"/>
+                            <constraint firstItem="WWz-gm-6YR" firstAttribute="centerX" secondItem="ZMN-b9-baT" secondAttribute="centerX" id="3Qb-BO-YKD"/>
                             <constraint firstItem="ZMN-b9-baT" firstAttribute="top" secondItem="B1C-jx-pij" secondAttribute="bottom" id="NGZ-Yi-SBV"/>
                             <constraint firstItem="EUB-XN-OLy" firstAttribute="trailing" secondItem="dUO-VU-Ct6" secondAttribute="trailing" constant="85" id="PhU-8R-NAB"/>
                             <constraint firstItem="ZMN-b9-baT" firstAttribute="leading" secondItem="EUB-XN-OLy" secondAttribute="leading" constant="115" id="Zob-uO-SPD"/>
@@ -549,6 +556,7 @@
                             <constraint firstItem="B1C-jx-pij" firstAttribute="top" secondItem="EUB-XN-OLy" secondAttribute="top" constant="40" id="evP-ri-4vE"/>
                             <constraint firstItem="dUO-VU-Ct6" firstAttribute="centerY" secondItem="ZMN-b9-baT" secondAttribute="centerY" id="fJB-OD-YqY"/>
                             <constraint firstItem="dUO-VU-Ct6" firstAttribute="leading" secondItem="ZMN-b9-baT" secondAttribute="trailing" constant="88.333333333333343" id="gZe-DR-R1M"/>
+                            <constraint firstItem="WWz-gm-6YR" firstAttribute="top" secondItem="ZMN-b9-baT" secondAttribute="bottom" constant="6.6666666666666288" id="xML-Fy-36s"/>
                             <constraint firstItem="B1C-jx-pij" firstAttribute="leading" secondItem="EUB-XN-OLy" secondAttribute="leading" id="xPg-lG-vFB"/>
                         </constraints>
                     </view>
@@ -556,6 +564,7 @@
                         <outlet property="deleteButton" destination="dUO-VU-Ct6" id="q2X-Gr-ZZ4"/>
                         <outlet property="imageView" destination="B1C-jx-pij" id="Lca-jG-uHy"/>
                         <outlet property="likeButton" destination="ZMN-b9-baT" id="dFB-ff-DR5"/>
+                        <outlet property="likeCountLabel" destination="WWz-gm-6YR" id="GjA-jC-4sk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GdE-L1-HTN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -19,6 +19,10 @@ class FullscreenPhotoViewController: UIViewController {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     
+
+    @IBOutlet weak var likeCountLabel: UILabel!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +39,7 @@ class FullscreenPhotoViewController: UIViewController {
         
         loadLikes()
         styleButtons()
+
         updateLikeButtonState()
         
         
@@ -167,6 +172,15 @@ class FullscreenPhotoViewController: UIViewController {
             
             let config = UIImage.SymbolConfiguration(pointSize: 40, weight: .regular)
             likeButton.setImage(UIImage(systemName: iconName, withConfiguration: config), for: .normal)
+            
+            let count = likes[currentIndex]
+            if count > 0 {
+                likeCountLabel.isHidden = false
+                likeCountLabel.text = "\(count)"
+            } else {
+                likeCountLabel.isHidden = true
+            }
+
         }
         
         
