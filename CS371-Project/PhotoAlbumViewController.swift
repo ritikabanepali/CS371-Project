@@ -10,6 +10,7 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
     @IBOutlet weak var addPhotoButton: UIButton!
     @IBOutlet weak var photoAlbumTitle: UILabel!
     @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var loadingLabel: UILabel!
     
     @IBOutlet weak var photoCollection: UICollectionView!
     var tripID: String?
@@ -37,6 +38,7 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         photoAlbumTitle.textColor = SettingsManager.shared.titleColor
+        loadingLabel.textColor = SettingsManager.shared.titleColor
         var myButtonConfig = addPhotoButton.configuration ?? .filled()
         myButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
         addPhotoButton.configuration = myButtonConfig

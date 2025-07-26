@@ -10,7 +10,7 @@ import MapKit
 import CoreLocation
 
 class LocationCell: UITableViewCell {
-    // These outlets will be connected to the labels in your storyboard cell
+    
     @IBOutlet var locationNameLabel: UILabel!
     @IBOutlet var distanceLabel: UILabel!
     @IBOutlet var linkLabel: UILabel!
@@ -18,6 +18,7 @@ class LocationCell: UITableViewCell {
 
 class LocationViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
     
+    @IBOutlet weak var locationTitle: UILabel!
     @IBOutlet var searchTextField: UITextField!
     
     @IBOutlet var searchButtonTapped: UIButton!
@@ -39,7 +40,7 @@ class LocationViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.delegate = self
         setupLocationServices()
         fetchPlaces(query: "attractions")
-
+        locationTitle.textColor = SettingsManager.shared.titleColor
     }
     
     

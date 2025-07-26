@@ -15,7 +15,7 @@ class WrappedViewController: UIViewController {
     @IBOutlet weak var tripTitle: UILabel!
     @IBOutlet weak var datesLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
-
+    @IBOutlet weak var wrappedLabel: UILabel!
     var tripDestination: String?
     
     @IBOutlet weak var wrappedTitle: UILabel!
@@ -39,7 +39,8 @@ class WrappedViewController: UIViewController {
         setTitle()
         totalStepsLabel.textColor = SettingsManager.shared.titleColor
         tripLeaderLabel.textColor = SettingsManager.shared.titleColor
-        
+        wrappedLabel.textColor = SettingsManager.shared.titleColor
+
         HealthKitManager.shared.requestAuthorization { [weak self] authorized in
             guard let self = self else { return }
             if authorized {

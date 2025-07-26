@@ -26,6 +26,9 @@ class ItineraryViewController: UIViewController {
 
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
+        
+        applyColorScheme()
+        
         itineraryTitleLabel.text = "Your Itinerary To \(trip.destination)"
         itineraryDatesLabel.text = "\(formatter.string(from: trip.startDate)) – \(formatter.string(from: trip.endDate))"
 
@@ -53,6 +56,26 @@ class ItineraryViewController: UIViewController {
         itineraryTextView.isEditable = false
         itineraryTextView.isSelectable = true
         itineraryTextView.dataDetectorTypes = [.link]
+    }
+    
+    func applyColorScheme(){
+        itineraryTitleLabel.textColor = SettingsManager.shared.titleColor
+        
+        var moreLocationsButtonConfig = moreLocationsButton.configuration ?? .filled()
+        moreLocationsButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        moreLocationsButton.configuration = moreLocationsButtonConfig
+        
+        var saveItineraryButtonConfig = saveItineraryButton.configuration ?? .filled()
+        saveItineraryButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        saveItineraryButton.configuration = saveItineraryButtonConfig
+        
+        var clearItineraryButtonConfig = clearItineraryButton.configuration ?? .filled()
+        clearItineraryButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        clearItineraryButton.configuration = clearItineraryButtonConfig
+        
+        var regenerateItineraryButtonConfig = regenerateItineraryButton.configuration ?? .filled()
+        regenerateItineraryButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        regenerateItineraryButton.configuration = regenerateItineraryButtonConfig
     }
 
     

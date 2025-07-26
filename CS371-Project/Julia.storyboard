@@ -493,6 +493,7 @@
                     <navigationItem key="navigationItem" id="Tyc-K6-2XT"/>
                     <connections>
                         <outlet property="addPhotoButton" destination="LDw-Er-p5m" id="0ds-kO-YT2"/>
+                        <outlet property="loadingLabel" destination="PXM-W6-wy0" id="Kav-V9-v00"/>
                         <outlet property="loadingView" destination="1UX-pV-jVj" id="Dp2-2j-1Oc"/>
                         <outlet property="photoAlbumTitle" destination="o09-Lp-F0C" id="9b5-oS-Sha"/>
                         <outlet property="photoCollection" destination="Fff-aY-JE4" id="Feh-H8-dzG"/>
@@ -609,7 +610,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

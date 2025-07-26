@@ -65,7 +65,9 @@ class SurveyViewController: UIViewController, UITableViewDataSource {
         
         var submitButtonConfig = submitButton.configuration ?? .filled()
         submitButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
+        submitButtonConfig.baseForegroundColor = .white
         submitButton.configuration = submitButtonConfig
+
         
         if let trip = currentTrip {
             startDatePicker.minimumDate = trip.startDate

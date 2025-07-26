@@ -414,6 +414,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Ctf-Fv-rfR"/>
                     <connections>
+                        <outlet property="locationTitle" destination="eRc-g7-zqA" id="gKv-yd-MsX"/>
                         <outlet property="locationTitleLabel" destination="eRc-g7-zqA" id="WeX-ky-ci4"/>
                         <outlet property="searchButtonTapped" destination="46i-qm-6as" id="0IR-cH-Kqe"/>
                         <outlet property="searchTextField" destination="Nyr-m0-Lfn" id="ISw-4B-g3I"/>
