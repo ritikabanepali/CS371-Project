@@ -375,10 +375,10 @@
             </objects>
             <point key="canvasLocation" x="2667.93893129771" y="669.71830985915494"/>
         </scene>
-        <!--Photo Album View Controller-->
+        <!--PhotoAlbumViewController-->
         <scene sceneID="Xec-0m-8vB">
             <objects>
-                <viewController storyboardIdentifier="PhotoAlbumViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zry-E2-PTr" customClass="PhotoAlbumViewController" customModule="CS371_Project" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="PhotoAlbumViewController" storyboardIdentifier="PhotoAlbumViewController" title="PhotoAlbumViewController" id="zry-E2-PTr" customClass="PhotoAlbumViewController" customModule="CS371_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Du6-LU-51Z">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

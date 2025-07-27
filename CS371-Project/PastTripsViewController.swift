@@ -13,6 +13,27 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
     var trips: [Trip] = []
     var selectedTripHere: Trip?
     
+    
+    
+    
+    @IBAction func viewPhotosTapped(_ sender: Any) {
+        guard let trip = selectedTripHere else {
+               print("🔴 No trip selected")
+               return
+           }
+           print("🟢 Opening PhotoAlbumViewController for trip: \(trip.destination), ID: \(trip.id)")
+           
+           let storyboard = UIStoryboard(name: "Julia", bundle: nil)
+           if let photoVC = storyboard.instantiateViewController(withIdentifier: "PhotoAlbumViewController") as? PhotoAlbumViewController {
+               photoVC.tripID = trip.id
+               print("✅ tripID sent to PhotoAlbumViewController: \(photoVC.tripID ?? "nil")")
+               self.navigationController?.pushViewController(photoVC, animated: true)
+           } else {
+               print("🔴 Failed to instantiate PhotoAlbumViewController")
+           }
+    }
+    
+    
     @IBAction func buttonTapped(_ sender: Any) {
         guard let button = sender as? UIButton else { return }
         let index = button.tag
