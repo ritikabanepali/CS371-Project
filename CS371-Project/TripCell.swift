@@ -7,6 +7,7 @@
 
 import UIKit
 
+//storing information for a trip to show in table views
 class TripCell: UITableViewCell {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var destinationLabel: UILabel!
@@ -14,13 +15,13 @@ class TripCell: UITableViewCell {
     @IBOutlet weak var travelersLabel: UILabel!
     @IBOutlet weak var myButton: UIButton!
     
-    var onOpenTripTapped: (() -> Void)? // Callback closure
+    var onOpenTripTapped: (() -> Void)?
     
+    //ui theme details
     func updateButtonColor (){
         var myButtonConfig = myButton.configuration ?? .filled()
         myButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
         myButton.configuration = myButtonConfig
-        
     }
     
     override func awakeFromNib() {

@@ -35,7 +35,6 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
         // Fetch trips the user owns
         group.enter()
         TripManager.shared.fetchUserTrips { result in
-            // We only care about future trips from this result
             if case .success(let (futureTrips, _)) = result {
                 ownedTrips = futureTrips
             }
@@ -51,7 +50,7 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
             group.leave()
         }
         
-        // When both are done, combine the results and update the UI
+        // Combine the results of the two fetch methods and update the UI
         group.notify(queue: .main) {
             // Combine the two arrays
             var combinedTrips = [String: Trip]()
@@ -65,10 +64,6 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
             self.tableView.reloadData()
         }
     }
-    
-    
-    
-    // MARK: - TableView Data Source
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return trips.count
@@ -86,14 +81,13 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
         
         cell.travelersLabel.text = "\(trip.travelerUIDs.count) travelers"
         
-        // Style cell
+        //cell ui details
         cell.containerView.layer.cornerRadius = 12
         cell.containerView.backgroundColor = .white
         cell.backgroundColor = .clear
         cell.contentView.backgroundColor = .clear
         cell.selectionStyle = .none
         
-        // Shadow
         cell.containerView.layer.shadowColor = UIColor.black.cgColor
         cell.containerView.layer.shadowOpacity = 0.1
         cell.containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -101,6 +95,7 @@ class FutureTripsViewController: UIViewController, UITableViewDataSource, UITabl
         
         cell.updateButtonColor()
         
+        //move to selected trip
         cell.onOpenTripTapped = { [weak self] in
             guard let self = self else { return }
             let selectedTrip = self.trips[indexPath.row]

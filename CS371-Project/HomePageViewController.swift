@@ -19,7 +19,7 @@ class HomePageViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    // Check if user is already signed in
+    // Checks if user is already signed in
     override func viewWillAppear(_ animated: Bool) {
         if let handle = handle {
             Auth.auth().removeStateDidChangeListener(handle)
@@ -37,7 +37,6 @@ class HomePageViewController: UIViewController {
                                     self?.present(abhaNavVC, animated: true, completion: nil)
                                 }
                             }
-                            
                         }
                     } else {
                         do {
