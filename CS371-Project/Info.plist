@@ -2,12 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We use your location to find nearby points of interest.</string>
-	<key>NSHealthUpdateUsageDescription</key>
-	<string>App needs access to update stepcount data</string>
-	<key>NSHealthShareUsageDescription</key>
-	<string>App needs to access stepcount data to share progress after the trip.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We use the camera to let you take photos for your trip diary</string>
 	<key>CFBundleIdentifier</key>
 	<string></string>
 	<key>UIApplicationSceneManifest</key>
@@ -30,8 +26,6 @@
 		</dict>
 	</dict>
 	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
-	</array>
+	<array/>
 </dict>
 </plist>

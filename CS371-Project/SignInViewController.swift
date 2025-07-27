@@ -7,7 +7,7 @@
 import UIKit
 import FirebaseAuth
 
-class SignInViewController: UIViewController {
+class SignInViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -23,6 +23,15 @@ class SignInViewController: UIViewController {
         uiView.layer.shadowOpacity = 0.1
         uiView.layer.shadowOffset = CGSize(width: 0, height: 2)
         uiView.layer.shadowRadius = 4
+        
+        // Dismiss keyboard when tapping outside
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            view.addGestureRecognizer(tapGesture)
+        
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,4 +94,11 @@ class SignInViewController: UIViewController {
         }
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }

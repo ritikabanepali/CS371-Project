@@ -432,7 +432,6 @@
                                     <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="addPhotosButtonTapped:" destination="zry-E2-PTr" eventType="touchUpInside" id="pAw-oJ-6Pi"/>
                                     <action selector="cameraButtonTapped:" destination="zry-E2-PTr" eventType="touchUpInside" id="ckJ-cn-3Yz"/>
                                 </connections>
                             </button>
