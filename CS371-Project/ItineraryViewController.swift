@@ -278,6 +278,15 @@ class ItineraryViewController: UIViewController {
         \(blocked.isEmpty ? "None" : blocked)
         
         Include real restaurants and activities with names and addresses.
+        For each activity, write 1 engaging sentence that describe what the travelers will experience. Mention interesting facts, what makes the place special, and why it was chosen based on group preferences.
+        Write in a friendly, enthusiastic, and informative tone — as if you're a tour guide showing close friends around.
+        Label each day like: **Day 1**. Use bullet points (`-`) for each event.  
+        Include real names of locations and restaurants with addresses.  
+        On a new line after each place name, write only the full address — no names. Start the line with: • Address:
+        Example:
+        - Visit Gyeongbokgung Palace  
+        • Address: 161 Sajik-ro, Jongno-gu, Seoul, South Korea 
+        Avoid using markdown like `#`, tables, or links.
         """
     }
     
@@ -295,7 +304,7 @@ class ItineraryViewController: UIViewController {
                 let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 18), .paragraphStyle: paragraphStyle]
                 fullText.append(NSAttributedString(string: "\(title)\n", attributes: attrs))
             } else if trimmed.lowercased().hasPrefix("• address:") {
-                let address = trimmed.replacingOccurrences(of: "• Address: ", with: "")
+                let address = trimmed.replacingOccurrences(of: "• Address:", with: "").trimmingCharacters(in: .whitespaces)
                 let encoded = address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
                 let mapURL = "http://maps.apple.com/?q=\(encoded)"
                 let attrs: [NSAttributedString.Key: Any] = [
