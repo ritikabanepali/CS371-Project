@@ -271,16 +271,25 @@ class ItineraryViewController: UIViewController {
         • Food interests: \(topFood.joined(separator: ", "))
         
         Daily schedule:
-        - Start around \(preferredStartTime)
-        - End around \(preferredEndTime)
+        - For each day, plan the following:
+          • Breakfast (suggest a local café or unique breakfast spot)
+          • Morning Activity (9am–12pm): light sightseeing or scenic activity  
+          • Lunch (recommend a real restaurant that matches group cuisine preferences)
+          • Afternoon Activity (12pm–5pm): cultural or outdoor attraction  
+          • Dinner (select a popular or hidden gem restaurant with atmosphere)
+          • Evening Activity (optional, e.g., walk, show, market visit)
+        - Meals should reflect the group’s top cuisine and food interests
+        - Use the group's preferred start time (~\(preferredStartTime)) and end time (~\(preferredEndTime)) as a general window for scheduling
+        - On travel days (first/last day), schedule lighter activities and meals near the hotel or transit hub.
         
         Avoid blocked times:
         \(blocked.isEmpty ? "None" : blocked)
         
         Include real restaurants and activities with names and addresses.
-        For each activity, write 1 engaging sentence that describe what the travelers will experience. Mention interesting facts, what makes the place special, and why it was chosen based on group preferences.
+        For each activity, write 1 engaging sentence that describes what the travelers will experience. Mention interesting facts, what makes the place special, and why it was chosen based on group preferences.
         Write in a friendly, enthusiastic, and informative tone — as if you're a tour guide showing close friends around.
-        Label each day like: **Day 1**. Use bullet points (`-`) for each event.  
+        Label each day like: **Day 1**. Use bullet points (`-`) for each event, and begin each one with the scheduled time (e.g., "9:00 AM – Visit Gyeongbokgung Palace").
+
         Include real names of locations and restaurants with addresses.  
         On a new line after each place name, write only the full address — no names. Start the line with: • Address:
         Example:
