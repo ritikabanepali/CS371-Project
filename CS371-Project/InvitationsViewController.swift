@@ -9,6 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
+// view controller that handles the display and data of a user receiving an invitation from someone else
 class InvitationsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
     
     @IBOutlet weak var invitationsTitleLabel: UILabel!
@@ -27,10 +28,12 @@ class InvitationsViewController: UIViewController, UITableViewDataSource, UITabl
         invitationsTitleLabel.textColor = SettingsManager.shared.titleColor
     }
     
+    // fetch the invitations data this user has received
     func fetchPendingInvitations() {
         TripManager.shared.fetchPendingInvitations { [weak self] result in
             guard let self = self else { return }
             
+            // get the data and then display it on the ui on the main thread
             DispatchQueue.main.async {
                 switch result {
                 case .success(let invitations):
@@ -50,23 +53,23 @@ class InvitationsViewController: UIViewController, UITableViewDataSource, UITabl
         return pendingInvitations.count
     }
     
+    // displays ui all invitations
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "InvitationCell", for: indexPath) as! InvitationCell
         
-        // 3. Configure the cell with the 'Invitation' object.
         let invitation = pendingInvitations[indexPath.row]
         
         cell.destinationLabel.text = "     \(invitation.tripName)"
         cell.inviterLabel.text = "     \(invitation.ownerName)"
         
-        // Style cell
+        // style cell
         cell.containerView.layer.cornerRadius = 12
         cell.containerView.backgroundColor = .white
         cell.backgroundColor = .clear
         cell.contentView.backgroundColor = .clear
         cell.selectionStyle = .none
         
-        // Shadow
+        // shadow
         cell.containerView.layer.shadowColor = UIColor.black.cgColor
         cell.containerView.layer.shadowOpacity = 0.1
         cell.containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -74,20 +77,18 @@ class InvitationsViewController: UIViewController, UITableViewDataSource, UITabl
         
         cell.applyColorScheme()
         
-        // 4. Update the button actions to call the new manager functions.
+        //  update the button actions if a user accepts an invitation
         cell.onAccept = { [weak self] in
             TripManager.shared.acceptInvitation(invitation) { error in
                 if let error = error {
                     print("Error accepting invite: \(error.localizedDescription)")
                 } else {
                     print("Invite accepted successfully!")
-                    // Optimistically remove the cell from the UI.
                     self?.removeInvitation(at: indexPath)
                 }
             }
         }
-        
-        cell.onDecline = { [weak self] in
+        cell.onDecline = { [weak self] in // user declines an invitation
             TripManager.shared.declineInvitation(invitation) { error in
                 if let error = error {
                     print("Error ignoring invite: \(error.localizedDescription)")
@@ -97,11 +98,10 @@ class InvitationsViewController: UIViewController, UITableViewDataSource, UITabl
                 }
             }
         }
-        
         return cell
     }
     
-    // Helper function to remove a row from the table safely.
+    // helper function to remove a row from the table safely.
     private func removeInvitation(at indexPath: IndexPath) {
         DispatchQueue.main.async {
             if self.pendingInvitations.indices.contains(indexPath.row) {
@@ -112,6 +112,7 @@ class InvitationsViewController: UIViewController, UITableViewDataSource, UITabl
     }
 }
 
+// the cells displayed on the InvitationsViewController that shows the information of a trip a user has been invited to
 class InvitationCell: UITableViewCell {
     
     @IBOutlet weak var inviterLabel: UILabel!
@@ -124,7 +125,7 @@ class InvitationCell: UITableViewCell {
     var onAccept: (() -> Void)?
     var onDecline: (() -> Void)?
     
-    
+    // ui configurations
     func applyColorScheme() {
         var acceptButtonConfig = acceptButton.configuration ?? .filled()
         acceptButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor

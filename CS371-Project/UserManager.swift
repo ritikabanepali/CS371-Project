@@ -9,12 +9,13 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 
+// manages user data, including fetching profiles from Firestore and handling the currently logged-in user's state
 class UserManager {
     static let didUpdateUserData = Notification.Name("didUpdateUserDataNotification")
     static let shared = UserManager()
     private let db = Firestore.firestore()
     
-    // Always reflects currently logged-in user
+    // always display the logged in user
     var currentUserID: String? {
         return Auth.auth().currentUser?.uid
     }
@@ -25,19 +26,21 @@ class UserManager {
     
     private init() {}
     
+    // stores the user's information
     func setUserData(uid: String, firstName: String, lastName: String, email: String) {
         self.currentUserFirstName = firstName
         self.currentUserLastName = lastName
         self.currentUserEmail = email
     }
     
+    // erase logged in data if user is logging out
     func logoutUserData() {
         self.currentUserFirstName = nil
         self.currentUserLastName = nil
         self.currentUserEmail = nil
     }
     
-    
+    // fetches a user's profile from the "Users" collection in Firestore
     func fetchUserProfile(forUserID uid: String, completion: @escaping (Error?) -> Void) {
         let db = Firestore.firestore()
         db.collection("Users").document(uid).getDocument { [weak self] documentSnapshot, error in
@@ -50,6 +53,7 @@ class UserManager {
                 return
             }
             
+            // store the user's data to display on their account
             if let document = documentSnapshot, document.exists {
                 let data = document.data()
                 self.setUserData(
@@ -71,7 +75,8 @@ class UserManager {
     
     // find a user's id by searching their email
     func findUser(byEmail email: String, completion: @escaping (Result<String, Error>) -> Void) {
-        // query the firestore data base in lowercasew
+        
+        // query the firestore data base in lowercase
         db.collection("Users").whereField("Email", isEqualTo: email.lowercased()).getDocuments { (querySnapshot, error) in
             if let error = error {
                 completion(.failure(error))
@@ -89,6 +94,7 @@ class UserManager {
         }
     }
     
+    // fetches the full name of a user in Firestore
     func fetchName(forUserWithUID uid: String, completion: @escaping (Result<String, Error>) -> Void) {
         db.collection("Users").document(uid).getDocument { (snapshot, error) in
             if let error = error {
@@ -96,6 +102,7 @@ class UserManager {
                 return
             }
             
+            // ensure the document exists and contains the necessary name fields
             guard let document = snapshot, document.exists,
                   let data = document.data(),
                   let firstName = data["FirstName"] as? String,
@@ -105,9 +112,10 @@ class UserManager {
                 return
                 
             }
+            
+            // return the result of their full name
             let fullName = "\(firstName) \(lastName)"
             completion(.success(fullName))
         }
-        
     }
 }

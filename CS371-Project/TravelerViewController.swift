@@ -9,11 +9,12 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
+// shared information for a travelers among a trip
 struct TravelerViewModel {
     let uid: String
     let name: String
     let status: String // "confirmed" or "pending"
-    let surveyStatus: String
+    let surveyStatus: String // 'y' or 'n' if survey completed
 }
 
 class TravelerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -24,9 +25,9 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var invitedTableView: UITableView!
     @IBOutlet weak var tripNameLabel: UILabel!
     
-    var trip: Trip?
+    var trip: Trip? // the trip object passed to this view controller
     private var travelers: [TravelerViewModel] = []
-    private var tripListener: ListenerRegistration?
+    private var tripListener: ListenerRegistration? // detects real time changes of the TravelerViewModel
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,23 +35,31 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         invitedTableView.delegate = self
         travelersTitleLabel.textColor = SettingsManager.shared.titleColor
         
+        // custom colors
         var inviteButtonConfig = inviteButton.configuration ?? .filled()
         inviteButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
         inviteButton.configuration = inviteButtonConfig
         
-        // helper method
+        // set up the view and start listening for data changes.
         configureView()
         navigationController?.navigationBar.tintColor = .black
     }
     
-    func applyShadow(to button: UIButton) {
-            button.layer.shadowColor = UIColor.black.cgColor
-            button.layer.shadowOpacity = 0.1
-            button.layer.shadowOffset = CGSize(width: 0, height: 2)
-            button.layer.shadowRadius = 4
-            button.layer.masksToBounds = false
-        }
+    // removes the listener when the view controller is deallocated
+    deinit {
+        tripListener?.remove()
+    }
     
+    // button customizations
+    func applyShadow(to button: UIButton) {
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowRadius = 4
+        button.layer.masksToBounds = false
+    }
+    
+    // initial set up of the view when looking at travelers that are part of a trip
     private func configureView() {
         guard let trip = trip else {
             print("Error: Trip object was not provided.")
@@ -59,18 +68,13 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         tripNameLabel.text = "\(trip.destination)"
-        tripNameLabel.numberOfLines = 2 // Allow the text to wrap
+        tripNameLabel.numberOfLines = 2
         
         applyShadow(to: inviteButton)
-
+        
         setupTripListener()
     }
     
-    deinit {
-        // Removes the listener when the view controller is deallocated
-        tripListener?.remove()
-        print("TravelerViewController deinit, listener removed.")
-    }
     
     private func setupTripListener() {
         guard let trip = trip else { return }
@@ -95,52 +99,51 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    
+    // fetches detailed information for each traveler in the trip
     private func loadTravelerData() {
         guard let trip = trip else { return }
-
-        // Get a reference to the trip document in Firestore
+        
+        // get a reference to the trip document in Firestore
         let db = Firestore.firestore()
         let tripRef = db.collection("Users").document(trip.ownerUID).collection("trips").document(trip.id)
         
-        let group = DispatchGroup()
+        let group = DispatchGroup() // ensuring the UI is updated only after all data has been retrieved.
         var fetchedTravelers: [TravelerViewModel] = []
-
+        
         for uid in trip.travelerUIDs {
-            group.enter() // Enter the group for each traveler
-
-            // Step 1: Check if a survey response exists for this traveler's UID
+            group.enter() // enter the group for each traveler
+            
+            // check if a survey response exists for this traveler's UID
             tripRef.collection("surveyResponses").document(uid).getDocument { (document, error) in
                 
-                // Determine survey status: "Y" if document exists, otherwise "N"
+                // determine survey status: "Y" if document exists, otherwise "N"
                 let surveyCompleted = document?.exists ?? false
                 let surveyStatus = surveyCompleted ? "Y" : "N"
                 
-                // Step 2: Now that we have the status, fetch the traveler's name
+                // fetch the traveler's name
                 UserManager.shared.fetchName(forUserWithUID: uid) { result in
                     var travelerName = "Unknown User"
                     if case .success(let name) = result {
                         travelerName = name
                     }
                     
-                    // Step 3: Create the final view model with all the dynamic data
+                    // create the final view model with all the dynamic data
                     let traveler = TravelerViewModel(
                         uid: uid,
                         name: travelerName,
-                        status: "confirmed", // As per your original logic
-                        surveyStatus: surveyStatus // Use the fetched status
+                        status: "confirmed",
+                        surveyStatus: surveyStatus
                     )
                     
                     fetchedTravelers.append(traveler)
-                    group.leave() // Leave the group, signaling this traveler is done
+                    group.leave() // this traveler is done
                 }
             }
         }
-
-        // This block runs only after ALL travelers have been processed
+        
+        // block runs only after ALL travelers have been processed
         group.notify(queue: .main) {
             self.travelers = fetchedTravelers.sorted {
-                // Your existing sorting logic
                 if $0.status == "confirmed" && $1.status == "pending" { return true }
                 return false
             }
@@ -148,7 +151,7 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    
+    // a user is invited another traveler into the trip
     @IBAction func inviteButtonTapped(_ sender: Any) {
         guard let email = enterEmailTextField.text, !email.isEmpty else {
             showAlert(title: "Missing Email", message: "Please enter an email to invite a traveler.")
@@ -156,16 +159,17 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         guard let tripToUpdate = self.trip,
-              let inviterName = UserManager.shared.currentUserFirstName else { // Get current user's name
+              let inviterName = UserManager.shared.currentUserFirstName else { // get current user's name
             return
         }
         
         inviteButton.isEnabled = false
         
-        // Call the new 'sendInvitation' function
+        // call the new 'sendInvitation' function from TripManager
         TripManager.shared.sendInvitation(toEmail: email, forTrip: tripToUpdate, fromUser: inviterName) { [weak self] error in
             guard let self = self else { return }
             
+            // update UI elements to the main thread
             DispatchQueue.main.async {
                 self.inviteButton.isEnabled = true
                 self.enterEmailTextField.text = ""
@@ -181,34 +185,34 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     
-    // This function determines which rows can be swiped.
+    // which rows can be swiped. used for deleting travelers from a trip.
+    // owner cannot remove themselves from their trip. they must delete the trip entirely
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        
+        // fetch the current user's uid
         guard let currentUserUID = Auth.auth().currentUser?.uid, let trip = self.trip else {
             return false
         }
         
         let travelerToRemove = travelers[indexPath.row]
         
-        // Allow editing if:
-        // 1. The current user is the trip owner and isn't trying to remove themselves.
+        // the current user is the trip owner and isn't trying to remove themselves.
         if currentUserUID == trip.ownerUID && currentUserUID != travelerToRemove.uid {
             return true
         }
         
-        // 2. The current user is trying to remove themselves (and they aren't the owner).
+        // the current user is trying to remove themselves (and they aren't the owner)
         if currentUserUID == travelerToRemove.uid && currentUserUID != trip.ownerUID {
             return true
         }
-        
         return false
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // This immediately deselects the row after it's been tapped.
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    // This function handles the actual deletion.
+    // handles the actual deletion of a person leaving a trip
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             guard let trip = self.trip else { return }
@@ -218,12 +222,12 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
             let alertTitle = isLeaving ? "Leave Trip?" : "Remove Traveler?"
             let alertMessage = isLeaving ? "Are you sure you want to leave this trip?" : "Are you sure you want to remove \(travelerToRemove.name)?"
             
-            // Show a confirmation alert
+            // show a confirmation alert
             let confirmationAlert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
             confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
             confirmationAlert.addAction(UIAlertAction(title: isLeaving ? "Leave" : "Remove", style: .destructive, handler: { _ in
                 
-                // Call the manager to remove the user from Firestore
+                // call the manager to remove the user from Firestore
                 TripManager.shared.removeTraveler(from: trip, userToRemoveUID: travelerToRemove.uid) { [weak self] error in
                     guard let self = self else { return }
                     
@@ -232,7 +236,7 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
                         return
                     }
                     
-                    // If successful, remove the user from the local array and table view
+                    // if successful, remove the user from the local array and table view
                     DispatchQueue.main.async {
                         self.travelers.remove(at: indexPath.row)
                         tableView.deleteRows(at: [indexPath], with: .automatic)
@@ -247,24 +251,17 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         return travelers.count
     }
     
+    // display all the travelers a part of the trup
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TravelerCell", for: indexPath) as! TravelerCell
         
+        // display traveler data
         let traveler = travelers[indexPath.row]
-        
         cell.nameLabel.text = traveler.name
-        
-        // This is where you would set the survey status text based on your data model
         cell.surveyStatusLabel.text = traveler.surveyStatus
-        
-        // Visually distinguish between pending and confirmed
-        if traveler.status == "pending" {
-            cell.nameLabel.textColor = .systemGray
-            cell.surveyStatusLabel.textColor = .systemGray
-        } else {
-            cell.nameLabel.textColor = .label // Adapts to light/dark mode
-            cell.surveyStatusLabel.textColor = .label
-        }
+
+        cell.nameLabel.textColor = .label
+        cell.surveyStatusLabel.textColor = .label
         
         return cell
     }
@@ -276,11 +273,9 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
             self.present(alert, animated: true)
         }
     }
-    
 }
 
 class TravelerCell: UITableViewCell {
-    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var surveyStatusLabel: UILabel!
 }
