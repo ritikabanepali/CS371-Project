@@ -20,22 +20,21 @@ class MyTripHomeViewController: UIViewController {
     @IBOutlet var genButton: UIButton!
     @IBOutlet var surveyButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
-    
     @IBOutlet var chatButton: UIButton!
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //ui details
         applyShadow(to: travelersButton)
         applyShadow(to: photoButton)
         applyShadow(to: genButton)
         applyShadow(to: surveyButton)
         
         let config = UIImage.SymbolConfiguration(pointSize: 40, weight: .regular)
-           let largeChatImage = UIImage(systemName: "message.circle", withConfiguration: config)
-           chatButton.setImage(largeChatImage, for: .normal)
-
+        let largeChatImage = UIImage(systemName: "message.circle", withConfiguration: config)
+        chatButton.setImage(largeChatImage, for: .normal)
         
         if let destination = trip?.destination {
             titleLabel.text = "\(destination)"
@@ -43,12 +42,13 @@ class MyTripHomeViewController: UIViewController {
             titleLabel.text = "My Trip"
         }
         
+        //request authorization for using HealthKit data
         HealthKitManager.shared.requestAuthorization { [weak self] authorized in
             guard self != nil else { return }
             if authorized {
-                print("HealthKit: Permission granted for step count.")
+                print("HealthKit Permission granted for step count.")
             } else {
-                print("HealthKit: Permission denied or error")
+                print("HealthKit errir")
             }
         }
     }
@@ -63,6 +63,8 @@ class MyTripHomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        //ui details
         titleLabel.textColor = SettingsManager.shared.titleColor
         
         var travelerButtonConfig = travelersButton.configuration ?? .filled()
@@ -81,6 +83,7 @@ class MyTripHomeViewController: UIViewController {
         surveyButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
         surveyButton.configuration = surveyButtonConfig
         
+        //allow notifications to be scheduled, or if user disabled remove any pending notifications
         if SettingsManager.shared.notificationsEnabled {
             if let currentTrip = trip {
                 scheduleTripNotifications(for: currentTrip)
@@ -148,6 +151,7 @@ class MyTripHomeViewController: UIViewController {
         }
     }
     
+    //allow user to delete a trip, alert verification
     @IBAction func deleteTripTapped(_ sender: Any) {
         let alert = UIAlertController(title: "Delete Trip", message: "Are you sure you want to delete this trip?", preferredStyle: .alert)
         
@@ -155,27 +159,22 @@ class MyTripHomeViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
             self.performTripDeletion()
         })
-        
         present(alert, animated: true)
     }
     
+    //detele a trip from firestore and update
     private func performTripDeletion() {
-        guard let id = trip?.id else {
-            print("Missing trip ID")
-            return
-        }
-        
-        print("Attempting to delete trip with ID: \(id)")
-        
+        guard let id = trip?.id else { return }
+                
         TripManager.shared.deleteTrip(tripID: id) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success():
-                    print("Trip deleted successfully")
+                    print("Trip deleted")
                     self?.navigationController?.popViewController(animated: true)
                 case .failure(let error):
                     print("Deletion failed: \(error.localizedDescription)")
-                    self?.showAlert(title: "Error", message: "Could not delete trip: \(error.localizedDescription)")
+                    self?.showAlert(title: "Error", message: "Could not delete trip")
                 }
             }
         }
@@ -188,6 +187,7 @@ class MyTripHomeViewController: UIViewController {
         present(alert, animated: true)
     }
     
+    //segue details
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toPhotoAlbumVC",
            let destinationVC = segue.destination as? PhotoAlbumViewController {
@@ -216,8 +216,6 @@ class MyTripHomeViewController: UIViewController {
         if let travelerVC = storyboard.instantiateViewController(withIdentifier: "travelersID") as? TravelerViewController {
             travelerVC.trip = self.trip
             self.navigationController?.pushViewController(travelerVC, animated: true)
-        } else {
-            print("Error: Could not instantiate TravelerViewController from Ritika.storyboard.")
         }
     }
     
@@ -226,10 +224,6 @@ class MyTripHomeViewController: UIViewController {
         if let itineraryVC = storyboard.instantiateViewController(withIdentifier: "iteneraryID") as? ItineraryViewController {
             itineraryVC.currentTrip = self.trip
             self.navigationController?.pushViewController(itineraryVC, animated: true)
-        } else {
-            print("Failed to instantiate IteneraryViewController from Ritika storyboard.")
         }
     }
-    
-    
 }

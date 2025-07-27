@@ -1,3 +1,9 @@
+//
+//  SignInViewController.swift
+//  CS371-Project
+//
+//
+
 import UIKit
 import FirebaseAuth
 
@@ -11,11 +17,8 @@ class SignInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Style for the view's background and corners
         uiView.backgroundColor = .white
         uiView.layer.cornerRadius = 12
-        
-        // Style for the shadow
         uiView.layer.shadowColor = UIColor.black.cgColor
         uiView.layer.shadowOpacity = 0.1
         uiView.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -49,9 +52,9 @@ class SignInViewController: UIViewController {
             //  sign-in is confirmed, fetch the user's profile from Firestore
             UserManager.shared.fetchUserProfile(forUserID: user.uid) { error in
                 
-                if let error = error {
-                    // If we can't get their profile, show an error and sign them out
-                    self?.showAlert(title: "Error", message: "Signed in, but could not fetch your profile. Please try again. \(error.localizedDescription)")
+                if error != nil {
+                    // if we can't get their profile, show an error and sign them out
+                    self?.showAlert(title: "Error", message: "Signed in, but could not fetch your profile. Please try again.")
                     try? Auth.auth().signOut() // Sign out to be safe
                     return
                 }
@@ -74,7 +77,7 @@ class SignInViewController: UIViewController {
     }
     
     func showAlert(title: String, message: String) {
-        // Make sure we are on the main thread before presenting an alert
+        // make sure we are on the main thread before presenting an alert
         DispatchQueue.main.async {
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default))

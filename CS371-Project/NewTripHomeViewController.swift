@@ -11,7 +11,6 @@ import FirebaseFirestore
 class NewTripHomeViewController: UIViewController {
     
     @IBOutlet weak var welcomeLabel: UILabel!
-    
     @IBOutlet var createButton: UIButton!
     @IBOutlet var upcomingButton: UIButton!
     @IBOutlet var pastButton: UIButton!
@@ -21,6 +20,7 @@ class NewTripHomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //ui details
         applyShadow(to: createButton)
         applyShadow(to: upcomingButton)
         applyShadow(to: pastButton)
@@ -32,7 +32,6 @@ class NewTripHomeViewController: UIViewController {
             welcomeLabel.text = "Hello, \(firstName)!"
         } else {
             welcomeLabel.text = "Hello!"
-            print("User first name not found in UserManager.")
         }
     }
     
@@ -49,6 +48,7 @@ class NewTripHomeViewController: UIViewController {
         applyColorScheme()
     }
     
+    //more ui details
     func applyColorScheme(){
         welcomeLabel.textColor = SettingsManager.shared.titleColor
         
@@ -71,25 +71,6 @@ class NewTripHomeViewController: UIViewController {
         var settingsButtonConfig = settingsButton.configuration ?? .filled()
         settingsButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
         settingsButton.configuration = settingsButtonConfig
-        
-    }
-    
-    @IBAction func pastTripsTapped(_ sender: UIButton) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "PastTripsViewController") as! PastTripsViewController
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    @IBAction func settingsTapped(_ sender: UIButton) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    @IBAction func futureTripsTapped(_ sender: UIButton) {
-        print("Future trips tapped") // No navigation yet
-    }
-    
-    @IBAction func pendingRequestsTapped(_ sender: UIButton) {
-        print("Pending requests tapped")
     }
 }
 

@@ -29,7 +29,6 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
         pastTripsTitle.textColor = SettingsManager.shared.titleColor
     }
     
-    
     func fetchTrips() {
         let group = DispatchGroup()
         var ownedPastTrips: [Trip] = []
@@ -76,6 +75,7 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         
+        //ui details for cell
         cell.destinationLabel.text = trip.destination
         cell.dateLabel.text = "\(formatter.string(from: trip.startDate)) → \(formatter.string(from: trip.endDate))"
         cell.travelersLabel.text = "\(trip.travelerUIDs.count) travelers"
@@ -96,6 +96,7 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
         var myButtonConfig = cell.myButton.configuration ?? .filled()
         myButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
         cell.myButton.configuration = myButtonConfig
+        
         return cell
     }
     

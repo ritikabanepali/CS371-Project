@@ -14,19 +14,19 @@ class SettingsManager {
     static let shared = SettingsManager()
     private let db = Firestore.firestore()
     
+    //properties managed in settings
     var colorSchemeIsRed: Bool = false
     var notificationsEnabled: Bool = false
     
     private init() {}
     
+    //creates a reference to firestore
     private func getUserSettingsDocRef() -> DocumentReference? {
-        guard let userId = Auth.auth().currentUser?.uid else {
-            print("SettingsManager: Error - User not authenticated")
-            return nil
-        }
+        guard let userId = Auth.auth().currentUser?.uid else { return nil }
         return db.collection("Users").document(userId).collection("settings").document("app_settings")
     }
     
+    //load stored settings from firestore
     func loadSettings(completion: @escaping () -> Void) {
         guard let settingsDocRef = getUserSettingsDocRef() else {
             return
@@ -35,27 +35,30 @@ class SettingsManager {
         settingsDocRef.getDocument { [weak self] documentSnapshot, error in
             guard let self = self else { return }
             
+            //error
             defer { completion() }
-            if let error = error {
-                print("SettingsManager: Error fetching user settings: \(error.localizedDescription)")
+            if error != nil {
+                print("error getting user settings")
                 return
             }
             
+            //no settings saved yet
             guard let document = documentSnapshot, document.exists else {
-                print("SettingsManager: User settings document does not exist, set defaults")
+                print("document does not exist yet, set default settings")
                 self.colorSchemeIsRed = false
                 self.notificationsEnabled = false
                 return
             }
             
+            //restore saved settings
             if let data = document.data() {
                 self.colorSchemeIsRed = data["colorSchemeIsRed"] as? Bool ?? false
                 self.notificationsEnabled = data["notificationsEnabled"] as? Bool ?? false
-                print("SettingsManager: User settings loaded from Firestore: Color Scheme is Red: \(self.colorSchemeIsRed), Notifications: \(self.notificationsEnabled)")
             }
         }
     }
     
+    //save user settings to firestore
     func saveUserSettings() {
         guard let settingsDocRef = getUserSettingsDocRef() else { return}
         
@@ -65,13 +68,15 @@ class SettingsManager {
         ]
         
         settingsDocRef.setData(settingsData) { error in
-            if let error = error {
-                print("SettingsManager: Error saving user settings: \(error.localizedDescription)")
+            if error != nil {
+                print("did not save to firestore")
             } else {
-                print("SettingsManager: User settings saved to Firestore successfully.")
+                print("saved to firestore")
             }
         }
     }
+    
+    //titleColor and buttonColor are saved colors to be used in all app screens
     
     var titleColor: UIColor {
         if colorSchemeIsRed {

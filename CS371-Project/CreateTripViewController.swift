@@ -1,3 +1,9 @@
+//
+//  CreateTripViewController.swift
+//  CS371-Project
+//
+//
+
 import UIKit
 import FirebaseFirestore
 
@@ -19,15 +25,16 @@ class CreateTripViewController: UIViewController {
         // set initial minimum date for the end picker
         endDatePicker.minimumDate = startDatePicker.date
         
+        //ui details
         backgroundView.layer.cornerRadius = 17
         backgroundView.backgroundColor = .white
-        
         backgroundView.layer.shadowColor = UIColor.black.cgColor
         backgroundView.layer.shadowOpacity = 0.2
         backgroundView.layer.shadowOffset = CGSize(width: 0, height: 2)
         backgroundView.layer.shadowRadius = 5
     }
     
+    //ui details
     override func viewWillAppear(_ animated: Bool) {
         createNewTripTitleLabel.textColor = SettingsManager.shared.titleColor
         
@@ -37,9 +44,8 @@ class CreateTripViewController: UIViewController {
         
     }
     
-    
+    //sets up new trip
     @IBAction func continueButtonTapped(_ sender: Any) {
-        
         guard let destination = destinationField.text, !destination.isEmpty else {
             showAlert(title: "Missing Destination", message: "Please enter a destination for your trip.")
             return
@@ -57,7 +63,7 @@ class CreateTripViewController: UIViewController {
             
             // on the main thread before doing UI updates
             DispatchQueue.main.async {
-                // Re-enable the button regardless of outcome
+                // re-enable the button regardless of outcome
                 self?.continueButton.isEnabled = true
                 self?.continueButton.setTitle("Continue", for: .normal)
                 
@@ -72,7 +78,7 @@ class CreateTripViewController: UIViewController {
                 case .failure(let error):
                     print("Error creating trip: \(error.localizedDescription)")
                     // Show an alert to the user so they know what went wrong
-                    self?.showAlert(title: "Error", message: "Could not create trip. Please try again. \n(\(error.localizedDescription))")
+                    self?.showAlert(title: "Error", message: "Could not create trip. Please try again.)")
                 }
             }
         }
