@@ -28,11 +28,6 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         photoCollection.delegate = self
         photoCollection.isScrollEnabled = true
         
-        if let tripID = tripID {
-            print("Trip ID:", tripID)
-        } else {
-            print("Error: tripID is nil")
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,6 +38,8 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         myButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
         addPhotoButton.configuration = myButtonConfig
         
+        
+        // Load images if first time or refresh requested
         if images.isEmpty || needsRefresh {
             loadingView.isHidden = false
             needsRefresh = false
@@ -71,6 +68,7 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         }
     }
     
+    // Action to open the system photo picker
     @IBAction func addPhotosButtonTapped(_ sender: Any) {
         var config = PHPickerConfiguration()
         config.filter = .images
@@ -87,8 +85,6 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
             picker.sourceType = .camera
             picker.allowsEditing = false
             present(picker, animated: true)
-        } else {
-            print("Camera not available")
         }
     }
     
@@ -128,12 +124,10 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         
         let params = CLDUploadRequestParams()
         cloudinary.createUploader().upload(data: imageData, uploadPreset: "unsigned_preset", params: params, progress: nil) { result, error in
-            if let error = error {
-                print("Upload error:", error.localizedDescription)
+            if error != nil {
                 return
             }
             if let secureUrl = result?.secureUrl {
-                print("Uploaded image URL:", secureUrl)
                 let key = "savedImageURLs_\(tripID)"
                 var savedURLs = UserDefaults.standard.stringArray(forKey: key) ?? []
                 savedURLs.append(secureUrl)
@@ -142,6 +136,7 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         }
     }
     
+    // Load saved image URLs from UserDefaults and fetch images from them
     func loadSavedImageURLs() {
         guard let tripID = tripID else { return }
         

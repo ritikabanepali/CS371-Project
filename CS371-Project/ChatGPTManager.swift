@@ -5,13 +5,12 @@
 //  Created by Abha on 7/18/25.
 //
 
-
 import Foundation
 
 class ChatGPTManager {
     static let shared = ChatGPTManager()
     private init() {}
-
+    
     private let apiKey: String = {
         if let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
            let dict = NSDictionary(contentsOfFile: path),
@@ -20,7 +19,7 @@ class ChatGPTManager {
         }
         fatalError("OPENAI_API_KEY not found in Secrets.plist")
     }()
-
+    
     func generateItinerary(prompt: String, completion: @escaping (String?) -> Void) {
         let url = URL(string: "https://api.openai.com/v1/chat/completions")!
         
@@ -52,25 +51,16 @@ class ChatGPTManager {
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("Error making request: \(error)")
                 completion(nil)
                 return
             }
-
+            
             guard let data = data else {
-                print("No data returned")
+                
                 completion(nil)
                 return
             }
-
-            // Debug: Print HTTP status code
-            if let httpResponse = response as? HTTPURLResponse {
-                print("HTTP Status Code: \(httpResponse.statusCode)")
-            }
-
-            // Debug: Print full raw response body
-            print("Full raw response data: \(String(data: data, encoding: .utf8) ?? "")")
-
+            
             // Attempt to parse
             if let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                let choices = responseJSON["choices"] as? [[String: Any]],
@@ -78,10 +68,10 @@ class ChatGPTManager {
                let content = message["content"] as? String {
                 completion(content)
             } else {
-                print("Failed to parse response: \(String(data: data, encoding: .utf8) ?? "")")
+                
                 completion(nil)
             }
         }.resume()
-
+        
     }
 }

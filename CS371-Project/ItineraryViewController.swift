@@ -1,13 +1,11 @@
 // ItineraryViewController.swift
-// Adds permissions: only trip owner can generate/save/clear itinerary,
-// and only after all invited travelers have submitted surveys. Now uses Firestore with live syncing.
 
 import UIKit
 import FirebaseFirestore
 
 class ItineraryViewController: UIViewController {
     var currentTrip: Trip!
-
+    
     @IBOutlet weak var itineraryTextView: UITextView!
     @IBOutlet weak var itineraryTitleLabel: UILabel!
     @IBOutlet weak var moreLocationsButton: UIButton!
@@ -15,15 +13,14 @@ class ItineraryViewController: UIViewController {
     @IBOutlet weak var saveItineraryButton: UIButton!
     @IBOutlet weak var clearItineraryButton: UIButton!
     @IBOutlet weak var regenerateItineraryButton: UIButton!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         guard let trip = currentTrip else {
-            print("No trip passed to itinerary generator")
             return
         }
-
+        
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         
@@ -31,13 +28,15 @@ class ItineraryViewController: UIViewController {
         
         itineraryTitleLabel.text = "Your Itinerary To \(trip.destination)"
         itineraryDatesLabel.text = "\(formatter.string(from: trip.startDate)) – \(formatter.string(from: trip.endDate))"
-
+        
         let isOwner = isCurrentUserTripOwner()
+        // Only shows itinerary controls (save/clear/regenerate) to the trip owner
         saveItineraryButton.isHidden = !isOwner
         clearItineraryButton.isHidden = !isOwner
         regenerateItineraryButton.isHidden = !isOwner
-
+        
         if isOwner {
+            // Enable buttons only if all invited travelers have submitted their surveys
             allSurveysSubmitted { allDone in
                 DispatchQueue.main.async {
                     let enable = allDone
@@ -45,14 +44,15 @@ class ItineraryViewController: UIViewController {
                     self.clearItineraryButton.isEnabled = enable
                     self.regenerateItineraryButton.isEnabled = enable
                     if !enable {
+                        // Alert owner that itinerary actions are locked until all surveys are done
                         self.showAlert(title: "Wait", message: "All travelers must complete the survey before generating an itinerary.")
                     }
                 }
             }
         }
-
+        
         observeItineraryUpdates()
-
+        
         itineraryTextView.isEditable = false
         itineraryTextView.isSelectable = true
         itineraryTextView.dataDetectorTypes = [.link]
@@ -77,12 +77,11 @@ class ItineraryViewController: UIViewController {
         regenerateItineraryButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
         regenerateItineraryButton.configuration = regenerateItineraryButtonConfig
     }
-
     
     func observeItineraryUpdates() {
         let docRef = Firestore.firestore().collection("itineraries").document(currentTrip.id)
-
-        docRef.addSnapshotListener { snapshot, error in
+        
+        docRef.addSnapshotListener { snapshot, _ in
             if let data = snapshot?.data(),
                let base64 = data["itineraryBase64"] as? String,
                let decodedData = Data(base64Encoded: base64),
@@ -92,64 +91,63 @@ class ItineraryViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.itineraryTextView.text = "No itinerary available."
+                    self.itineraryTextView.text = "No itinerary available, click 'Generate' to generate itinerary."
                 }
             }
         }
     }
-
+    
     func isCurrentUserTripOwner() -> Bool {
         return UserManager.shared.currentUserID == currentTrip.ownerUID
     }
-
+    
     func allSurveysSubmitted(completion: @escaping (Bool) -> Void) {
         TripManager.shared.fetchSurveyResponses(for: currentTrip) { responses in
             completion(responses.count == self.currentTrip.travelerUIDs.count)
         }
     }
-
+    
+    // added permissions so only trip owner can generate/save/clear itinerary
     @IBAction func saveItinerary(_ sender: UIButton) {
         guard isCurrentUserTripOwner() else {
             showAlert(title: "Unauthorized", message: "Only the trip owner can save the itinerary.")
             return
         }
         guard let text = itineraryTextView.attributedText else { return }
-
+        
         let archived = try? NSKeyedArchiver.archivedData(withRootObject: text, requiringSecureCoding: false)
         let base64 = archived?.base64EncodedString() ?? ""
-
+        
         Firestore.firestore().collection("itineraries").document(currentTrip.id).setData([
             "tripID": currentTrip.id,
             "ownerUID": currentTrip.ownerUID,
             "itineraryBase64": base64,
             "updatedAt": Timestamp(date: Date())
         ]) { error in
-            if let error = error {
-                print("Error saving: \(error.localizedDescription)")
+            if error != nil {
                 self.showAlert(title: "Error", message: "Failed to save itinerary.")
             } else {
                 self.showAlert(title: "Saved", message: "Itinerary successfully saved.")
             }
         }
     }
-
+    
     @IBAction func clearItinerary(_ sender: UIButton) {
         guard isCurrentUserTripOwner() else {
             showAlert(title: "Unauthorized", message: "Only the trip owner can clear the itinerary.")
             return
         }
-
+        
         Firestore.firestore().collection("itineraries").document(currentTrip.id).delete { error in
-            if let error = error {
-                print("Error clearing: \(error.localizedDescription)")
+            if error != nil {
                 self.showAlert(title: "Error", message: "Failed to clear itinerary.")
             } else {
-                self.itineraryTextView.text = "No itinerary available."
+                self.itineraryTextView.text = "No itinerary available, click 'Generate' to generate itinerary."
                 self.showAlert(title: "Cleared", message: "Itinerary has been cleared.")
             }
         }
     }
-
+    
     @IBAction func regenerateItinerary(_ sender: UIButton) {
         guard isCurrentUserTripOwner() else {
             showAlert(title: "Unauthorized", message: "Only the trip owner can regenerate the itinerary.")
@@ -157,7 +155,7 @@ class ItineraryViewController: UIViewController {
         }
         generateItinerary()
     }
-
+    
     func generateItinerary() {
         TripManager.shared.fetchSurveyResponses(for: currentTrip) { responses in
             var experienceCount: [String: Int] = [:]
@@ -166,7 +164,7 @@ class ItineraryViewController: UIViewController {
             var preferredStart: Date?
             var preferredEnd: Date?
             var blockedTimes: [[String: Timestamp]] = []
-
+            
             for response in responses {
                 if let experiences = response["experiences"] as? [String] {
                     for item in experiences { experienceCount[item, default: 0] += 1 }
@@ -187,12 +185,11 @@ class ItineraryViewController: UIViewController {
                     blockedTimes.append(contentsOf: blocks)
                 }
             }
-
+            
             guard let startDate = preferredStart, let endDate = preferredEnd else {
-                print("Missing start or end dates.")
                 return
             }
-
+            
             let prompt = self.buildPrompt(
                 exp: experienceCount,
                 cuisines: cuisineCount,
@@ -204,17 +201,18 @@ class ItineraryViewController: UIViewController {
                 blockedTimes: blockedTimes,
                 location: self.currentTrip.destination
             )
-
+            
             ChatGPTManager.shared.generateItinerary(prompt: prompt) { itineraryText in
                 DispatchQueue.main.async {
                     if let itineraryText = itineraryText {
                         let formatted = self.formatItineraryText(itineraryText)
                         self.itineraryTextView.attributedText = formatted
-
+                        
                         // Save immediately after generation
                         let archived = try? NSKeyedArchiver.archivedData(withRootObject: formatted, requiringSecureCoding: false)
                         let base64 = archived?.base64EncodedString() ?? ""
-
+                        
+                        // can only interact with itinerary only after all invited travelers have submitted surveys and uses firestore with live syncing
                         Firestore.firestore().collection("itineraries").document(self.currentTrip.id).setData([
                             "tripID": self.currentTrip.id,
                             "ownerUID": self.currentTrip.ownerUID,
@@ -228,7 +226,7 @@ class ItineraryViewController: UIViewController {
             }
         }
     }
-
+    
     func buildPrompt(
         exp: [String: Int],
         cuisines: [String: Int],
@@ -243,54 +241,55 @@ class ItineraryViewController: UIViewController {
         let topExp = exp.sorted { $0.value > $1.value }.prefix(3).map { $0.key }
         let topCuisines = cuisines.sorted { $0.value > $1.value }.prefix(3).map { $0.key }
         let topFood = food.sorted { $0.value > $1.value }.prefix(2).map { $0.key }
-
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .long
-
+        
         let timeFormatter = DateFormatter()
         timeFormatter.timeStyle = .short
-
+        
         let tripRange = "\(dateFormatter.string(from: startDate)) to \(dateFormatter.string(from: endDate))"
         let preferredStartTime = timeFormatter.string(from: preferredStart)
         let preferredEndTime = timeFormatter.string(from: preferredEnd)
-
+        
         var blocked = ""
         for time in blockedTimes {
             if let start = time["start"]?.dateValue(), let end = time["end"]?.dateValue() {
                 blocked += "- \(timeFormatter.string(from: start)) to \(timeFormatter.string(from: end))\n"
             }
         }
-
+        
+        // prompt sent to ChatGPT
         return """
         You are a smart travel planner.
-
+        
         Create a detailed itinerary for a group trip to \(location) from \(tripRange).
-
+        
         Group preferences:
         • Top experiences: \(topExp.joined(separator: ", "))
         • Favorite cuisines: \(topCuisines.joined(separator: ", "))
         • Food interests: \(topFood.joined(separator: ", "))
-
+        
         Daily schedule:
         - Start around \(preferredStartTime)
         - End around \(preferredEndTime)
-
+        
         Avoid blocked times:
         \(blocked.isEmpty ? "None" : blocked)
-
+        
         Include real restaurants and activities with names and addresses.
         """
     }
-
+    
     func formatItineraryText(_ text: String) -> NSAttributedString {
         let fullText = NSMutableAttributedString()
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
-
+        
         let lines = text.components(separatedBy: .newlines)
         for line in lines {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
-
+            
             if trimmed.hasPrefix("**Day") && trimmed.hasSuffix("**") {
                 let title = trimmed.replacingOccurrences(of: "**", with: "")
                 let attrs: [NSAttributedString.Key: Any] = [.font: UIFont.boldSystemFont(ofSize: 18), .paragraphStyle: paragraphStyle]
@@ -315,10 +314,10 @@ class ItineraryViewController: UIViewController {
                 fullText.append(NSAttributedString(string: "\(trimmed)\n\n", attributes: attrs))
             }
         }
-
+        
         return fullText
     }
-
+    
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
@@ -326,14 +325,13 @@ class ItineraryViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // 1. Check if this is the correct segue using the identifier you just set
+        // Check if this is the correct segue using the identifier you just set
         if segue.identifier == "toLocationSearch" {
             
-            // 2. Get a reference to the destination view controller
+            // Get a reference to the destination view controller
             if let destinationVC = segue.destination as? LocationViewController {
                 
-                // 3. Pass the trip object to the destination
-                // (Make sure 'self.trip' holds the correct trip data before the segue)
+                // Pass the trip object to the destination
                 destinationVC.trip = self.currentTrip
             }
         }

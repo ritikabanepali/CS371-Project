@@ -13,7 +13,8 @@ class ChatViewController: UIViewController{
     @IBOutlet weak var messageField: UITextField!
     @IBOutlet weak var send: UIButton!
     
-    var messages: [Message] = [] // Your message model
+    // message model
+    var messages: [Message] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +35,6 @@ struct Message: Codable {
     let text: String
     let timestamp: Date
 }
-
 
 extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -87,7 +87,7 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    //MARK: save and load messages
+    // save and load messages
     func saveMessages() {
         guard let tripID = tripID else { return }
         let key = "messages_\(tripID)"
@@ -96,7 +96,7 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
             let data = try JSONEncoder().encode(messages)
             UserDefaults.standard.set(data, forKey: key)
         } catch {
-            print("Failed to save messages:", error)
+
         }
     }
     
@@ -108,7 +108,7 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
             do {
                 messages = try JSONDecoder().decode([Message].self, from: data)
             } catch {
-                print("Failed to load messages:", error)
+
             }
         }
     }

@@ -35,11 +35,10 @@ class CreateAccountViewController: UIViewController {
               let lastName = lastNameTextField.text, !lastName.isEmpty,
               let email = emailTextField.text, !email.isEmpty,
               let password = passwordTextField.text, !password.isEmpty else {
-            print("One or more fields are empty.")
             return
         }
         
-        //making sure the password set is long enough
+        // making sure the password set is long enough
         if password.count < 7 {
             let alert = UIAlertController(title: "Password Too Short", message: "Password must be at least 7 characters.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -49,10 +48,7 @@ class CreateAccountViewController: UIViewController {
         
         // Create user with email and password
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                print("Failed to create user: \(error.localizedDescription)")
-                return
-            }
+            guard error == nil else { return }
             
             // Store additional user info in Firestore
             if let user = authResult?.user {
@@ -63,11 +59,8 @@ class CreateAccountViewController: UIViewController {
                     "Email": email,
                     "UserID": user.uid
                 ]) { err in
-                    if let err = err {
-                        print("Error writing user data to Firestore: \(err)")
-                    } else {
+                    if err == nil {
                         UserManager.shared.setUserData(uid: user.uid, firstName: firstName, lastName: lastName, email: email)
-                        print("Successfully saved user info to Firestore.")
                     }
                 }
             }

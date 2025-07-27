@@ -13,14 +13,11 @@ class SurveyViewController: UIViewController, UITableViewDataSource {
     
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var tripInputTitleLabel: UILabel!
-    // MARK: - Outlets for date pickers
     @IBOutlet weak var startDatePicker: UIDatePicker!
     @IBOutlet weak var endDatePicker: UIDatePicker!
     
-    // MARK: - TableView for blocked times
     @IBOutlet weak var blockedTimesTableView: UITableView!
     
-    // MARK: - All checkboxes (connect these in storyboard)
     @IBOutlet weak var artsCultureButton: UIButton!
     @IBOutlet weak var landmarksButton: UIButton!
     @IBOutlet weak var adventureButton: UIButton!
@@ -52,7 +49,7 @@ class SurveyViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var wineButton: UIButton!
     @IBOutlet weak var dessertButton: UIButton!
     
-    // MARK: - Data for blocked times
+    // Data for blocked times
     var blockedTimeRanges: [(Date, Date)] = []
     var currentTrip: Trip? //
     
@@ -67,7 +64,7 @@ class SurveyViewController: UIViewController, UITableViewDataSource {
         submitButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
         submitButtonConfig.baseForegroundColor = .white
         submitButton.configuration = submitButtonConfig
-
+        
         
         if let trip = currentTrip {
             startDatePicker.minimumDate = trip.startDate
@@ -81,20 +78,20 @@ class SurveyViewController: UIViewController, UITableViewDataSource {
         return buttons.filter { $0.isSelected }.compactMap { $0.titleLabel?.text }
     }
     
-    // MARK: - Checkbox Toggle
+    // Checkbox Toggle
     @IBAction func checkboxTapped(_ sender: UIButton) {
         sender.isSelected.toggle()
         let imageName = sender.isSelected ? "checkmark.square" : "square"
         sender.setImage(UIImage(systemName: imageName), for: .normal)
     }
     
-    // MARK: - Add Blocked Time Range
+    // Add Blocked Time Range
     @IBAction func addBlockedTime(_ sender: UIButton) {
         let start = startDatePicker.date
         let end = endDatePicker.date
         
         guard start < end else {
-            print("Start must be before end")
+            
             return
         }
         
@@ -102,7 +99,7 @@ class SurveyViewController: UIViewController, UITableViewDataSource {
         blockedTimesTableView.reloadData()
     }
     
-    // MARK: - TableView Data Source
+    // TableView Data Source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return blockedTimeRanges.count
     }
@@ -120,12 +117,12 @@ class SurveyViewController: UIViewController, UITableViewDataSource {
     
     @IBAction func submitSurvey(_ sender: UIButton) {
         guard let userId = UserManager.shared.currentUserID else {
-            print("No authenticated user")
+            
             return
         }
         
         guard let tripID = currentTrip?.id else {
-            print("No current trip selected")
+            
             return
         }
         
@@ -165,7 +162,7 @@ class SurveyViewController: UIViewController, UITableViewDataSource {
         let db = Firestore.firestore()
         
         guard let tripOwnerId = currentTrip?.ownerUID else {
-            print("Missing trip owner ID")
+            
             return
         }
         
@@ -177,15 +174,7 @@ class SurveyViewController: UIViewController, UITableViewDataSource {
             .collection("surveyResponses")
             .document(userId) // overwrite or create the user’s survey response
         
-        tripRef.setData(surveyData) { error in
-            if let error = error {
-                print("Error saving survey: \(error)")
-            } else {
-                print("Survey response saved under the trip!")
-            }
-        }
-        
+        tripRef.setData(surveyData)
     }
-    
 }
 
