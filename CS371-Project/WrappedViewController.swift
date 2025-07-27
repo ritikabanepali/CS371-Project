@@ -157,7 +157,7 @@ class WrappedViewController: UIViewController {
         mostLikedPhoto.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         mostLikedPhoto.layer.cornerRadius = mostLikedPhoto.frame.height / 2
         mostLikedPhoto.layer.masksToBounds = true
-        mostLikedPhoto.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+        mostLikedPhoto.backgroundColor = UIColor.white.withAlphaComponent(0.45)
     }
 
 
@@ -334,13 +334,13 @@ class WrappedViewController: UIViewController {
         print("🟡 Loading images for trip ID: \(trip.id)")
         print("🟡 Retrieved URLs: \(urls)")
 
-        var loadedImages: [UIImage] = []
-        var likedCounts: [Int] = []
-
         if urls.isEmpty {
             useDefaultImages()
             return
         }
+
+        var loadedImages: [UIImage] = []
+        var likedCounts: [Int] = []
 
         let dispatchGroup = DispatchGroup()
         let syncQueue = DispatchQueue(label: "imageLikeSyncQueue")
@@ -361,7 +361,6 @@ class WrappedViewController: UIViewController {
                 }
 
                 if let data = data, let image = UIImage(data: data) {
-                    print("🟢 Successfully downloaded image: \(url.absoluteString)")
                     syncQueue.sync {
                         loadedImages.append(image)
                         let likeCount = self.getLikeCount(for: urlString)
@@ -372,23 +371,33 @@ class WrappedViewController: UIViewController {
         }
 
         dispatchGroup.notify(queue: .main) {
-            if loadedImages.isEmpty {
-                self.useDefaultImages()
+            let sorted = zip(loadedImages, likedCounts).sorted { $0.1 > $1.1 }
+
+            // Always show something in bigImage
+            if let mostLiked = sorted.first?.0 {
+                self.bigImage.image = mostLiked
             } else {
-                let sorted = zip(loadedImages, likedCounts).sorted { $0.1 > $1.1 }
-                self.bigImage.image = sorted.first?.0
-
-                let otherImages = Array(sorted.dropFirst().prefix(4).map { $0.0 })
-                let smallImages = [self.image1, self.image2, self.image3, self.image4]
-
-                for (i, imgView) in smallImages.enumerated() {
-                    imgView?.image = i < otherImages.count ? otherImages[i] : UIImage(named: "default\(i+2)")
-                }
-
-                self.view.setNeedsLayout()
+                self.bigImage.image = UIImage(named: "lavender-airplane")
             }
+
+            // Display up to 4 other images, fallback if not enough
+            let smallImages = [self.image1, self.image2, self.image3, self.image4]
+            let fallbackNames = ["blue-door", "pink-van", "green-plant", "fallen-bike"]
+            let secondaryImages = Array(sorted.dropFirst().map { $0.0 })  // Extract just the UIImages
+
+            for (i, imgView) in smallImages.enumerated() {
+                if i < secondaryImages.count {
+                    imgView?.image = secondaryImages[i]
+                } else {
+                    imgView?.image = UIImage(named: fallbackNames[i])
+                }
+            }
+
+            self.view.setNeedsLayout()
         }
+
     }
+
     
     func printAllSavedImageKeysAndCounts() {
         let defaults = UserDefaults.standard
