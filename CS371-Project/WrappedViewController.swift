@@ -20,7 +20,16 @@ class WrappedViewController: UIViewController {
     
     @IBOutlet weak var wrappedTitle: UILabel!
     @IBOutlet weak var totalStepsLabel: UILabel!
-    @IBOutlet weak var tripLeaderLabel: UILabel!
+    @IBOutlet weak var trailblazerLabel: UILabel!
+    
+    @IBOutlet weak var mostLikedPhoto: UILabel!
+    
+    @IBOutlet weak var leaderLabel: UILabel!
+    
+    @IBOutlet weak var chattboxLabel: UILabel!
+    
+    @IBOutlet weak var typeTrip: UILabel!
+    
     
     @IBOutlet weak var bigImage: UIImageView!
     
@@ -35,10 +44,12 @@ class WrappedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        printAllSavedImageKeysAndCounts()
+
         setCardTitle()
         setTitle()
         totalStepsLabel.textColor = SettingsManager.shared.titleColor
-        tripLeaderLabel.textColor = SettingsManager.shared.titleColor
+        trailblazerLabel.textColor = SettingsManager.shared.titleColor
         wrappedLabel.textColor = SettingsManager.shared.titleColor
 
         HealthKitManager.shared.requestAuthorization { [weak self] authorized in
@@ -47,20 +58,109 @@ class WrappedViewController: UIViewController {
                 self.fetchTripSteps()
             } else {
                 self.totalStepsLabel.text = "Total Steps: N/A (HealthKit Access Denied)"
-                self.tripLeaderLabel.text = "Trip Leader: N/A"
+                self.trailblazerLabel.text = "Trip Trailblazer: N/A"
                 self.fetchAllTravelerSteps()
             }
         }
         loadTripImagesAndDisplay()
+        displayTripLeaderName()
+        updateTypeTrip()
+        fetchMostActiveChatter()
+
         
         let imageViews = [bigImage, image1, image2, image3, image4]
         for imageView in imageViews {
             imageView?.layer.cornerRadius = 15
             imageView?.clipsToBounds = true
         }
+        
+        
 
 
     }
+    
+    func fetchMostActiveChatter() {
+        guard let trip = selectedTrip else { return }
+
+        let key = "messages_\(trip.id)"
+        guard let data = UserDefaults.standard.data(forKey: key) else {
+            DispatchQueue.main.async {
+                self.chattboxLabel.text = "No chatterers"
+            }
+            return
+        }
+
+        do {
+            let messages = try JSONDecoder().decode([Message].self, from: data)
+            if messages.isEmpty {
+                DispatchQueue.main.async {
+                    self.chattboxLabel.text = "No chatterers"
+                }
+                return
+            }
+
+            var countByUser: [String: Int] = [:]
+            var nameByUser: [String: String] = [:]
+
+            for msg in messages {
+                countByUser[msg.senderID, default: 0] += 1
+                nameByUser[msg.senderID] = msg.senderName
+            }
+
+            if let (topID, _) = countByUser.max(by: { $0.value < $1.value }),
+               let topName = nameByUser[topID] {
+                DispatchQueue.main.async {
+                    self.chattboxLabel.text = "Chatterbox: \(topName)"
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.chattboxLabel.text = "No chatterers"
+                }
+            }
+
+        } catch {
+            print("Error decoding messages: \(error)")
+            DispatchQueue.main.async {
+                self.chattboxLabel.text = "No chatterers"
+            }
+        }
+    }
+
+
+
+
+
+    
+    func updateTypeTrip() {
+        typeTrip.textColor = SettingsManager.shared.titleColor
+        typeTrip.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+
+        let adjectives = ["relaxing", "adventurous", "memorable", "vibrant", "serene", "fun-filled", "spontaneous", "energizing", "unforgettable", "crazy", "sleep-deprived", "vibe-heavy", "sunburnt", "trail-misguided", "souvenir hoarding", "lost-but-vibing", "inside-joke-filled", "best-best-best", "feral"]
+        let adjective = adjectives.randomElement() ?? "amazing"
+
+        // Check if it starts with a vowel (a, e, i, o, u)
+        let firstChar = adjective.lowercased().first
+        let article = (firstChar == "a" || firstChar == "e" || firstChar == "i" || firstChar == "o" || firstChar == "u") ? "An" : "A"
+
+        typeTrip.text = "\(article) \(adjective) trip"
+    }
+
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        // Highlight "Most Liked Photo" Label
+        mostLikedPhoto.text = "   Most Liked Photo   "
+        mostLikedPhoto.textColor = .black
+        mostLikedPhoto.backgroundColor = .white
+        mostLikedPhoto.textAlignment = .center
+        mostLikedPhoto.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        mostLikedPhoto.layer.cornerRadius = mostLikedPhoto.frame.height / 2
+        mostLikedPhoto.layer.masksToBounds = true
+        mostLikedPhoto.backgroundColor = UIColor.white.withAlphaComponent(0.45)
+    }
+
+
     
     func setTitle(){
         if let destination = tripDestination {
@@ -91,7 +191,7 @@ class WrappedViewController: UIViewController {
                    let days = calendar.dateComponents([.day], from: start, to: end).day ?? 0
                    let totalDays = days + 1
                    
-                   durationLabel.text = "\(totalDays) day\(totalDays == 1 ? "Day" : "Days")"
+                   durationLabel.text = "\(totalDays) day\(totalDays == 1 ? "" : "s")"
         }
         tripTitle.textColor = SettingsManager.shared.titleColor
         tripTitle.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
@@ -116,6 +216,25 @@ class WrappedViewController: UIViewController {
             }
         }
     }
+    
+    func getLikeCount(for imageKey: String) -> Int {
+        guard let tripID = selectedTrip?.id else { return 0 }
+
+        // Look through all users’ like data if needed. For now, we’ll just use the current user:
+        guard let userID = UserManager.shared.currentUserID else { return 0 }
+
+        let key = "likes_\(tripID)_\(userID)"
+        let likeCounts = UserDefaults.standard.array(forKey: key) as? [Int] ?? []
+
+        let imageURLs = UserDefaults.standard.stringArray(forKey: "savedImageURLs_\(tripID)") ?? []
+
+        if let index = imageURLs.firstIndex(of: imageKey), index < likeCounts.count {
+            return likeCounts[index]
+        } else {
+            return 0
+        }
+    }
+
     
     func saveMyTravelerSteps(trip: Trip, steps: Int, completion: @escaping (Error?) -> Void){
         guard let currentUserID = currentUserID else {
@@ -158,11 +277,27 @@ class WrappedViewController: UIViewController {
                 case .failure(let error):
                     print("WrappedViewController: Error fetching all traveler steps: \(error.localizedDescription)")
                     self.totalStepsLabel.text = "Total Steps: Error"
-                    self.tripLeaderLabel.text = "Trip Trailblazer: Error"
+                    self.trailblazerLabel.text = "Trip Trailblazer: Error"
                 }
             }
         }
     }
+    
+    func displayTripLeaderName() {
+        guard let trip = selectedTrip else { return } // your trip variable
+
+        UserManager.shared.fetchName(forUserWithUID: trip.ownerUID) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let name):
+                    self?.leaderLabel.text = "Leader: \(name)"
+                case .failure(_):
+                    self?.leaderLabel.text = "Leader: Unknown"
+                }
+            }
+        }
+    }
+
     
     func updateStepLabels (){
         var totalSteps = 0
@@ -182,9 +317,9 @@ class WrappedViewController: UIViewController {
         }
         
         if let leaderUID = stepLeaderUID, let leaderName = travelerNames[leaderUID] {
-            self.tripLeaderLabel.text = "Trailblazer: \(leaderName) with \(maxSteps) steps"
+            self.trailblazerLabel.text = "Trailblazer: \(leaderName) with \(maxSteps) steps"
         } else {
-            self.tripLeaderLabel.text = "No trailblazers :("
+            self.trailblazerLabel.text = "No trailblazers :("
         }
         
     }
@@ -196,72 +331,102 @@ class WrappedViewController: UIViewController {
         let key = "savedImageURLs_\(trip.id)"
         let urls = UserDefaults.standard.stringArray(forKey: key) ?? []
 
+        print("🟡 Loading images for trip ID: \(trip.id)")
+        print("🟡 Retrieved URLs: \(urls)")
+
+        if urls.isEmpty {
+            useDefaultImages()
+            return
+        }
+
         var loadedImages: [UIImage] = []
         var likedCounts: [Int] = []
 
-        if urls.isEmpty { //defaults
-            bigImage.image = UIImage(named: "lavender-airplane")
-            image1.image = UIImage(named: "blue-door")
-            image2.image = UIImage(named: "pink-van")
-            image3.image = UIImage(named: "green-plant")
-            image4.image = UIImage(named: "fallen-bike")
+        let dispatchGroup = DispatchGroup()
+        let syncQueue = DispatchQueue(label: "imageLikeSyncQueue")
 
-            return
+        for urlString in urls {
+            guard let url = URL(string: urlString) else {
+                print("🔴 Invalid URL: \(urlString)")
+                continue
+            }
+
+            dispatchGroup.enter()
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                defer { dispatchGroup.leave() }
+
+                if let error = error {
+                    print("🔴 Failed to download \(url): \(error.localizedDescription)")
+                    return
+                }
+
+                if let data = data, let image = UIImage(data: data) {
+                    syncQueue.sync {
+                        loadedImages.append(image)
+                        let likeCount = self.getLikeCount(for: urlString)
+                        likedCounts.append(likeCount)
+                    }
+                }
+            }.resume()
         }
 
-        // Load images and likes
-        for urlString in urls {
-            if let data = try? Data(contentsOf: URL(fileURLWithPath: urlString)),
-               let image = UIImage(data: data) {
-                loadedImages.append(image)
+        dispatchGroup.notify(queue: .main) {
+            let sorted = zip(loadedImages, likedCounts).sorted { $0.1 > $1.1 }
 
-                // Look up like count
-                let likeCount = getLikeCount(for: urlString)
-                likedCounts.append(likeCount)
+            // Always show something in bigImage
+            if let mostLiked = sorted.first?.0 {
+                self.bigImage.image = mostLiked
+            } else {
+                self.bigImage.image = UIImage(named: "lavender-airplane")
+            }
+
+            // Display up to 4 other images, fallback if not enough
+            let smallImages = [self.image1, self.image2, self.image3, self.image4]
+            let fallbackNames = ["blue-door", "pink-van", "green-plant", "fallen-bike"]
+            let secondaryImages = Array(sorted.dropFirst().map { $0.0 })  // Extract just the UIImages
+
+            for (i, imgView) in smallImages.enumerated() {
+                if i < secondaryImages.count {
+                    imgView?.image = secondaryImages[i]
+                } else {
+                    imgView?.image = UIImage(named: fallbackNames[i])
+                }
+            }
+
+            self.view.setNeedsLayout()
+        }
+
+    }
+
+    
+    func printAllSavedImageKeysAndCounts() {
+        let defaults = UserDefaults.standard
+        let allKeys = defaults.dictionaryRepresentation().keys
+        
+        let photoKeys = allKeys.filter { $0.hasPrefix("savedImageURLs_") }
+        
+        if photoKeys.isEmpty {
+            print("📂 No saved image URL keys found in UserDefaults.")
+        } else {
+            for key in photoKeys {
+                if let urls = defaults.stringArray(forKey: key) {
+                    print("📸 \(key) → \(urls.count) image(s)")
+                } else {
+                    print("⚠️ \(key) exists but no valid string array found.")
+                }
             }
         }
-        
-        if let image = UIImage(named: "lavender-airplane") {
-            bigImage.image = image
-        } else {
-            print("⚠️ Image not found")
-        }
-
-
-        if loadedImages.isEmpty {
-            bigImage.image = UIImage(named: "lavender-airplane")
-            image1.image = UIImage(named: "blue-door")
-            image2.image = UIImage(named: "pink-van")
-            image3.image = UIImage(named: "green-plant")
-            image4.image = UIImage(named: "fallen-bike")
-            return
-        }
-
-        // Find most liked image
-        let sorted = zip(loadedImages, likedCounts).sorted { $0.1 > $1.1 }
-        bigImage.image = sorted.first?.0
-
-        let otherImages = Array(sorted.dropFirst().prefix(4).map { $0.0 })
-        let smallImages = [image1, image2, image3, image4]
-
-        for (i, imgView) in smallImages.enumerated() {
-            imgView?.image = i < otherImages.count ? otherImages[i] : UIImage(named: "default\(i+2)")
-        }
     }
+
+
+
     
-    func getLikeCount(for key: String) -> Int {
-        guard let tripID = selectedTrip?.id,
-              let userID = currentUserID else { return 0 }
-        
-        let likesKey = "likes_\(tripID)_\(userID)"
-        let likedArray = UserDefaults.standard.array(forKey: likesKey) as? [Int] ?? []
-        
-        // Get index of photo in savedImageURLs
-        let photoURLs = UserDefaults.standard.stringArray(forKey: "savedImageURLs_\(tripID)") ?? []
-        if let index = photoURLs.firstIndex(of: key), index < likedArray.count {
-            return likedArray[index]
-        }
-        return 0
+    func useDefaultImages() {
+        bigImage.image = UIImage(named: "lavender-airplane")
+        image1.image = UIImage(named: "blue-door")
+        image2.image = UIImage(named: "pink-van")
+        image3.image = UIImage(named: "green-plant")
+        image4.image = UIImage(named: "fallen-bike")
     }
 
 
