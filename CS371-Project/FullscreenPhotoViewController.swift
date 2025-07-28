@@ -120,7 +120,6 @@ class FullscreenPhotoViewController: UIViewController {
             self.likes[self.currentIndex] = newLikes
             self.updateLikeButtonState()
             
-            print("Tapped like. Was liked: \(isLiked). New count: \(newLikes)")
         }
     }
     

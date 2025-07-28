@@ -17,7 +17,7 @@ struct TravelerViewModel {
     let surveyStatus: String // 'y' or 'n' if survey completed
 }
 
-class TravelerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TravelerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var travelersTitleLabel: UILabel!
     @IBOutlet weak var enterEmailTextField: UITextField!
@@ -33,6 +33,8 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
         invitedTableView.dataSource = self
         invitedTableView.delegate = self
+        enterEmailTextField.delegate = self
+
         travelersTitleLabel.textColor = SettingsManager.shared.titleColor
         
         // custom colors
@@ -43,6 +45,9 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
         // set up the view and start listening for data changes.
         configureView()
         navigationController?.navigationBar.tintColor = .black
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     // removes the listener when the view controller is deallocated
@@ -272,6 +277,15 @@ class TravelerViewController: UIViewController, UITableViewDataSource, UITableVi
             alert.addAction(UIAlertAction(title: "OK", style: .default))
             self.present(alert, animated: true)
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 

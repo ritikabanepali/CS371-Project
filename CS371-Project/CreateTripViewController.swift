@@ -7,7 +7,7 @@
 import UIKit
 import FirebaseFirestore
 
-class CreateTripViewController: UIViewController {
+class CreateTripViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var destinationField: UITextField!
     @IBOutlet weak var continueButton: UIButton!
@@ -32,6 +32,14 @@ class CreateTripViewController: UIViewController {
         backgroundView.layer.shadowOpacity = 0.2
         backgroundView.layer.shadowOffset = CGSize(width: 0, height: 2)
         backgroundView.layer.shadowRadius = 5
+        
+        // Keyboard dismissal setup
+        destinationField.delegate = self
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
+        startDatePicker.addTarget(self, action: #selector(startDateChanged), for: .valueChanged)
+        
     }
     
     //ui details
@@ -95,4 +103,15 @@ class CreateTripViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
+    
+    // Keyboard Handling
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
 }

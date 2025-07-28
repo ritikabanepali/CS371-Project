@@ -17,7 +17,7 @@ class LocationCell: UITableViewCell {
 }
 
 // manages the data for querying different locations a user may want to go to on their trip
-class LocationViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
+class LocationViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate,  UITextFieldDelegate {
     
     @IBOutlet weak var locationTitle: UILabel!
     @IBOutlet var searchTextField: UITextField!
@@ -40,35 +40,41 @@ class LocationViewController: UIViewController, UITableViewDataSource, UITableVi
         setupLocationServices()
         fetchPlaces(query: "attractions") // initailly, query for 'attractions'
         locationTitle.textColor = SettingsManager.shared.titleColor
+        
+        searchTextField.delegate = self
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
     }
     
     // depending on the user's query, search for locations near the trip destination
     private func fetchPlaces(query: String) {
-          guard let trip = trip else {
-              print("Error: Trip data is missing.")
-              return
-          }
-
-          self.locationTitleLabel.text = "Finding places in \(trip.destination)..."
-          
-          let geocoder = CLGeocoder()
-          
-          // use CoreLocation's CLGeocoder to turn the city name into coordinates
-          geocoder.geocodeAddressString(trip.destination) { [weak self] (placemarks, error) in
-              guard let self = self else { return }
-              
-              if let error = error {
-                  print("Geocoding error: \(error.localizedDescription)")
-                  self.locationTitleLabel.text = "Could not find destination."
-                  return
-              }
-              
-              if let placemarkLocation = placemarks?.first?.location {
-                  self.tripLocation = placemarkLocation // save the location
-                  self.performSearch(near: placemarkLocation, query: query)
-              }
-          }
-      }
+        guard let trip = trip else {
+            print("Error: Trip data is missing.")
+            return
+        }
+        
+        self.locationTitleLabel.text = "Finding places in \(trip.destination)..."
+        
+        let geocoder = CLGeocoder()
+        
+        // use CoreLocation's CLGeocoder to turn the city name into coordinates
+        geocoder.geocodeAddressString(trip.destination) { [weak self] (placemarks, error) in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print("Geocoding error: \(error.localizedDescription)")
+                self.locationTitleLabel.text = "Could not find destination."
+                return
+            }
+            
+            if let placemarkLocation = placemarks?.first?.location {
+                self.tripLocation = placemarkLocation // save the location
+                self.performSearch(near: placemarkLocation, query: query)
+            }
+        }
+    }
     
     // ensure required permissions are granted for location services
     private func setupLocationServices() {
@@ -95,7 +101,7 @@ class LocationViewController: UIViewController, UITableViewDataSource, UITableVi
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = query
         request.region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 20000, longitudinalMeters: 20000)
-
+        
         let search = MKLocalSearch(request: request)
         search.start { [weak self] (response, error) in
             DispatchQueue.main.async {
@@ -186,6 +192,15 @@ class LocationViewController: UIViewController, UITableViewDataSource, UITableVi
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to get user location: \(error.localizedDescription)")
         locationTitleLabel.text = "Could not get your location."
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
 }

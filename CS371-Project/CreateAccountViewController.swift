@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class CreateAccountViewController: UIViewController {
+class CreateAccountViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -28,6 +28,16 @@ class CreateAccountViewController: UIViewController {
         uiView.layer.shadowOpacity = 0.1
         uiView.layer.shadowOffset = CGSize(width: 0, height: 2)
         uiView.layer.shadowRadius = 4
+        
+        // Set delegates
+        firstNameTextField.delegate = self
+        lastNameTextField.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        
+        // Tap to dismiss keyboard
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
     }
     
     @IBAction func joinButton(_ sender: Any) {
@@ -66,4 +76,14 @@ class CreateAccountViewController: UIViewController {
             }
         }
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
 }

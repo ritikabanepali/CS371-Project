@@ -9,7 +9,7 @@ import UIKit
 import FirebaseFirestore
 import FirebaseAuth
 
-class ChatViewController: UIViewController{
+class ChatViewController: UIViewController, UITextFieldDelegate{
     var tripID: String?
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageField: UITextField!
@@ -26,6 +26,11 @@ class ChatViewController: UIViewController{
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
         loadMessages()
+        
+        messageField.delegate = self
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
     }
 }
 
@@ -34,14 +39,14 @@ struct Message: Codable {
     let senderName: String
     let text: String
     let timestamp: Date
-
+    
     init(senderID: String, senderName: String, text: String, timestamp: Date) {
         self.senderID = senderID
         self.senderName = senderName
         self.text = text
         self.timestamp = timestamp
     }
-
+    
     init?(from dict: [String: Any]) {
         guard let senderID = dict["senderID"] as? String,
               let senderName = dict["senderName"] as? String,
@@ -49,13 +54,13 @@ struct Message: Codable {
               let timestamp = dict["timestamp"] as? Timestamp else {
             return nil
         }
-
+        
         self.senderID = senderID
         self.senderName = senderName
         self.text = text
         self.timestamp = timestamp.dateValue()
     }
-
+    
     func toDict() -> [String: Any] {
         return [
             "senderID": senderID,
@@ -84,23 +89,23 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
         guard let text = messageField.text, !text.trimmingCharacters(in: .whitespaces).isEmpty else {
             return
         }
-
+        
         guard let senderID = UserManager.shared.currentUserID else { return }
         let firstName = UserManager.shared.currentUserFirstName ?? "Unknown"
         let lastName = UserManager.shared.currentUserLastName ?? ""
         let fullName = "\(firstName) \(lastName)".trimmingCharacters(in: .whitespaces)
-
+        
         let newMessage = Message(
             senderID: senderID,
             senderName: fullName,
             text: text,
             timestamp: Date()
         )
-
+        
         messageField.text = ""
         saveMessageToFirestore(newMessage)
     }
-
+    
     
     func scrollToBottom() {
         let lastRow = messages.count - 1
@@ -113,22 +118,22 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
     // save and load messages
     func saveMessageToFirestore(_ message: Message) {
         guard let tripID = tripID else { return }
-
+        
         let db = Firestore.firestore()
         let tripRef = db.collection("Users")
             .document(message.senderID)
             .collection("trips")
             .document(tripID)
-
+        
         let messagesRef = tripRef.collection("messages")
         messagesRef.addDocument(data: message.toDict())
     }
-
+    
     
     func loadMessages() {
         guard let tripID = tripID,
               let currentUserID = UserManager.shared.currentUserID else { return }
-
+        
         let db = Firestore.firestore()
         let messagesRef = db.collection("Users")
             .document(currentUserID)
@@ -136,15 +141,22 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
             .document(tripID)
             .collection("messages")
             .order(by: "timestamp", descending: false)
-
+        
         messagesRef.addSnapshotListener { snapshot, error in
             guard let documents = snapshot?.documents else { return }
-
+            
             self.messages = documents.compactMap { Message(from: $0.data()) }
             self.tableView.reloadData()
             self.scrollToBottom()
         }
     }
-
-
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
