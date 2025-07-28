@@ -213,10 +213,14 @@ class FullscreenPhotoViewController: UIViewController {
             ref.getDocument { snapshot, error in
                 if let data = snapshot?.data(), let count = data["likes"] as? Int {
                     self.likes[index] = count
+
                     if index == self.currentIndex {
-                        self.updateLikeButtonState()
+                        DispatchQueue.main.async {
+                            self.updateLikeButtonState()
+                        }
                     }
                 }
+
             }
         }
     }
@@ -224,10 +228,16 @@ class FullscreenPhotoViewController: UIViewController {
     // styling
     func styleButtons(){
         let config = UIImage.SymbolConfiguration(pointSize: 40, weight: .regular)
+
+        // Trash icon
         let largeTrash = UIImage(systemName: "trash.circle", withConfiguration: config)
         deleteButton.setImage(largeTrash, for: .normal)
         
+        // Like icon (default state)
+        let heart = UIImage(systemName: "heart.circle", withConfiguration: config)
+        likeButton.setImage(heart, for: .normal)
     }
+
     
     func getCurrentUserID() -> String? {
         return UserManager.shared.currentUserID
