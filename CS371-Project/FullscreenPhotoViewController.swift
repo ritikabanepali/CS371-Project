@@ -19,6 +19,7 @@ class FullscreenPhotoViewController: UIViewController {
     var imageDocumentIDs: [String] = []
     var imageURLs: [String] = []
     var ownerID: String?
+    var didStyleButtons = false
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var likeButton: UIButton!
