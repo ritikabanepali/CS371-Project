@@ -24,6 +24,7 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
             self.navigationController?.pushViewController(photoVC, animated: true)
         }
     }
+
     
     @IBAction func buttonTapped(_ sender: Any) {
         guard let button = sender as? UIButton else { return }

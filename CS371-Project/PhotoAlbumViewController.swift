@@ -1,6 +1,8 @@
 import UIKit
 import PhotosUI
 import Cloudinary
+import FirebaseFirestore
+import FirebaseAuth
 
 let config = CLDConfiguration(cloudName: "dzemwygcg", secure: true)
 let cloudinary = CLDCloudinary(configuration: config)
@@ -16,6 +18,12 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
     var tripID: String?
     var images: [UIImage] = []
     var needsRefresh = false
+    var imageDocumentIDs: [String] = []
+    var imageURLs: [String] = []
+    var ownerID: String? {
+        return Auth.auth().currentUser?.uid
+    }
+    var likes: [Int] = []
     
     @IBAction func cameraButtonTapped(_ sender: UIButton) {
         openCamera()
@@ -27,7 +35,6 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         photoCollection.dataSource = self
         photoCollection.delegate = self
         photoCollection.isScrollEnabled = true
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,33 +45,11 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
         myButtonConfig.background.backgroundColor = SettingsManager.shared.buttonColor
         addPhotoButton.configuration = myButtonConfig
         
-        
-        // Load images if first time or refresh requested
+        //load images or refresh
         if images.isEmpty || needsRefresh {
             loadingView.isHidden = false
             needsRefresh = false
-            
-            DispatchQueue.global(qos: .userInitiated).async {
-                guard let tripID = self.tripID else { return }
-                let key = "savedImageURLs_\(tripID)"
-                let urls = UserDefaults.standard.stringArray(forKey: key) ?? []
-                
-                var loadedImages: [UIImage] = []
-                
-                for urlString in urls {
-                    if let url = URL(string: urlString),
-                       let data = try? Data(contentsOf: url),
-                       let image = UIImage(data: data) {
-                        loadedImages.append(image)
-                    }
-                }
-                
-                DispatchQueue.main.async {
-                    self.images = loadedImages
-                    self.photoCollection.reloadData()
-                    self.loadingView.isHidden = true
-                }
-            }
+            loadImagesFromFirestore()
         }
     }
     
@@ -87,7 +72,6 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
             present(picker, animated: true)
         }
     }
-    
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         dismiss(animated: true)
@@ -128,36 +112,81 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
                 return
             }
             if let secureUrl = result?.secureUrl {
-                let key = "savedImageURLs_\(tripID)"
-                var savedURLs = UserDefaults.standard.stringArray(forKey: key) ?? []
-                savedURLs.append(secureUrl)
-                UserDefaults.standard.set(savedURLs, forKey: key)
+                guard let userID = Auth.auth().currentUser?.uid else { return }
+                
+                let db = Firestore.firestore()
+                let imageDoc = db
+                    .collection("Users")
+                    .document(userID)
+                    .collection("trips")
+                    .document(tripID)
+                    .collection("images")
+                    .document() // Auto-ID
+                
+                imageDoc.setData([
+                    "url": secureUrl,
+                    "timestamp": Timestamp(date: Date()),
+                    "likes": 0
+                ])
             }
         }
     }
     
-    // Load saved image URLs from UserDefaults and fetch images from them
-    func loadSavedImageURLs() {
-        guard let tripID = tripID else { return }
+    func loadImagesFromFirestore() {
+        guard let tripID = tripID,
+              let userID = Auth.auth().currentUser?.uid else { return }
         
-        let key = "savedImageURLs_\(tripID)"
-        let urls = UserDefaults.standard.stringArray(forKey: key) ?? []
-        
-        for urlString in urls {
-            guard let url = URL(string: urlString) else { continue }
-            
-            // Asynchronous image download
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.images.append(image)
-                        self.photoCollection.reloadData()
+        let db = Firestore.firestore()
+        db.collection("Users")
+            .document(userID)
+            .collection("trips")
+            .document(tripID)
+            .collection("images")
+            .order(by: "timestamp", descending: false)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("failed to get images: \(error)")
+                    return
+                }
+                
+                guard let documents = snapshot?.documents else { return }
+                
+                // Reset everything
+                self.images = []
+                self.imageDocumentIDs = []
+                self.imageURLs = []
+                self.likes = []
+                let dispatchGroup = DispatchGroup()
+                
+                for doc in documents {
+                    if let urlString = doc["url"] as? String,
+                       let url = URL(string: urlString) {
+                        
+                        // Collect document ID and URL
+                        self.imageDocumentIDs.append(doc.documentID)
+                        self.imageURLs.append(urlString)
+                        
+                        let likeCount = doc["likes"] as? Int ?? 0
+                        self.likes.append(likeCount)
+                        
+                        dispatchGroup.enter()
+                        URLSession.shared.dataTask(with: url) { data, _, _ in
+                            if let data = data, let image = UIImage(data: data) {
+                                DispatchQueue.main.async {
+                                    self.images.append(image)
+                                }
+                            }
+                            dispatchGroup.leave()
+                        }.resume()
                     }
                 }
-            }.resume()
-        }
+                
+                dispatchGroup.notify(queue: .main) {
+                    self.photoCollection.reloadData()
+                    self.loadingView.isHidden = true
+                }
+            }
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
@@ -205,6 +234,11 @@ class PhotoAlbumViewController: UIViewController, PHPickerViewControllerDelegate
             fullscreenVC.images = images
             fullscreenVC.currentIndex = indexPath.item
             fullscreenVC.tripID = self.tripID
+            fullscreenVC.imageDocumentIDs = self.imageDocumentIDs
+            fullscreenVC.imageURLs = self.imageURLs
+            fullscreenVC.ownerID = self.ownerID
+            fullscreenVC.likes = self.likes
+            
             fullscreenVC.modalPresentationStyle = .fullScreen
             navigationController?.pushViewController(fullscreenVC, animated: true)
         }

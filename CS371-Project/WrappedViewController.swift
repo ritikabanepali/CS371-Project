@@ -196,25 +196,6 @@ class WrappedViewController: UIViewController {
         }
     }
     
-    func getLikeCount(for imageKey: String) -> Int {
-        guard let tripID = selectedTrip?.id else { return 0 }
-        
-        // Look through all users’ like data if needed. For now, we’ll just use the current user:
-        guard let userID = UserManager.shared.currentUserID else { return 0 }
-        
-        let key = "likes_\(tripID)_\(userID)"
-        let likeCounts = UserDefaults.standard.array(forKey: key) as? [Int] ?? []
-        
-        let imageURLs = UserDefaults.standard.stringArray(forKey: "savedImageURLs_\(tripID)") ?? []
-        
-        if let index = imageURLs.firstIndex(of: imageKey), index < likeCounts.count {
-            return likeCounts[index]
-        } else {
-            return 0
-        }
-    }
-    
-    
     func saveMyTravelerSteps(trip: Trip, steps: Int, completion: @escaping (Error?) -> Void){
         guard let currentUserID = currentUserID else {
             completion(NSError(domain: "WrappedVC", code: 401, userInfo: [NSLocalizedDescriptionKey: "Current user not authenticated."]))
@@ -299,76 +280,74 @@ class WrappedViewController: UIViewController {
         } else {
             self.trailblazerLabel.text = "No trailblazers :("
         }
-        
     }
     
     //MARK: photos added
     
     func loadTripImagesAndDisplay() {
         guard let trip = selectedTrip else { return }
-        let key = "savedImageURLs_\(trip.id)"
-        let urls = UserDefaults.standard.stringArray(forKey: key) ?? []
         
-        if urls.isEmpty {
-            useDefaultImages()
-            return
-        }
-        
-        var loadedImages: [UIImage] = []
-        var likedCounts: [Int] = []
-        
-        let dispatchGroup = DispatchGroup()
-        let syncQueue = DispatchQueue(label: "imageLikeSyncQueue")
-        
-        for urlString in urls {
-            guard let url = URL(string: urlString) else {
-                print("invalid URL: \(urlString)")
-                continue
-            }
-            
-            dispatchGroup.enter()
-            URLSession.shared.dataTask(with: url) { data, response, error in
-                defer { dispatchGroup.leave() }
-                
+        let db = Firestore.firestore()
+        db.collection("Users")
+            .document(trip.ownerUID)
+            .collection("trips")
+            .document(trip.id)
+            .collection("images")
+            .getDocuments { snapshot, error in
                 if let error = error {
+                    self.useDefaultImages()
                     return
                 }
                 
-                if let data = data, let image = UIImage(data: data) {
-                    syncQueue.sync {
-                        loadedImages.append(image)
-                        let likeCount = self.getLikeCount(for: urlString)
-                        likedCounts.append(likeCount)
+                guard let docs = snapshot?.documents, !docs.isEmpty else {
+                    self.useDefaultImages()
+                    return
+                }
+                
+                var imagesWithLikes: [(UIImage, Int)] = []
+                let dispatchGroup = DispatchGroup()
+                
+                for doc in docs {
+                    guard let urlString = doc["url"] as? String,
+                          let url = URL(string: urlString),
+                          let likeCount = doc["likes"] as? Int else {
+                        continue
+                    }
+                    
+                    dispatchGroup.enter()
+                    URLSession.shared.dataTask(with: url) { data, _, _ in
+                        defer { dispatchGroup.leave() }
+                        
+                        if let data = data, let image = UIImage(data: data) {
+                            imagesWithLikes.append((image, likeCount))
+                        }
+                    }.resume()
+                }
+                
+                dispatchGroup.notify(queue: .main) {
+                    let sorted = imagesWithLikes.sorted { $0.1 > $1.1 }
+                    
+                    // Set bigImage
+                    if let top = sorted.first?.0 {
+                        self.bigImage.image = top
+                    } else {
+                        self.bigImage.image = UIImage(named: "lavender-airplane")
+                    }
+                    
+                    // Set the 4 smaller images
+                    let imageViews = [self.image1, self.image2, self.image3, self.image4]
+                    let fallback = ["blue-door", "pink-van", "green-plant", "fallen-bike"]
+                    let smaller = Array(sorted.dropFirst().map { $0.0 })
+                    
+                    for (i, view) in imageViews.enumerated() {
+                        if i < smaller.count {
+                            view?.image = smaller[i]
+                        } else {
+                            view?.image = UIImage(named: fallback[i])
+                        }
                     }
                 }
-            }.resume()
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            let sorted = zip(loadedImages, likedCounts).sorted { $0.1 > $1.1 }
-            
-            // show something in bigImagefirst
-            if let mostLiked = sorted.first?.0 {
-                self.bigImage.image = mostLiked
-            } else {
-                self.bigImage.image = UIImage(named: "lavender-airplane")
             }
-            
-            //4 other small images
-            let smallImages = [self.image1, self.image2, self.image3, self.image4]
-            let fallbackNames = ["blue-door", "pink-van", "green-plant", "fallen-bike"]
-            let secondaryImages = Array(sorted.dropFirst().map { $0.0 })
-            
-            for (i, imgView) in smallImages.enumerated() {
-                if i < secondaryImages.count {
-                    imgView?.image = secondaryImages[i]
-                } else {
-                    imgView?.image = UIImage(named: fallbackNames[i])
-                }
-            }
-            self.view.setNeedsLayout()
-        }
-        
     }
     
     func useDefaultImages() {

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseFirestore
+import FirebaseAuth
 
 class FullscreenPhotoViewController: UIViewController {
     
@@ -14,6 +16,10 @@ class FullscreenPhotoViewController: UIViewController {
     var currentIndex: Int = 0
     var tripID: String?
     var pageIndicatorStack: UIStackView!
+    var imageDocumentIDs: [String] = []
+    var imageURLs: [String] = []
+    var ownerID: String?
+
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var likeButton: UIButton!
@@ -57,21 +63,17 @@ class FullscreenPhotoViewController: UIViewController {
     }
     
     @objc func handleSwipe(_ gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == .left {
-            if currentIndex < images.count - 1 {
-                currentIndex += 1
-                imageView.image = images[currentIndex]
-            }
-        } else if gesture.direction == .right {
-            if currentIndex > 0 {
-                currentIndex -= 1
-                imageView.image = images[currentIndex]
-            }
+        if gesture.direction == .left, currentIndex < images.count - 1 {
+            currentIndex += 1
+        } else if gesture.direction == .right, currentIndex > 0 {
+            currentIndex -= 1
         }
-        
+
+        imageView.image = images[currentIndex]
         updatePageIndicator()
         updateLikeButtonState()
     }
+
     
     // image likes & delete
     func imageKey(for index: Int) -> String? {
@@ -82,26 +84,51 @@ class FullscreenPhotoViewController: UIViewController {
     }
     
     @IBAction func likeButtonTapped(_ sender: UIButton) {
-        guard let key = imageKey(for: currentIndex),
-              let tripID = tripID,
-              let userID = getCurrentUserID() else { return }
-        
-        let likedKey = "likedPhotos_\(tripID)_\(userID)"
-        var liked = UserDefaults.standard.stringArray(forKey: likedKey) ?? []
-        
-        if liked.contains(key) {
-            liked.removeAll { $0 == key }
-            likes[currentIndex] = max(likes[currentIndex] - 1, 0)
-        } else {
-            liked.append(key)
-            likes[currentIndex] += 1
+        likeButton.tintColor = .systemPink
+
+        guard let tripID = tripID,
+              let ownerID = ownerID,
+              currentIndex < imageDocumentIDs.count else { return }
+
+        let docID = imageDocumentIDs[currentIndex]
+        let imageRef = Firestore.firestore()
+            .collection("Users")
+            .document(ownerID)
+            .collection("trips")
+            .document(tripID)
+            .collection("images")
+            .document(docID)
+
+        imageRef.getDocument { snapshot, error in
+            guard let doc = snapshot, doc.exists, var data = doc.data(),
+                  let currentLikes = data["likes"] as? Int else { return }
+
+            let likedKey = "likedPhotos_\(tripID)_\(self.getCurrentUserID() ?? "")"
+            var liked = UserDefaults.standard.stringArray(forKey: likedKey) ?? []
+            
+            let docID = self.imageDocumentIDs[self.currentIndex]
+            let isLiked = liked.contains(docID)
+
+            
+            let newLikes = isLiked ? max(currentLikes - 1, 0) : currentLikes + 1
+
+            imageRef.updateData(["likes": newLikes])
+
+            if isLiked {
+                liked.removeAll { $0 == docID }
+            } else {
+                liked.append(docID)
+            }
+            UserDefaults.standard.set(liked, forKey: likedKey)
+
+
+            self.likes[self.currentIndex] = newLikes
+            self.updateLikeButtonState()
+            
+            print("Tapped like. Was liked: \(isLiked). New count: \(newLikes)")
         }
-        
-        UserDefaults.standard.set(liked, forKey: likedKey)
-        UserDefaults.standard.set(likes, forKey: "likes_\(tripID)_\(userID)")
-        
-        updateLikeButtonState()
     }
+
     
     @IBAction func deleteButtonTapped(_ sender: UIButton) {
         // change trash icon (styling)
@@ -118,74 +145,90 @@ class FullscreenPhotoViewController: UIViewController {
     
     func performDeletion() {
         guard let tripID = tripID,
-              let key = imageKey(for: currentIndex) else { return }
-        
-        let defaults = UserDefaults.standard
-        var saved = defaults.stringArray(forKey: "savedImageURLs_\(tripID)") ?? []
-        saved.removeAll { $0 == key }
-        defaults.set(saved, forKey: "savedImageURLs_\(tripID)")
-        
-        var liked = defaults.stringArray(forKey: "likedPhotos") ?? []
-        liked.removeAll { $0 == key }
-        defaults.set(liked, forKey: "likedPhotos")
-        
-        images.remove(at: currentIndex)
-        
-        if let navController = navigationController,
-           let photoVC = navController.viewControllers.first(where: { $0 is PhotoAlbumViewController }) as? PhotoAlbumViewController {
-            photoVC.needsRefresh = true
-        }
-        
-        if images.isEmpty {
-            navigationController?.popViewController(animated: true)
-        } else {
-            currentIndex = min(currentIndex, images.count - 1)
-            imageView.image = images[currentIndex]
-            updateLikeButtonState()
-            updatePageIndicator()
-            
-            // Reset trash icon to unfilled for next image
-            styleButtons()
+              let ownerID = ownerID,
+              currentIndex < imageDocumentIDs.count else { return }
+
+        let docID = imageDocumentIDs[currentIndex]
+        let imageRef = Firestore.firestore()
+            .collection("Users")
+            .document(ownerID)
+            .collection("trips")
+            .document(tripID)
+            .collection("images")
+            .document(docID)
+
+        imageRef.delete { error in
+            if let error = error {
+                print("Error deleting image: \(error.localizedDescription)")
+                return
+            }
+
+            self.images.remove(at: self.currentIndex)
+            self.imageDocumentIDs.remove(at: self.currentIndex)
+            self.imageURLs.remove(at: self.currentIndex)
+            self.likes.remove(at: self.currentIndex)
+
+            if self.images.isEmpty {
+                self.navigationController?.popViewController(animated: true)
+            } else {
+                self.currentIndex = min(self.currentIndex, self.images.count - 1)
+                self.imageView.image = self.images[self.currentIndex]
+                self.updateLikeButtonState()
+                self.updatePageIndicator()
+                self.styleButtons()
+            }
+
+            if let navController = self.navigationController,
+               let photoVC = navController.viewControllers.first(where: { $0 is PhotoAlbumViewController }) as? PhotoAlbumViewController {
+                photoVC.needsRefresh = true
+            }
         }
     }
+
     
     // likes
     func updateLikeButtonState() {
-        guard let key = imageKey(for: currentIndex),
-              let tripID = tripID,
-              let userID = getCurrentUserID() else { return }
-        
+        guard let tripID = tripID,
+              let userID = getCurrentUserID(),
+              currentIndex < imageURLs.count else { return }
+
+        let docID = imageDocumentIDs[currentIndex]
         let liked = UserDefaults.standard.stringArray(forKey: "likedPhotos_\(tripID)_\(userID)") ?? []
-        let isLiked = liked.contains(key)
+        let isLiked = liked.contains(docID)
+
         let iconName = isLiked ? "heart.circle.fill" : "heart.circle"
-        
+
         let config = UIImage.SymbolConfiguration(pointSize: 40, weight: .regular)
         likeButton.setImage(UIImage(systemName: iconName, withConfiguration: config), for: .normal)
-        
-        let count = likes[currentIndex]
-        if count > 0 {
-            likeCountLabel.isHidden = false
-            likeCountLabel.text = "\(count)"
-        } else {
-            likeCountLabel.isHidden = true
-        }
-        
+
+        let count = likes.indices.contains(currentIndex) ? likes[currentIndex] : 0
+        likeCountLabel.text = "\(count)"
+        likeCountLabel.isHidden = count == 0
     }
+
     
     func loadLikes() {
-        guard let tripID = tripID,
-              let userID = getCurrentUserID() else { return }
-        
-        let key = "likes_\(tripID)_\(userID)"
-        let savedLikes = UserDefaults.standard.array(forKey: key) as? [Int] ?? []
-        
-        // Ensure same size as images
-        if savedLikes.count == images.count {
-            likes = savedLikes
-        } else {
-            likes = Array(repeating: 0, count: images.count)
+        guard let tripID = tripID, let ownerID = ownerID else { return }
+
+        likes = Array(repeating: 0, count: imageDocumentIDs.count)
+        let db = Firestore.firestore()
+
+        for (index, docID) in imageDocumentIDs.enumerated() {
+            let ref = db.collection("Users").document(ownerID)
+                .collection("trips").document(tripID)
+                .collection("images").document(docID)
+
+            ref.getDocument { snapshot, error in
+                if let data = snapshot?.data(), let count = data["likes"] as? Int {
+                    self.likes[index] = count
+                    if index == self.currentIndex {
+                        self.updateLikeButtonState()
+                    }
+                }
+            }
         }
     }
+
     
     // styling
     func styleButtons(){
