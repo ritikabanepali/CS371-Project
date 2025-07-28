@@ -29,5 +29,5 @@
 | Survey | User can fill out their preferences for trip activities/dining/timings | Abha (100%) |
 | Invitations | Users can view their incoming trip invitations and accept/decline people who are a part of the same trip, and also view who has joined. | Ritika (90%) Suhani (10%) |
 | Map | The user’s current location is used to view locations in their travel destination and load information about the locations | Ritika (100%) |
-| Trip Wrapped | The user can view trip data once the trip dates have ended, including trip information, top liked photos, and group step counts through HealthKit | Suhani (50%) Julia (50%) |
+| Trip Wrapped | The user can view trip data once the trip dates have ended, including trip information, top liked photos, and group step counts through HealthKit | Suhani (25%) Julia (75%) |
 | Settings | User can save notification and theme preferences, updated throughout app screens | Suhani (100%) |
