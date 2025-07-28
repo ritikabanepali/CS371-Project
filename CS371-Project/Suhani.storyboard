@@ -24,7 +24,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VvZ-Wb-CPU">
-                                <rect key="frame" x="143" y="426" width="106" height="47"/>
+                                <rect key="frame" x="143" y="534" width="106" height="47"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="tintColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -43,7 +43,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lrd-KT-Pws">
-                                <rect key="frame" x="102" y="499" width="189" height="46"/>
+                                <rect key="frame" x="102" y="608" width="189" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="tintColor" red="0.73725497719999999" green="0.84313726430000002" blue="0.92156863209999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -61,14 +61,14 @@
                                     <segue destination="z7p-kE-d54" kind="show" identifier="CreateAccountPageSegue" id="gVu-kz-UDa"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENJOY TRAVEL, STRESS FREE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aEq-dl-wJa">
-                                <rect key="frame" x="64" y="312" width="265" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="ENJOY TRAVEL, STRESS FREE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aEq-dl-wJa">
+                                <rect key="frame" x="78" y="311" width="265" height="17"/>
                                 <fontDescription key="fontDescription" name="HoeflerText-Regular" family="Hoefler Text" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WELCOME TO TRAVEL DIARY" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwK-Ve-Hg6">
-                                <rect key="frame" x="50" y="154" width="293" height="138"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="WELCOME TO TRAVEL DIARY" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwK-Ve-Hg6">
+                                <rect key="frame" x="50" y="165" width="293" height="138"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="138" id="QIE-af-jEW"/>
                                     <constraint firstAttribute="width" constant="293" id="S0z-3k-pCc"/>
@@ -180,16 +180,27 @@
                                     <segue destination="z7p-kE-d54" kind="show" identifier="SigninToCreateSegue" id="YBx-mT-Ljl"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sign In" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hf-CV-0Nh">
-                                <rect key="frame" x="142" y="180" width="109" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Sign In" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hf-CV-0Nh">
+                                <rect key="frame" x="142" y="283" width="109" height="36"/>
                                 <fontDescription key="fontDescription" name="HoeflerText-Regular" family="Hoefler Text" pointSize="36"/>
                                 <color key="textColor" red="0.2941176593" green="0.41568624970000001" blue="0.1686274707" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="travel-diary-logo" translatesAutoresizingMaskIntoConstraints="NO" id="U5Y-W4-pHK">
+                                <rect key="frame" x="161" y="192" width="74" height="66"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="66" id="54k-2C-Gmi"/>
+                                    <constraint firstAttribute="width" constant="74" id="ImG-b2-vf9"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="XC1-KQ-cB4"/>
                         <color key="backgroundColor" red="0.98039215800000001" green="0.98039215800000001" blue="0.96470588450000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="XC1-KQ-cB4" firstAttribute="top" secondItem="U5Y-W4-pHK" secondAttribute="top" constant="-30" id="5QI-st-3hR"/>
+                            <constraint firstItem="1hf-CV-0Nh" firstAttribute="top" secondItem="U5Y-W4-pHK" secondAttribute="bottom" constant="25" id="kyJ-9d-Wjv"/>
+                            <constraint firstItem="U5Y-W4-pHK" firstAttribute="leading" secondItem="XC1-KQ-cB4" secondAttribute="leading" constant="161" id="sQZ-mc-ys0"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="c8z-Hi-bGG"/>
                     <connections>
@@ -296,9 +307,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Create Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eK4-AL-6xi">
-                                <rect key="frame" x="81" y="184" width="238" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="travel-diary-logo" translatesAutoresizingMaskIntoConstraints="NO" id="0bg-2C-AcB">
+                                <rect key="frame" x="163" y="192" width="74" height="66"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="66" id="OdY-mD-sf5"/>
+                                    <constraint firstAttribute="width" constant="74" id="Z4P-Dd-EXG"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Create Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eK4-AL-6xi">
+                                <rect key="frame" x="77" y="286" width="238" height="36"/>
                                 <fontDescription key="fontDescription" name="HoeflerText-Regular" family="Hoefler Text" pointSize="36"/>
                                 <color key="textColor" red="0.2941176593" green="0.41568624970000001" blue="0.1686274707" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
@@ -306,6 +323,11 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="oDE-f0-QCZ"/>
                         <color key="backgroundColor" red="0.98039215800000001" green="0.98039215800000001" blue="0.96470588450000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstItem="0bg-2C-AcB" firstAttribute="leading" secondItem="oDE-f0-QCZ" secondAttribute="leading" constant="163" id="3gR-AF-NRk"/>
+                            <constraint firstItem="eK4-AL-6xi" firstAttribute="top" secondItem="0bg-2C-AcB" secondAttribute="bottom" constant="28" id="Oj2-bd-3VO"/>
+                            <constraint firstItem="oDE-f0-QCZ" firstAttribute="top" secondItem="0bg-2C-AcB" secondAttribute="top" constant="-30" id="meo-1O-Bw6"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="t3K-rc-mJS"/>
                     <connections>
@@ -346,6 +368,7 @@
         <image name="HomepageBackgroundImage" width="574" height="1244"/>
         <image name="LoginImage" width="130" height="134"/>
         <image name="PasswordImage" width="106" height="94"/>
+        <image name="travel-diary-logo" width="941" height="741"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

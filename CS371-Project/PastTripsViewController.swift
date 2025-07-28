@@ -13,32 +13,22 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
     var trips: [Trip] = []
     var selectedTripHere: Trip?
     
-    
-    
-    
     @IBAction func viewPhotosTapped(_ sender: Any) {
         guard let trip = selectedTripHere else {
-               print("🔴 No trip selected")
-               return
-           }
-           print("🟢 Opening PhotoAlbumViewController for trip: \(trip.destination), ID: \(trip.id)")
-           
-           let storyboard = UIStoryboard(name: "Julia", bundle: nil)
-           if let photoVC = storyboard.instantiateViewController(withIdentifier: "PhotoAlbumViewController") as? PhotoAlbumViewController {
-               photoVC.tripID = trip.id
-               print("✅ tripID sent to PhotoAlbumViewController: \(photoVC.tripID ?? "nil")")
-               self.navigationController?.pushViewController(photoVC, animated: true)
-           } else {
-               print("🔴 Failed to instantiate PhotoAlbumViewController")
-           }
+            return
+        }
+        
+        let storyboard = UIStoryboard(name: "Julia", bundle: nil)
+        if let photoVC = storyboard.instantiateViewController(withIdentifier: "PhotoAlbumViewController") as? PhotoAlbumViewController {
+            photoVC.tripID = trip.id
+            self.navigationController?.pushViewController(photoVC, animated: true)
+        }
     }
-    
     
     @IBAction func buttonTapped(_ sender: Any) {
         guard let button = sender as? UIButton else { return }
         let index = button.tag
         selectedTripHere = trips[index]
-        
     }
     
     override func viewDidLoad() {
@@ -55,7 +45,7 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
         var ownedPastTrips: [Trip] = []
         var acceptedPastTrips: [Trip] = []
         
-        // Fetch owned trips
+        // owned trips
         group.enter()
         TripManager.shared.fetchUserTrips { result in
             if case .success(let (_, pastTrips)) = result {
@@ -64,7 +54,6 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
             group.leave()
         }
         
-        // Fetch accepted trips
         group.enter()
         TripManager.shared.fetchAcceptedInvitations { result in
             if case .success(let trips) = result {
@@ -73,7 +62,7 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
             group.leave()
         }
         
-        // Combine and update the UI
+        //update ui
         group.notify(queue: .main) {
             var combinedTrips = [String: Trip]()
             (ownedPastTrips + acceptedPastTrips).forEach { trip in
@@ -129,5 +118,4 @@ class PastTripsViewController: UIViewController, UITableViewDataSource, UITableV
             destinationVC.selectedTrip = selectedTripHere
         }
     }
-    
 }

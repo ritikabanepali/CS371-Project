@@ -30,8 +30,8 @@
             filePath = "CS371-Project/WrappedViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
             landmarkName = "fetchAllTravelerSteps()"
             landmarkType = "7">
          </BreakpointContent>
@@ -66,8 +66,8 @@
             filePath = "CS371-Project/WrappedViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "261"
-            endingLineNumber = "261"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
             landmarkName = "saveMyTravelerSteps(trip:steps:completion:)"
             landmarkType = "7">
          </BreakpointContent>

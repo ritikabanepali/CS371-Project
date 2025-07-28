@@ -23,16 +23,11 @@ class WrappedViewController: UIViewController {
     @IBOutlet weak var trailblazerLabel: UILabel!
     
     @IBOutlet weak var mostLikedPhoto: UILabel!
-    
     @IBOutlet weak var leaderLabel: UILabel!
-    
     @IBOutlet weak var chattboxLabel: UILabel!
-    
     @IBOutlet weak var typeTrip: UILabel!
     
-    
     @IBOutlet weak var bigImage: UIImageView!
-    
     @IBOutlet weak var image1: UIImageView!
     @IBOutlet weak var image2: UIImageView!
     @IBOutlet weak var image3: UIImageView!
@@ -44,14 +39,13 @@ class WrappedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        printAllSavedImageKeysAndCounts()
-
+        
         setCardTitle()
         setTitle()
         totalStepsLabel.textColor = SettingsManager.shared.titleColor
         trailblazerLabel.textColor = SettingsManager.shared.titleColor
         wrappedLabel.textColor = SettingsManager.shared.titleColor
-
+        
         HealthKitManager.shared.requestAuthorization { [weak self] authorized in
             guard let self = self else { return }
             if authorized {
@@ -66,22 +60,17 @@ class WrappedViewController: UIViewController {
         displayTripLeaderName()
         updateTypeTrip()
         fetchMostActiveChatter()
-
         
         let imageViews = [bigImage, image1, image2, image3, image4]
         for imageView in imageViews {
             imageView?.layer.cornerRadius = 15
             imageView?.clipsToBounds = true
         }
-        
-        
-
-
     }
     
     func fetchMostActiveChatter() {
         guard let trip = selectedTrip else { return }
-
+        
         let key = "messages_\(trip.id)"
         guard let data = UserDefaults.standard.data(forKey: key) else {
             DispatchQueue.main.async {
@@ -89,7 +78,7 @@ class WrappedViewController: UIViewController {
             }
             return
         }
-
+        
         do {
             let messages = try JSONDecoder().decode([Message].self, from: data)
             if messages.isEmpty {
@@ -98,15 +87,15 @@ class WrappedViewController: UIViewController {
                 }
                 return
             }
-
+            
             var countByUser: [String: Int] = [:]
             var nameByUser: [String: String] = [:]
-
+            
             for msg in messages {
                 countByUser[msg.senderID, default: 0] += 1
                 nameByUser[msg.senderID] = msg.senderName
             }
-
+            
             if let (topID, _) = countByUser.max(by: { $0.value < $1.value }),
                let topName = nameByUser[topID] {
                 DispatchQueue.main.async {
@@ -117,7 +106,7 @@ class WrappedViewController: UIViewController {
                     self.chattboxLabel.text = "No chatterers"
                 }
             }
-
+            
         } catch {
             print("Error decoding messages: \(error)")
             DispatchQueue.main.async {
@@ -125,42 +114,32 @@ class WrappedViewController: UIViewController {
             }
         }
     }
-
-
-
-
-
     
     func updateTypeTrip() {
         typeTrip.textColor = SettingsManager.shared.titleColor
         typeTrip.font = UIFont.systemFont(ofSize: 17, weight: .medium)
-
+        
         let adjectives = ["relaxing", "adventurous", "memorable", "vibrant", "serene", "fun-filled", "spontaneous", "energizing", "unforgettable", "crazy", "sleep-deprived", "vibe-heavy", "sunburnt", "trail-misguided", "souvenir hoarding", "lost-but-vibing", "inside-joke-filled", "best-best-best", "feral"]
         let adjective = adjectives.randomElement() ?? "amazing"
-
-        // Check if it starts with a vowel (a, e, i, o, u)
+        
+        // check if it starts with a vowel (a, e, i, o, u)
         let firstChar = adjective.lowercased().first
         let article = (firstChar == "a" || firstChar == "e" || firstChar == "i" || firstChar == "o" || firstChar == "u") ? "An" : "A"
-
+        
         typeTrip.text = "\(article) \(adjective) trip"
     }
-
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
-        // Highlight "Most Liked Photo" Label
+        
+        // highlight "Most Liked Photo" Label
         mostLikedPhoto.text = "   Most Liked Photo   "
-        mostLikedPhoto.textColor = .black
         mostLikedPhoto.backgroundColor = .white
-        mostLikedPhoto.textAlignment = .center
         mostLikedPhoto.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         mostLikedPhoto.layer.cornerRadius = mostLikedPhoto.frame.height / 2
         mostLikedPhoto.layer.masksToBounds = true
         mostLikedPhoto.backgroundColor = UIColor.white.withAlphaComponent(0.45)
     }
-
-
     
     func setTitle(){
         if let destination = tripDestination {
@@ -173,25 +152,25 @@ class WrappedViewController: UIViewController {
     
     func setCardTitle(){
         if let destination = tripDestination {
-               tripTitle.text = "\(destination)"
-           }
+            tripTitle.text = "\(destination)"
+        }
         if let destination = tripDestination,
            let start = selectedTrip?.startDate,
            let end = selectedTrip?.endDate {
-
+            
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
-
+            
             let startStr = formatter.string(from: start)
             let endStr = formatter.string(from: end)
-
+            
             datesLabel.text = " (\(startStr) - \(endStr))"
             
             let calendar = Calendar.current
-                   let days = calendar.dateComponents([.day], from: start, to: end).day ?? 0
-                   let totalDays = days + 1
-                   
-                   durationLabel.text = "\(totalDays) day\(totalDays == 1 ? "" : "s")"
+            let days = calendar.dateComponents([.day], from: start, to: end).day ?? 0
+            let totalDays = days + 1
+            
+            durationLabel.text = "\(totalDays) day\(totalDays == 1 ? "" : "s")"
         }
         tripTitle.textColor = SettingsManager.shared.titleColor
         tripTitle.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
@@ -219,22 +198,22 @@ class WrappedViewController: UIViewController {
     
     func getLikeCount(for imageKey: String) -> Int {
         guard let tripID = selectedTrip?.id else { return 0 }
-
+        
         // Look through all users’ like data if needed. For now, we’ll just use the current user:
         guard let userID = UserManager.shared.currentUserID else { return 0 }
-
+        
         let key = "likes_\(tripID)_\(userID)"
         let likeCounts = UserDefaults.standard.array(forKey: key) as? [Int] ?? []
-
+        
         let imageURLs = UserDefaults.standard.stringArray(forKey: "savedImageURLs_\(tripID)") ?? []
-
+        
         if let index = imageURLs.firstIndex(of: imageKey), index < likeCounts.count {
             return likeCounts[index]
         } else {
             return 0
         }
     }
-
+    
     
     func saveMyTravelerSteps(trip: Trip, steps: Int, completion: @escaping (Error?) -> Void){
         guard let currentUserID = currentUserID else {
@@ -285,7 +264,7 @@ class WrappedViewController: UIViewController {
     
     func displayTripLeaderName() {
         guard let trip = selectedTrip else { return } // your trip variable
-
+        
         UserManager.shared.fetchName(forUserWithUID: trip.ownerUID) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
@@ -297,7 +276,6 @@ class WrappedViewController: UIViewController {
             }
         }
     }
-
     
     func updateStepLabels (){
         var totalSteps = 0
@@ -330,36 +308,32 @@ class WrappedViewController: UIViewController {
         guard let trip = selectedTrip else { return }
         let key = "savedImageURLs_\(trip.id)"
         let urls = UserDefaults.standard.stringArray(forKey: key) ?? []
-
-        print("🟡 Loading images for trip ID: \(trip.id)")
-        print("🟡 Retrieved URLs: \(urls)")
-
+        
         if urls.isEmpty {
             useDefaultImages()
             return
         }
-
+        
         var loadedImages: [UIImage] = []
         var likedCounts: [Int] = []
-
+        
         let dispatchGroup = DispatchGroup()
         let syncQueue = DispatchQueue(label: "imageLikeSyncQueue")
-
+        
         for urlString in urls {
             guard let url = URL(string: urlString) else {
-                print("🔴 Invalid URL: \(urlString)")
+                print("invalid URL: \(urlString)")
                 continue
             }
-
+            
             dispatchGroup.enter()
             URLSession.shared.dataTask(with: url) { data, response, error in
                 defer { dispatchGroup.leave() }
-
+                
                 if let error = error {
-                    print("🔴 Failed to download \(url): \(error.localizedDescription)")
                     return
                 }
-
+                
                 if let data = data, let image = UIImage(data: data) {
                     syncQueue.sync {
                         loadedImages.append(image)
@@ -369,22 +343,22 @@ class WrappedViewController: UIViewController {
                 }
             }.resume()
         }
-
+        
         dispatchGroup.notify(queue: .main) {
             let sorted = zip(loadedImages, likedCounts).sorted { $0.1 > $1.1 }
-
-            // Always show something in bigImage
+            
+            // show something in bigImagefirst
             if let mostLiked = sorted.first?.0 {
                 self.bigImage.image = mostLiked
             } else {
                 self.bigImage.image = UIImage(named: "lavender-airplane")
             }
-
-            // Display up to 4 other images, fallback if not enough
+            
+            //4 other small images
             let smallImages = [self.image1, self.image2, self.image3, self.image4]
             let fallbackNames = ["blue-door", "pink-van", "green-plant", "fallen-bike"]
-            let secondaryImages = Array(sorted.dropFirst().map { $0.0 })  // Extract just the UIImages
-
+            let secondaryImages = Array(sorted.dropFirst().map { $0.0 })
+            
             for (i, imgView) in smallImages.enumerated() {
                 if i < secondaryImages.count {
                     imgView?.image = secondaryImages[i]
@@ -392,34 +366,10 @@ class WrappedViewController: UIViewController {
                     imgView?.image = UIImage(named: fallbackNames[i])
                 }
             }
-
             self.view.setNeedsLayout()
         }
-
-    }
-
-    
-    func printAllSavedImageKeysAndCounts() {
-        let defaults = UserDefaults.standard
-        let allKeys = defaults.dictionaryRepresentation().keys
         
-        let photoKeys = allKeys.filter { $0.hasPrefix("savedImageURLs_") }
-        
-        if photoKeys.isEmpty {
-            print("📂 No saved image URL keys found in UserDefaults.")
-        } else {
-            for key in photoKeys {
-                if let urls = defaults.stringArray(forKey: key) {
-                    print("📸 \(key) → \(urls.count) image(s)")
-                } else {
-                    print("⚠️ \(key) exists but no valid string array found.")
-                }
-            }
-        }
     }
-
-
-
     
     func useDefaultImages() {
         bigImage.image = UIImage(named: "lavender-airplane")
@@ -428,7 +378,4 @@ class WrappedViewController: UIViewController {
         image3.image = UIImage(named: "green-plant")
         image4.image = UIImage(named: "fallen-bike")
     }
-
-
-
 }
