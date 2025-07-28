@@ -180,7 +180,7 @@
                                     <segue destination="z7p-kE-d54" kind="show" identifier="SigninToCreateSegue" id="YBx-mT-Ljl"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Sign In" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hf-CV-0Nh">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign In" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hf-CV-0Nh">
                                 <rect key="frame" x="142" y="283" width="109" height="36"/>
                                 <fontDescription key="fontDescription" name="HoeflerText-Regular" family="Hoefler Text" pointSize="36"/>
                                 <color key="textColor" red="0.2941176593" green="0.41568624970000001" blue="0.1686274707" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -198,6 +198,7 @@
                         <color key="backgroundColor" red="0.98039215800000001" green="0.98039215800000001" blue="0.96470588450000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="XC1-KQ-cB4" firstAttribute="top" secondItem="U5Y-W4-pHK" secondAttribute="top" constant="-30" id="5QI-st-3hR"/>
+                            <constraint firstItem="1hf-CV-0Nh" firstAttribute="leading" secondItem="XC1-KQ-cB4" secondAttribute="leading" constant="142" id="94s-5l-GEP"/>
                             <constraint firstItem="1hf-CV-0Nh" firstAttribute="top" secondItem="U5Y-W4-pHK" secondAttribute="bottom" constant="25" id="kyJ-9d-Wjv"/>
                             <constraint firstItem="U5Y-W4-pHK" firstAttribute="leading" secondItem="XC1-KQ-cB4" secondAttribute="leading" constant="161" id="sQZ-mc-ys0"/>
                         </constraints>
@@ -314,7 +315,7 @@
                                     <constraint firstAttribute="width" constant="74" id="Z4P-Dd-EXG"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Create Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eK4-AL-6xi">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eK4-AL-6xi">
                                 <rect key="frame" x="77" y="286" width="238" height="36"/>
                                 <fontDescription key="fontDescription" name="HoeflerText-Regular" family="Hoefler Text" pointSize="36"/>
                                 <color key="textColor" red="0.2941176593" green="0.41568624970000001" blue="0.1686274707" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -326,6 +327,7 @@
                         <constraints>
                             <constraint firstItem="0bg-2C-AcB" firstAttribute="leading" secondItem="oDE-f0-QCZ" secondAttribute="leading" constant="163" id="3gR-AF-NRk"/>
                             <constraint firstItem="eK4-AL-6xi" firstAttribute="top" secondItem="0bg-2C-AcB" secondAttribute="bottom" constant="28" id="Oj2-bd-3VO"/>
+                            <constraint firstItem="eK4-AL-6xi" firstAttribute="leading" secondItem="oDE-f0-QCZ" secondAttribute="leading" constant="77" id="mde-l7-yOe"/>
                             <constraint firstItem="oDE-f0-QCZ" firstAttribute="top" secondItem="0bg-2C-AcB" secondAttribute="top" constant="-30" id="meo-1O-Bw6"/>
                         </constraints>
                     </view>
