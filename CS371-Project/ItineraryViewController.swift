@@ -80,6 +80,7 @@ class ItineraryViewController: UIViewController {
     
     func observeItineraryUpdates() {
         let docRef = Firestore.firestore().collection("itineraries").document(currentTrip.id)
+        let isOwner = isCurrentUserTripOwner()
         
         docRef.addSnapshotListener { snapshot, _ in
             if let data = snapshot?.data(),
@@ -91,11 +92,18 @@ class ItineraryViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
+                    if !isOwner {
+                        self.showAlert(
+                            title: "Itinerary Not Ready",
+                            message: "The itinerary hasn’t been created yet. Please wait for the trip owner to generate it."
+                        )
+                    }
                     self.itineraryTextView.text = "No itinerary available, click 'Generate' to generate itinerary."
                 }
             }
         }
     }
+
     
     func isCurrentUserTripOwner() -> Bool {
         return UserManager.shared.currentUserID == currentTrip.ownerUID
