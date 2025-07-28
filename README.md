@@ -20,12 +20,12 @@
  
 **Logins for testing functionality (but can make your own!)**
     
-    account 1:
+  account 1:
     Name: Hook ‘Em Longhorn
     - Email: hookem@gmail.com 
     - Password: hookem123
     
-    account 2:
+  account 2:
     Name: Bevo Longhorn
     - Email: ut@gmail.com
     - Password: longhorn
@@ -36,7 +36,7 @@
 2. In the **Signing & Capabilities** tab:
    - Change the **Bundle Identifier** to something unique (e.g., `com.yourname.projectname`)
    - Select your own **Apple Team** in the "Team" dropdown.
-3. Plug in your iPhone (or use an **Iphone 16 Pro** simulator ).
+3. Plug in your iPhone and use **light mode** display for best UI experience (or use an **Iphone 16 Pro** simulator ).
 4. Press **Run**  to build and install the app.
 
 **Note: You must use your own Apple Developer Team to run this app on a physical iPhone.**
