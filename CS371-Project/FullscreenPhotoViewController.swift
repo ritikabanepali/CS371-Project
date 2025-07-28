@@ -20,7 +20,6 @@ class FullscreenPhotoViewController: UIViewController {
     var imageURLs: [String] = []
     var ownerID: String?
 
-    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
@@ -42,9 +41,7 @@ class FullscreenPhotoViewController: UIViewController {
         
         loadLikes()
         styleButtons()
-        
         updateLikeButtonState()
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -54,7 +51,6 @@ class FullscreenPhotoViewController: UIViewController {
             createIndicator()
             updatePageIndicator()
         }
-        
         positionIndicator()
     }
     
@@ -68,12 +64,10 @@ class FullscreenPhotoViewController: UIViewController {
         } else if gesture.direction == .right, currentIndex > 0 {
             currentIndex -= 1
         }
-
         imageView.image = images[currentIndex]
         updatePageIndicator()
         updateLikeButtonState()
     }
-
     
     // image likes & delete
     func imageKey(for index: Int) -> String? {
@@ -128,7 +122,6 @@ class FullscreenPhotoViewController: UIViewController {
             print("Tapped like. Was liked: \(isLiked). New count: \(newLikes)")
         }
     }
-
     
     @IBAction func deleteButtonTapped(_ sender: UIButton) {
         // change trash icon (styling)
@@ -185,7 +178,6 @@ class FullscreenPhotoViewController: UIViewController {
         }
     }
 
-    
     // likes
     func updateLikeButtonState() {
         guard let tripID = tripID,
@@ -205,7 +197,6 @@ class FullscreenPhotoViewController: UIViewController {
         likeCountLabel.text = "\(count)"
         likeCountLabel.isHidden = count == 0
     }
-
     
     func loadLikes() {
         guard let tripID = tripID, let ownerID = ownerID else { return }
@@ -228,7 +219,6 @@ class FullscreenPhotoViewController: UIViewController {
             }
         }
     }
-
     
     // styling
     func styleButtons(){
@@ -316,5 +306,4 @@ class FullscreenPhotoViewController: UIViewController {
             height: 10
         )
     }
-    
 }
