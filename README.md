@@ -1,9 +1,14 @@
 **Team Members:** Suhani Goswami, Ritika Banepali, Abha Misaqi, Julia Mergel
 
+**GitHub Repo:** https://github.com/ritikabanepali/CS371-Project
+
+**Presentation Slides:** https://docs.google.com/presentation/d/1y_rHMln1kTQk2X5pIHW4hwgOaZj0K6dFBGQO4Y879-s/edit?usp=sharing
+
 **Name of Project:** Travel Diary
 
 **Special Instructions:**
 - Chat GPT API Key Set up for Generate Itinerary
+- (note: the Secrets.plist file is already in the zip file so these instructions can be diregarded for local testing!)
   - Create a Secrets.plist File
   - In Xcode, right-click on your project navigator and select New File.
   - Choose Property List and name it: Secrets.plist
@@ -14,6 +19,27 @@
   - Ensure Secrets.plist is in your .gitignore to prevent exposing your API key.
  
 **Logins for testing functionality (but can make your own!)**
+    
+    account 1:
+    Name: Hook ‘Em Longhorn
+    - Email: hookem@gmail.com 
+    - Password: hookem123
+    
+    account 2:
+    Name: Bevo Longhorn
+    - Email: ut@gmail.com
+    - Password: longhorn
+    
+**How to Run the App**
+
+1. Unzip the folder and open the `.xcodeproj` file in Xcode.
+2. In the **Signing & Capabilities** tab:
+   - Change the **Bundle Identifier** to something unique (e.g., `com.yourname.projectname`)
+   - Select your own **Apple Team** in the "Team" dropdown.
+3. Plug in your iPhone (or use a simulator).
+4. Press **Run**  to build and install the app.
+
+**Note: You must use your own Apple Developer Team to run this app on a physical iPhone.**
 
 | Feature  | Description   | Percentages |
 | :---  |  :---  | :--- |
