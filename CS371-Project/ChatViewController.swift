@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseFirestore
+import FirebaseAuth
 
 class ChatViewController: UIViewController{
     var tripID: String?
@@ -24,8 +26,6 @@ class ChatViewController: UIViewController{
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
         loadMessages()
-        NotificationCenter.default.addObserver(self, selector: #selector(saveMessagesOnBackground), name: UIApplication.willResignActiveNotification, object: nil)
-        
     }
 }
 
@@ -34,7 +34,38 @@ struct Message: Codable {
     let senderName: String
     let text: String
     let timestamp: Date
+
+    init(senderID: String, senderName: String, text: String, timestamp: Date) {
+        self.senderID = senderID
+        self.senderName = senderName
+        self.text = text
+        self.timestamp = timestamp
+    }
+
+    init?(from dict: [String: Any]) {
+        guard let senderID = dict["senderID"] as? String,
+              let senderName = dict["senderName"] as? String,
+              let text = dict["text"] as? String,
+              let timestamp = dict["timestamp"] as? Timestamp else {
+            return nil
+        }
+
+        self.senderID = senderID
+        self.senderName = senderName
+        self.text = text
+        self.timestamp = timestamp.dateValue()
+    }
+
+    func toDict() -> [String: Any] {
+        return [
+            "senderID": senderID,
+            "senderName": senderName,
+            "text": text,
+            "timestamp": timestamp
+        ]
+    }
 }
+
 
 extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -53,31 +84,23 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
         guard let text = messageField.text, !text.trimmingCharacters(in: .whitespaces).isEmpty else {
             return
         }
-        
-        // Get user ID and name from UserManager
+
         guard let senderID = UserManager.shared.currentUserID else { return }
         let firstName = UserManager.shared.currentUserFirstName ?? "Unknown"
         let lastName = UserManager.shared.currentUserLastName ?? ""
         let fullName = "\(firstName) \(lastName)".trimmingCharacters(in: .whitespaces)
-        
-        // Create new message
+
         let newMessage = Message(
             senderID: senderID,
             senderName: fullName,
             text: text,
             timestamp: Date()
         )
-        
-        // Add and update table
-        messages.append(newMessage)
-        tableView.reloadData()
-        scrollToBottom()
-        
-        // Clear input field
+
         messageField.text = ""
-        saveMessages()
-        
+        saveMessageToFirestore(newMessage)
     }
+
     
     func scrollToBottom() {
         let lastRow = messages.count - 1
@@ -88,31 +111,40 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     // save and load messages
-    func saveMessages() {
+    func saveMessageToFirestore(_ message: Message) {
         guard let tripID = tripID else { return }
-        let key = "messages_\(tripID)"
-        
-        do {
-            let data = try JSONEncoder().encode(messages)
-            UserDefaults.standard.set(data, forKey: key)
-        } catch {
 
-        }
+        let db = Firestore.firestore()
+        let tripRef = db.collection("Users")
+            .document(message.senderID)
+            .collection("trips")
+            .document(tripID)
+
+        let messagesRef = tripRef.collection("messages")
+        messagesRef.addDocument(data: message.toDict())
     }
+
     
     func loadMessages() {
-        guard let tripID = tripID else { return }
-        let key = "messages_\(tripID)"
-        
-        if let data = UserDefaults.standard.data(forKey: key) {
-            do {
-                messages = try JSONDecoder().decode([Message].self, from: data)
-            } catch {
+        guard let tripID = tripID,
+              let currentUserID = UserManager.shared.currentUserID else { return }
 
-            }
+        let db = Firestore.firestore()
+        let messagesRef = db.collection("Users")
+            .document(currentUserID)
+            .collection("trips")
+            .document(tripID)
+            .collection("messages")
+            .order(by: "timestamp", descending: false)
+
+        messagesRef.addSnapshotListener { snapshot, error in
+            guard let documents = snapshot?.documents else { return }
+
+            self.messages = documents.compactMap { Message(from: $0.data()) }
+            self.tableView.reloadData()
+            self.scrollToBottom()
         }
     }
-    @objc func saveMessagesOnBackground() {
-        saveMessages()
-    }
+
+
 }
