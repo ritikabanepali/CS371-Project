@@ -95,7 +95,7 @@ class FullscreenPhotoViewController: UIViewController {
             .document(docID)
 
         imageRef.getDocument { snapshot, error in
-            guard let doc = snapshot, doc.exists, var data = doc.data(),
+            guard let doc = snapshot, doc.exists, let data = doc.data(),
                   let currentLikes = data["likes"] as? Int else { return }
 
             let likedKey = "likedPhotos_\(tripID)_\(self.getCurrentUserID() ?? "")"

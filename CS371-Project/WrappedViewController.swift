@@ -150,12 +150,12 @@ class WrappedViewController: UIViewController {
         wrappedTitle.textColor = SettingsManager.shared.titleColor
     }
     
-    func setCardTitle(){
+    func setCardTitle() {
         if let destination = tripDestination {
             tripTitle.text = "\(destination)"
         }
-        if let destination = tripDestination,
-           let start = selectedTrip?.startDate,
+
+        if let start = selectedTrip?.startDate,
            let end = selectedTrip?.endDate {
             
             let formatter = DateFormatter()
@@ -172,10 +172,12 @@ class WrappedViewController: UIViewController {
             
             durationLabel.text = "\(totalDays) day\(totalDays == 1 ? "" : "s")"
         }
+
         tripTitle.textColor = SettingsManager.shared.titleColor
         tripTitle.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
         tripTitle.textAlignment = .center
     }
+
     
     func fetchTripSteps() {
         let startDate = selectedTrip?.startDate ?? Date()
@@ -294,10 +296,6 @@ class WrappedViewController: UIViewController {
             .document(trip.id)
             .collection("images")
             .getDocuments { snapshot, error in
-                if let error = error {
-                    self.useDefaultImages()
-                    return
-                }
                 
                 guard let docs = snapshot?.documents, !docs.isEmpty else {
                     self.useDefaultImages()
